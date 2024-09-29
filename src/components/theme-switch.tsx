@@ -6,6 +6,7 @@ import { SwitchProps, useSwitch } from "@nextui-org/switch";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
+
 import { MoonFilledIcon, SunFilledIcon } from "./icons";
 
 export interface ThemeSwitchProps {
@@ -45,7 +46,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
           className,
-          classNames?.base
+          classNames?.base,
         ),
       })}
     >
@@ -67,7 +68,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
               "px-0",
               "mx-0",
             ],
-            classNames?.wrapper
+            classNames?.wrapper,
           ),
         })}
       >

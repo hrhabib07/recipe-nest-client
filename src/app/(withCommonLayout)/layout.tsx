@@ -1,6 +1,7 @@
-import { Navbar } from "@/src/components/navbar";
 import { Link } from "@nextui-org/link";
 import React from "react";
+
+import { Navbar } from "@/src/components/navbar";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
