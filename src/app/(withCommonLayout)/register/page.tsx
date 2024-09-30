@@ -10,27 +10,32 @@ import RNInput from "@/src/components/form/RNInput";
 import RNForm from "@/src/components/form/RNForm";
 import { registerUser } from "@/src/services/authServices";
 import { useMutation } from "@tanstack/react-query";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
+import { useEffect } from "react";
 
 export default function RegisterPage() {
-  const {
-    mutate: handleUserRegistration,
-    isPending,
-    data,
-    isError,
-    isSuccess,
-  } = useMutation({
-    mutationKey: ["user-registration"],
-    mutationFn: async (userData) => await registerUser(userData),
-  });
-  console.log(isPending, isSuccess, data);
-  // const { mutate: handleUserRegistration, isPending } = useUserRegistration();
+  // const {
+  //   mutate: handleUserRegistration,
+  //   isPending,
+  //   data,
+  //   isError,
+  //   isSuccess,
+  // } = useMutation({
+  //   mutationKey: ["user-registration"],
+  //   mutationFn: async (userData) => await registerUser(userData),
+  // });
+  // console.log(isPending, isSuccess, data);
+  const { mutate: handleUserRegistration, isPending } = useUserRegistration();
 
-  //   useEffect(() => {
-  //     if (isPending) {
-  //       // Handle Loading satate
-  //     }
-  //   }, [isPending]);
+  useEffect(() => {
+    if (isPending) {
+      // Handle Loading satate
+    }
+  }, [isPending]);
 
+  if (isPending) {
+    //  handle loading state
+  }
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
       ...data,
@@ -42,10 +47,6 @@ export default function RegisterPage() {
 
     handleUserRegistration(userData);
   };
-
-  //   if (isPending) {
-  //     //  handle loading state
-  //   }
 
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
