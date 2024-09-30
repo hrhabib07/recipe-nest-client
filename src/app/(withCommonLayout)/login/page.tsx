@@ -14,19 +14,20 @@ import { useUserLogin } from "@/src/hooks/auth.hook";
 import { Progress } from "@nextui-org/progress";
 import { Spinner } from "@nextui-org/spinner";
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
+import { useUser } from "@/src/context/user.provider";
 
 const LoginPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { setIsLoading: userLoading } = useUser();
   // const { mutate: handleUserLogin } = useUserLogin();
-
   const redirect = searchParams.get("redirect");
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
-    // userLoading(true);
+    userLoading(true);
   };
 
   useEffect(() => {
@@ -41,8 +42,7 @@ const LoginPage = () => {
 
   return (
     <>
-      {
-        isPending && <LoadingSpinner></LoadingSpinner>}
+      {isPending && <LoadingSpinner></LoadingSpinner>}
 
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
         <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
