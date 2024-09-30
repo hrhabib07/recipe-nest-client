@@ -8,10 +8,22 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import registerValidationSchema from "@/src/schemas/register.schema";
 import RNInput from "@/src/components/form/RNInput";
 import RNForm from "@/src/components/form/RNForm";
-import { handleUserRegistration } from "@/src/services/authServices";
+import { registerUser } from "@/src/services/authServices";
+import { useMutation } from "@tanstack/react-query";
 
 export default function RegisterPage() {
-  //   const { mutate: handleUserRegistration, isPending } = useUserRegistration();
+  const {
+    mutate: handleUserRegistration,
+    isPending,
+    data,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationKey: ["user-registration"],
+    mutationFn: async (userData) => await registerUser(userData),
+  });
+  console.log(isPending, isSuccess, data);
+  // const { mutate: handleUserRegistration, isPending } = useUserRegistration();
 
   //   useEffect(() => {
   //     if (isPending) {
