@@ -8,6 +8,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import registerValidationSchema from "@/src/schemas/register.schema";
 import RNInput from "@/src/components/form/RNInput";
 import RNForm from "@/src/components/form/RNForm";
+import { handleUserRegistration } from "@/src/services/authServices";
 
 export default function RegisterPage() {
   //   const { mutate: handleUserRegistration, isPending } = useUserRegistration();
@@ -27,7 +28,7 @@ export default function RegisterPage() {
 
     console.log("Inside form user data: ", userData);
 
-    // handleUserRegistration(userData);
+    handleUserRegistration(userData);
   };
 
   //   if (isPending) {
