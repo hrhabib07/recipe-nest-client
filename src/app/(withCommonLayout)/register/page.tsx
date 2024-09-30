@@ -34,7 +34,7 @@ export default function RegisterPage() {
   }, [isPending]);
 
   if (isPending) {
-    //  handle loading state
+    //  handle loadingit ag state
   }
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {

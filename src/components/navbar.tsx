@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -19,6 +21,7 @@ import { Logo, SearchIcon } from "./icons";
 import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/src/config/site";
+import { logout } from "../services/authServices";
 
 export const Navbar = () => {
   const searchInput = (
@@ -57,7 +60,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -87,6 +90,15 @@ export const Navbar = () => {
             </Button>
           </Link>
         </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <Button
+            onClick={() => logout()}
+            className="text-sm font-normal text-default-600 bg-default-100"
+            variant="flat"
+          >
+            Logout
+          </Button>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -104,8 +116,8 @@ export const Navbar = () => {
                   index === 2
                     ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
+                    ? "danger"
+                    : "foreground"
                 }
                 href="#"
                 size="lg"
