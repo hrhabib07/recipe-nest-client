@@ -62,3 +62,22 @@ export const getCurrentUser = async () => {
 
   return decodedToken;
 };
+export const getCurrentUserWithId = async () => {
+  const accessToken = cookies().get("accessToken")?.value;
+
+  let decodedToken = null;
+
+  if (accessToken) {
+    decodedToken = await jwtDecode(accessToken);
+    try {
+      const { data } = await axiosInstance.get(`/users/${decodedToken._id}`);
+      return data;
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || "Failed to fetch user data."
+      );
+    }
+  }
+
+  throw new Error("No access token found.");
+};

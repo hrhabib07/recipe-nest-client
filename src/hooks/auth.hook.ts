@@ -2,7 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-import { loginUser, registerUser } from "../services/authServices";
+import {
+  getCurrentUserWithId,
+  loginUser,
+  registerUser,
+} from "../services/authServices";
 
 export const useUserRegistration = () => {
   return useMutation<any, Error, FieldValues>({
@@ -26,6 +30,20 @@ export const useUserLogin = () => {
     },
     onError: (error) => {
       toast.error(error.message);
+    },
+  });
+};
+
+export const useUserWithId = () => {
+  return useMutation<any, Error, void>({
+    mutationKey: ["GET_USER_WITH_ID"],
+    mutationFn: async () => await getCurrentUserWithId(),
+    onSuccess: (data) => {
+      toast.success("User data fetched successfully.");
+      return data;
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to fetch user data.");
     },
   });
 };
