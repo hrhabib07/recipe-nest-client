@@ -38,12 +38,5 @@ export const useUserWithId = () => {
   return useMutation<any, Error, void>({
     mutationKey: ["GET_USER_WITH_ID"],
     mutationFn: async () => await getCurrentUserWithId(),
-    onSuccess: (data) => {
-      toast.success("User data fetched successfully.");
-      return data;
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to fetch user data.");
-    },
   });
 };

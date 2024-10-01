@@ -71,10 +71,11 @@ export const getCurrentUserWithId = async () => {
     decodedToken = await jwtDecode(accessToken);
     try {
       const { data } = await axiosInstance.get(`/users/${decodedToken._id}`);
+
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data."
+        error.response?.data?.message || "Failed to fetch user data.",
       );
     }
   }
