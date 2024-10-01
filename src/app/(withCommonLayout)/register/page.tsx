@@ -4,14 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useEffect } from "react";
 
 import registerValidationSchema from "@/src/schemas/register.schema";
 import RNInput from "@/src/components/form/RNInput";
 import RNForm from "@/src/components/form/RNForm";
-import { registerUser } from "@/src/services/authServices";
-import { useMutation } from "@tanstack/react-query";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
-import { useEffect } from "react";
 
 export default function RegisterPage() {
   // const {

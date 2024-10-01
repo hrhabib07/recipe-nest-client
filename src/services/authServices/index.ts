@@ -2,8 +2,9 @@
 
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
-import { axiosInstance } from "@/src/lib/axiosInstence";
 import { jwtDecode } from "jwt-decode";
+
+import { axiosInstance } from "@/src/lib/axiosInstence";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
@@ -47,6 +48,7 @@ export const getCurrentUser = async () => {
 
   if (accessToken) {
     decodedToken = await jwtDecode(accessToken);
+
     return {
       _id: decodedToken._id,
       name: decodedToken.name,

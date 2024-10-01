@@ -1,22 +1,21 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import loginValidationSchema from "@/src/schemas/login.schema";
 import RNForm from "@/src/components/form/RNForm";
 import RNInput from "@/src/components/form/RNInput";
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useUserLogin } from "@/src/hooks/auth.hook";
-import { Progress } from "@nextui-org/progress";
-import { Spinner } from "@nextui-org/spinner";
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 
-const LoginPage = () => {
+const page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { setIsLoading: userLoading } = useUser();
@@ -42,7 +41,7 @@ const LoginPage = () => {
 
   return (
     <>
-      {isPending && <LoadingSpinner></LoadingSpinner>}
+      {isPending && <LoadingSpinner />}
 
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
         <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
@@ -76,4 +75,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default page;
