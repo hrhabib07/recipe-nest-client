@@ -15,6 +15,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
+import { MdEdit } from "react-icons/md";
 
 const page = () => {
   // const { mutate, data } = useUserWithId();
@@ -26,9 +27,6 @@ const page = () => {
 
   const userData = data?.data;
 
-  // useEffect(() => {
-  //   mutate();
-  // }, [mutate]);
   console.log(updateInfoData);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -76,42 +74,74 @@ const page = () => {
             className="rounded-full border-4 border-default shadow-lg"
           />
 
-          {/* modal  */}
-          <Button onPress={onOpen}>Add bio</Button>
-          <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">
-                    Update your bio
-                  </ModalHeader>
-                  <ModalBody>
-                    <Input onChange={handleBioChange}> </Input>
-                    <p>Characters: {remainingChars} / 101</p>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button
-                      color="primary"
-                      onClick={handleBioUpdate}
-                      onPress={onClose}
-                    >
-                      Action
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-
           {/* User Name and Bio */}
-          <div className="text-center mt-4">
+          <div className="text-center mt-4 flex flex-col items-center">
+            {/* User Name */}
             <p className="text-2xl font-bold">{userData?.name}</p>
-            <p className="text-sm text-default-900">
-              {userData?.bio ? userData?.bio : "Add your bio"}
-            </p>
+
+            {/* User Bio Section */}
+            <div className="mt-2 text-center">
+              {userData?.bio ? (
+                <div className="flex items-center justify-center">
+                  {/* Bio Text */}
+                  <p className="text-sm text-default-900 max-w-xs mr-2">
+                    {userData?.bio}
+                  </p>
+
+                  {/* Edit Icon */}
+                  <MdEdit
+                    className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
+                    size={20}
+                    title="Update bio"
+                    onClick={onOpen} // Opens the same modal as "Add bio" button
+                  />
+                </div>
+              ) : (
+                <Button
+                  className="bg-transparent text-blue-500"
+                  onPress={onOpen}
+                >
+                  Add bio
+                </Button>
+              )}
+            </div>
+
+            {/* Modal for Adding/Updating Bio */}
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      {userData?.bio ? "Update your Bio" : "Add your Bio"}
+                    </ModalHeader>
+                    <ModalBody>
+                      <Input
+                        defaultValue={userData?.bio}
+                        onChange={handleBioChange}
+                      />
+                      <p>Characters: {remainingChars} / 101</p>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        color="danger"
+                        variant="light"
+                        onPress={onClose}
+                        className="mr-2"
+                      >
+                        Close
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={handleBioUpdate}
+                        onPress={onClose}
+                      >
+                        Save
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
           </div>
           {/* Create New Post Button */}
           <div className="mt-6">
