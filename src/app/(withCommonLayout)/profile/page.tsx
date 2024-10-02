@@ -16,6 +16,9 @@ import {
   useDisclosure,
 } from "@nextui-org/modal";
 import { MdEdit } from "react-icons/md";
+import RNForm from "@/src/components/form/RNForm";
+import RNInput from "@/src/components/form/RNInput";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const page = () => {
   // const { mutate, data } = useUserWithId();
@@ -28,7 +31,16 @@ const page = () => {
   const userData = data?.data;
 
   console.log(updateInfoData);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isOpenBioModal,
+    onOpen: onOpenBioModal,
+    onOpenChange: onOpenBioModalChange,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenProfileModal,
+    onOpen: onOpenProfileModal,
+    onOpenChange: onOpenProfileModalChange,
+  } = useDisclosure();
 
   // Function to handle bio input change
   const handleBioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +57,12 @@ const page = () => {
     const payload = { _id: userData._id, bio };
 
     // Call the mutation to update the user bio
+    updateUser(payload);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const payload = { _id: userData?._id, ...data };
+    console.log("Inside form user data: ", payload);
     updateUser(payload);
   };
 
@@ -67,17 +85,31 @@ const page = () => {
         <div className="flex flex-col justify-center items-center -mt-16 relative">
           {/* Profile Photo */}
           <Image
-            src={userData?.profilePhoto}
+            src={
+              userData?.profilePhoto ||
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
             alt="User profile photo"
             width={96}
             height={96}
-            className="rounded-full border-4 border-default shadow-lg"
+            className="rounded-full border-4 border-default shadow-lg size-28"
           />
 
           {/* User Name and Bio */}
           <div className="text-center mt-4 flex flex-col items-center">
             {/* User Name */}
-            <p className="text-2xl font-bold">{userData?.name}</p>
+            <div className="flex items-center justify-center">
+              {/* Bio Text */}
+              <p className="text-2xl font-bold  me-2">{userData?.name}</p>
+
+              {/* Edit Icon */}
+              <MdEdit
+                className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
+                size={20}
+                title="Update bio"
+                onClick={onOpenProfileModal} // Opens the same modal as "Add bio" button
+              />
+            </div>
 
             {/* User Bio Section */}
             <div className="mt-2 text-center">
@@ -93,13 +125,13 @@ const page = () => {
                     className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
                     size={20}
                     title="Update bio"
-                    onClick={onOpen} // Opens the same modal as "Add bio" button
+                    onClick={onOpenBioModal} // Opens the same modal as "Add bio" button
                   />
                 </div>
               ) : (
                 <Button
                   className="bg-transparent text-blue-500"
-                  onPress={onOpen}
+                  onPress={onOpenBioModal}
                 >
                   Add bio
                 </Button>
@@ -107,7 +139,7 @@ const page = () => {
             </div>
 
             {/* Modal for Adding/Updating Bio */}
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpenBioModal} onOpenChange={onOpenBioModalChange}>
               <ModalContent>
                 {(onClose) => (
                   <>
@@ -138,6 +170,66 @@ const page = () => {
                         Save
                       </Button>
                     </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+
+            {/* Modal for Adding/Updating profile info */}
+            <Modal
+              isOpen={isOpenProfileModal}
+              onOpenChange={onOpenProfileModalChange}
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      {userData?.bio
+                        ? "Update your profile info"
+                        : "Add your profile info"}
+                    </ModalHeader>
+                    <ModalBody>
+                      <RNForm
+                        //! Only for development
+                        defaultValues={{
+                          name: userData.name,
+                          email: userData.email,
+                          mobileNumber: userData.mobileNumber,
+                          profilePhoto: userData.profilePhoto,
+                        }}
+                        onSubmit={onSubmit} // Make sure to call handleSubmit
+                      >
+                        <div className="py-3">
+                          <RNInput label="Name" name="name" size="sm" />
+                        </div>
+                        <div className="py-3">
+                          <RNInput label="Email" name="email" size="sm" />
+                        </div>
+                        <div className="py-3">
+                          <RNInput
+                            label="Mobile Number"
+                            name="mobileNumber"
+                            size="sm"
+                          />
+                        </div>
+                        <div className="py-3">
+                          <RNInput
+                            label="Profile photo URL"
+                            name="profilePhoto"
+                            size="sm"
+                          />
+                        </div>
+
+                        <Button
+                          className="my-3 w-full rounded-md bg-default-900 text-default"
+                          size="lg"
+                          type="submit"
+                          onPress={onClose}
+                        >
+                          Update
+                        </Button>
+                      </RNForm>
+                    </ModalBody>
                   </>
                 )}
               </ModalContent>
