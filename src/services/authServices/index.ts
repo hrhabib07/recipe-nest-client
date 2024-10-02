@@ -75,10 +75,20 @@ export const getCurrentUserWithId = async () => {
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data.",
+        error.response?.data?.message || "Failed to fetch user data."
       );
     }
   }
 
   throw new Error("No access token found.");
+};
+
+export const updateUserInfo = async (userId: string, userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.put(`/users/${userId}`, userData);
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };

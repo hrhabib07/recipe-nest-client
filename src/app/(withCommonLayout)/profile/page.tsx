@@ -1,22 +1,54 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
-import { useUserWithId } from "@/src/hooks/auth.hook";
+import { useUserData, useUserInfoUpdate } from "@/src/hooks/auth.hook";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/modal";
 
 const page = () => {
-  const { mutate, data } = useUserWithId();
-  // console.log(data?.data);
+  // const { mutate, data } = useUserWithId();
+
+  const { data, isLoading, isError } = useUserData();
+  const { mutate: updateUser, data: updateInfoData } = useUserInfoUpdate();
+  const [bio, setBio] = useState(""); // State to track the bio input value
+  const [remainingChars, setRemainingChars] = useState(101); // State to track remaining characters
+
   const userData = data?.data;
 
-  useEffect(() => {
-    mutate();
-  }, [mutate]);
-  console.log(data);
+  // useEffect(() => {
+  //   mutate();
+  // }, [mutate]);
+  console.log(updateInfoData);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  // Function to handle bio input change
+  const handleBioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newBio = e.target.value;
+    if (newBio.length <= 101) {
+      setBio(newBio);
+      setRemainingChars(101 - newBio.length); // Update remaining characters
+    }
+  };
+
+  // Function to handle bio update submission
+  const handleBioUpdate = () => {
+    // Create the payload to send to the update function
+    const payload = { _id: userData._id, bio };
+
+    // Call the mutation to update the user bio
+    updateUser(payload);
+  };
 
   return (
     <>
@@ -43,10 +75,43 @@ const page = () => {
             height={96}
             className="rounded-full border-4 border-default shadow-lg"
           />
+
+          {/* modal  */}
+          <Button onPress={onOpen}>Add bio</Button>
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    Update your bio
+                  </ModalHeader>
+                  <ModalBody>
+                    <Input onChange={handleBioChange}> </Input>
+                    <p>Characters: {remainingChars} / 101</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button
+                      color="primary"
+                      onClick={handleBioUpdate}
+                      onPress={onClose}
+                    >
+                      Action
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+
           {/* User Name and Bio */}
           <div className="text-center mt-4">
             <p className="text-2xl font-bold">{userData?.name}</p>
-            <p className="text-sm text-default-900">Add your bio</p>
+            <p className="text-sm text-default-900">
+              {userData?.bio ? userData?.bio : "Add your bio"}
+            </p>
           </div>
           {/* Create New Post Button */}
           <div className="mt-6">
