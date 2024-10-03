@@ -1,31 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { useEffect, useState } from "react";
 
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUserData, useUserInfoUpdate } from "@/src/hooks/auth.hook";
 import Image from "next/image";
-import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/modal";
-import { MdEdit } from "react-icons/md";
-import RNForm from "@/src/components/form/RNForm";
-import RNInput from "@/src/components/form/RNInput";
-import { FieldValues, SubmitHandler } from "react-hook-form";
 import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
 import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
+import { getAllPostData } from "@/src/hooks/post.hook";
+import PostCard from "@/src/components/ui/PostCard";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
+  const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
   const userData = data?.data;
-  // console.log(isError);
+  const posts = postsData?.data;
+
   return (
     <>
       {isLoading && <LoadingSpinner />}{" "}
@@ -102,6 +92,9 @@ const page = () => {
             Welcome to your profile page! Here you can manage your posts and
             update your personal information.
           </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+          {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
         </div>
       </div>
     </>
