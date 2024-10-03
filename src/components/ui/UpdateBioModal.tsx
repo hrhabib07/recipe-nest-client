@@ -52,21 +52,21 @@ const UpdateBioModal = ({
 
   return (
     <>
-      <Button
-        className="bg-transparent  text-blue-500"
-        onPress={onOpenBioModal}
-      >
-        {buttonText === "update" ? (
-          <MdEdit
-            className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
-            size={20}
-            title="Update bio"
-            onClick={onOpenBioModal} // Opens the same modal as "Add bio" button
-          />
-        ) : (
-          "Add bio"
-        )}
-      </Button>
+      {buttonText === "update" ? (
+        <MdEdit
+          className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
+          size={20}
+          title="Update bio"
+          onClick={onOpenBioModal} // Opens the same modal as "Add bio" button
+        />
+      ) : (
+        <Button
+          className="bg-transparent  text-blue-500"
+          onPress={onOpenBioModal}
+        >
+          {buttonText}
+        </Button>
+      )}
       {/* Modal for Adding/Updating Bio */}
       <Modal isOpen={isOpenBioModal} onOpenChange={onOpenBioModalChange}>
         <ModalContent>
