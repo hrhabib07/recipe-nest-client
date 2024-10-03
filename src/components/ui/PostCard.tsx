@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@nextui-org/button";
 import { MdThumbUp, MdThumbDown, MdComment } from "react-icons/md";
 import Image from "next/image";
+import { Input } from "@nextui-org/input";
 
 // Single post card component
 const PostCard = ({ post }: { post: any }) => {
@@ -84,11 +85,7 @@ const PostCard = ({ post }: { post: any }) => {
         )}
         {/* Comment input box */}
         <div className="flex gap-2 mt-4">
-          <input
-            type="text"
-            placeholder="Add a comment..."
-            className="border rounded-lg p-2 w-full text-default-700"
-          />
+          <Input type="text" placeholder="Add a comment..." />
           <Button color="primary" variant="solid" startContent={<MdComment />}>
             Comment
           </Button>

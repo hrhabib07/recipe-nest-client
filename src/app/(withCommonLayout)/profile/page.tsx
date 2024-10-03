@@ -9,6 +9,7 @@ import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
 import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
 import { getAllPostData } from "@/src/hooks/post.hook";
 import PostCard from "@/src/components/ui/PostCard";
+import CreatePostModal from "@/src/components/ui/createPostModal";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
@@ -80,9 +81,10 @@ const page = () => {
           </div>
           {/* Create New Post Button */}
           <div className="mt-6">
-            <Button color="primary" className="bg-blue-500 text-default-700">
+            <CreatePostModal></CreatePostModal>
+            {/* <Button color="primary" className="bg-blue-500 text-default-700">
               Create New Post
-            </Button>
+            </Button> */}
           </div>
         </div>
 
