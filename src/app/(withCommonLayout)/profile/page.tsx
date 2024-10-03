@@ -19,6 +19,7 @@ import { MdEdit } from "react-icons/md";
 import RNForm from "@/src/components/form/RNForm";
 import RNInput from "@/src/components/form/RNInput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
 
 const page = () => {
   // const { mutate, data } = useUserWithId();
@@ -121,20 +122,28 @@ const page = () => {
                   </p>
 
                   {/* Edit Icon */}
-                  <MdEdit
+                  <UpdateBioModal
+                    buttonText="update"
+                    userData={userData}
+                  ></UpdateBioModal>
+                  {/* <MdEdit
                     className="text-blue-500 cursor-pointer hover:text-blue-800 transition-colors duration-200"
                     size={20}
                     title="Update bio"
                     onClick={onOpenBioModal} // Opens the same modal as "Add bio" button
-                  />
+                  /> */}
                 </div>
               ) : (
-                <Button
-                  className="bg-transparent text-blue-500"
-                  onPress={onOpenBioModal}
-                >
-                  Add bio
-                </Button>
+                <UpdateBioModal
+                  buttonText="Add Bio"
+                  userData={userData}
+                ></UpdateBioModal>
+                // <Button
+                //   className="bg-transparent text-blue-500"
+                //   onPress={onOpenBioModal}
+                // >
+                //   Add bio
+                // </Button>
               )}
             </div>
 
