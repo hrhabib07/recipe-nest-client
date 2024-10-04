@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
-
-const PostInteractionSection = ({ post }: any) => {
+type TProps = {
+  _id: string;
+  likedUsers: string[];
+  dislikedUsers: string[];
+  comments: string[];
+};
+const PostInteractionSection = ({ post }: { post: TProps }) => {
   const { user } = useUser();
   const userId = user?._id;
   const {
@@ -15,6 +20,7 @@ const PostInteractionSection = ({ post }: any) => {
     isSuccess: updatePostSuccess,
   } = useUpdatePost();
   const { _id: postId, likedUsers, dislikedUsers, comments } = post;
+
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -50,6 +56,17 @@ const PostInteractionSection = ({ post }: any) => {
   const handleCommentClick = () => {
     setCommentsVisible(!commentsVisible);
   };
+
+  useEffect(() => {
+    if (likedUsers.includes(userId as string)) {
+      console.log("inclued", userId);
+      setLiked(true);
+    }
+    if (dislikedUsers.includes(userId as string)) {
+      console.log("inclued", userId);
+      setDisliked(true);
+    }
+  }, [likedUsers, disliked, userId, liked, disliked]);
 
   return (
     <div className="flex flex-col gap-4 p-4 rounded-lg bg-gradient-to-r from-default-100 shadow-lg">
