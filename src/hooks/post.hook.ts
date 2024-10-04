@@ -34,7 +34,7 @@ export const useCreatePost = () => {
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, { postId: string; postData: FormData }>({
+  return useMutation<any, Error, { postId: string; postData: any }>({
     mutationKey: ["posts"],
     mutationFn: async ({ postId, postData }) =>
       await updatePost(postId, postData),

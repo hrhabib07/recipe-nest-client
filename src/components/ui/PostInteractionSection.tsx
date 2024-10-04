@@ -3,8 +3,18 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
+import { useUpdatePost } from "@/src/hooks/post.hook";
+import { useUser } from "@/src/context/user.provider";
 
-const PostInteractionSection = () => {
+const PostInteractionSection = ({ post }: any) => {
+  const { user } = useUser();
+  const userId = user?._id;
+  const {
+    mutate: handleUpdatePost,
+    isPending: updatePostPending,
+    isSuccess: updatePostSuccess,
+  } = useUpdatePost();
+  const { _id: postId, likedUsers, dislikedUsers, comments } = post;
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -16,6 +26,11 @@ const PostInteractionSection = () => {
       setDisliked(false); // Reset dislike if like is selected
     }
     setLiked(!liked);
+    const payload: { postId: string; postData: any } = {
+      postId,
+      postData: { likedUsers: [userId] },
+    };
+    handleUpdatePost(payload);
   };
 
   // Handle dislike button click
@@ -24,6 +39,11 @@ const PostInteractionSection = () => {
       setLiked(false); // Reset like if dislike is selected
     }
     setDisliked(!disliked);
+    const payload: { postId: string; postData: any } = {
+      postId,
+      postData: { dislikedUsers: [userId] },
+    };
+    handleUpdatePost(payload);
   };
 
   // Handle comment box click
@@ -42,7 +62,9 @@ const PostInteractionSection = () => {
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             liked ? "text-primary-500 scale-110" : "text-default-500"
           }`}
-        ></Button>
+        >
+          ({likedUsers.length})
+        </Button>
 
         {/* Dislike button */}
         <Button
@@ -51,7 +73,9 @@ const PostInteractionSection = () => {
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             disliked ? "text-danger-500 scale-110" : "text-default-500"
           }`}
-        ></Button>
+        >
+          ({dislikedUsers.length})
+        </Button>
 
         {/* Comment button */}
         <Button
@@ -60,7 +84,9 @@ const PostInteractionSection = () => {
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             commentsVisible ? "text-primary-500 scale-110" : "text-default-500"
           }`}
-        ></Button>
+        >
+          ({comments.length})
+        </Button>
       </div>
 
       {/* Comments section */}

@@ -36,7 +36,7 @@ export const updatePost = async (
   postData: any
 ): Promise<any> => {
   try {
-    // Use JSON instead of FormData for updates
+    // console.log("postData:", postData);
     const { data } = await axiosInstance.put(`/items/${postId}`, postData);
     revalidateTag("posts");
     return data;
