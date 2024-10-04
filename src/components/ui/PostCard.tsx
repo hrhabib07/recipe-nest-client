@@ -4,6 +4,7 @@ import { MdThumbUp, MdThumbDown, MdComment } from "react-icons/md";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { useUpdatePost } from "@/src/hooks/post.hook";
+import PostInteractionSection from "./PostInteractionSection";
 // Single post card component
 const PostCard = ({ post }: { post: any }) => {
   const likeCounted = post.likedUsers;
@@ -128,64 +129,7 @@ const PostCard = ({ post }: { post: any }) => {
           </div>
         )}
       </div>
-
-      {/* Action buttons with like and dislike counts */}
-      <div className="flex gap-4 items-center">
-        <Button
-          variant="light"
-          color="primary"
-          startContent={<MdThumbUp />}
-          className="w-full"
-          onPress={handleLike}
-        >
-          Upvote ({likeCount})
-        </Button>
-        <Button
-          variant="light"
-          color="danger"
-          startContent={<MdThumbDown />}
-          className="w-full"
-          onPress={handleDislike}
-        >
-          Downvote ({dislikeCount})
-        </Button>
-      </div>
-
-      {/* Comments section */}
-      <div>
-        <h4 className="font-semibold">Comments</h4>
-        {comments.length > 0 ? (
-          <div className="mt-2 space-y-2">
-            {comments.map((comment: any, index: number) => (
-              <div
-                key={index}
-                className="border p-2 rounded-lg bg-default-100 text-default-800"
-              >
-                {comment.text}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm text-default-500 mt-2">No comments yet</p>
-        )}
-        {/* Comment input box */}
-        <div className="flex gap-2 mt-4">
-          <Input
-            type="text"
-            placeholder="Add a comment..."
-            value={comment}
-            onValueChange={setComment}
-          />
-          <Button
-            color="primary"
-            variant="solid"
-            startContent={<MdComment />}
-            onPress={handleCommentSubmit}
-          >
-            Comment
-          </Button>
-        </div>
-      </div>
+      <PostInteractionSection></PostInteractionSection>
     </div>
   );
 };
