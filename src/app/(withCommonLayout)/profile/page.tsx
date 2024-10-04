@@ -20,7 +20,7 @@ const page = () => {
   return (
     <>
       {!!isLoading && <LoadingSpinner />}{" "}
-      <div className="w-full  overflow-hidden shadow-md bg-default-100 relative">
+      <div className="w-full  overflow-hidden shadow-md bg-gradient-to-b from-default-50 relative">
         {/* Cover Photo */}
         <div
           className="w-full h-48 bg-cover bg-center"
@@ -29,9 +29,8 @@ const page = () => {
               "url('https://images.unsplash.com/photo-1512058454905-6b841e7ad132?q=80&w=1995&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+          {/* <div className="absolute inset-0 bg-black bg-opacity-30"></div> */}
         </div>
-
         {/* Profile Photo and Info */}
         <div className="flex flex-col justify-center items-center -mt-16 relative">
           {/* Profile Photo */}
@@ -87,17 +86,17 @@ const page = () => {
             </Button> */}
           </div>
         </div>
-
         {/* Additional Content (Optional) */}
         <div className="p-4 mt-6 text-center">
-          <p className="text-lg text-default-700">
+          {/* <p className="text-lg text-default-700">
             Welcome to your profile page! Here you can manage your posts and
             update your personal information.
-          </p>
+          </p> */}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
         </div>
+        {/* {console.log("posts: ", posts)} */}
       </div>
     </>
   );
