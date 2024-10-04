@@ -1,3 +1,4 @@
+"use server";
 import { axiosInstance } from "@/src/lib/axiosInstence";
 import { revalidateTag } from "next/cache";
 

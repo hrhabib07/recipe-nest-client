@@ -75,7 +75,7 @@ const CreatePostModal = () => {
   };
 
   if (!createPostPending && createPostSuccess) {
-    router.push("/profile");
+    router.push("/");
   }
   return (
     <>

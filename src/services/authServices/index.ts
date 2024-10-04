@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
-
 import { axiosInstance } from "@/src/lib/axiosInstence";
 
 export const registerUser = async (userData: FieldValues) => {
@@ -90,5 +89,24 @@ export const updateUserInfo = async (userId: string, userData: FieldValues) => {
     return data;
   } catch (error: any) {
     throw new Error(error);
+  }
+};
+
+export const getNewAccessToken = async () => {
+  try {
+    const refreshToken = cookies().get("refreshToken")?.value;
+
+    const res = await axiosInstance({
+      url: "/auth/refresh-token",
+      method: "POST",
+      withCredentials: true,
+      headers: {
+        cookie: `refreshToken=${refreshToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    throw new Error("Failed to get new access token");
   }
 };

@@ -19,7 +19,7 @@ const page = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}{" "}
+      {!!isLoading && <LoadingSpinner />}{" "}
       <div className="w-full  overflow-hidden shadow-md bg-default-100 relative">
         {/* Cover Photo */}
         <div
