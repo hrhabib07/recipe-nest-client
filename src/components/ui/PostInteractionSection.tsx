@@ -5,11 +5,16 @@ import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
+import Image from "next/image";
 type TProps = {
   _id: string;
   likedUsers: string[];
   dislikedUsers: string[];
-  comments: string[];
+  comments: {
+    users: { name: string; email: string; profilePhoto: string };
+    comment: string;
+    _id: string;
+  }[];
 };
 const PostInteractionSection = ({ post }: { post: TProps }) => {
   const { user } = useUser();
@@ -20,6 +25,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
     isSuccess: updatePostSuccess,
   } = useUpdatePost();
   const { _id: postId, likedUsers, dislikedUsers, comments } = post;
+  console.log(comments);
 
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -106,20 +112,72 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
         </Button>
       </div>
 
-      {/* Comments section */}
+      {/* Comments Section */}
       {commentsVisible && (
-        <div className="flex flex-col mt-4">
+        <div className="mt-6">
+          {/* Comment Input Box */}
           <Input
             label="Write a comment"
-            placeholder="Add a comment..."
+            placeholder="Share your thoughts..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="mb-4"
+            className="mb-6 shadow-md rounded-lg"
           />
-          <div className="p-4 bg-gray-100 rounded-lg">
-            <p className="text-gray-600 italic">
-              No comments yet. Be the first to comment!
-            </p>
+          {/* Comments Container */}
+          <div className="p-2  rounded-lg shadow-sm">
+            {comments.length > 0 ? (
+              comments?.map((comment, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-4 p-4 mb-4 bg-default-100  rounded-lg shadow-sm"
+                >
+                  {/* User Avatar */}
+                  {comment?.users?.profilePhoto ? (
+                    <Image
+                      src={comment?.users?.profilePhoto}
+                      alt={comment?.users?.name}
+                      width={50}
+                      height={50}
+                      className="rounded-full border-2 border-primary-500"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-default-100 flex items-center justify-center">
+                      <span className="text-lg font-semibold text-gray-500">
+                        U
+                      </span>
+                    </div>
+                  )}
+                  {/* Comment Content */}
+                  <div className="flex-1">
+                    {/* User Information */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-semibold ">
+                        {comment?.users?.name || "Unknown User"}
+                      </h3>
+                      {/* <span className="text-sm text-gray-400">
+                        {comment?.users?.email}
+                      </span> */}
+                    </div>
+                    {/* Comment Text */}
+                    <p className=" mb-2">{comment?.comment}</p>
+                    {/* Comment Interaction Buttons */}
+                    {/* <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <button className="hover:text-primary-500 transition-all duration-150 ease-in">
+                        👍 Like
+                      </button>
+                      <button className="hover:text-primary-500 transition-all duration-150 ease-in">
+                        💬 Reply
+                      </button>
+                      <span className="text-xs text-gray-400">2h ago</span>
+                    </div> */}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center italic text-gray-500">
+                No comments yet. Be the first to comment!
+              </p>
+            )}
           </div>
         </div>
       )}
