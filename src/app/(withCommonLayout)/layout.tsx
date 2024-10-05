@@ -12,11 +12,11 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <Link
           isExternal
           className="flex items-center gap-1 text-current"
-          href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
-          title="nextui.org homepage"
+          href="https://github.com/hrhabib07"
+          title="Habib's Github profile"
         >
-          <span className="text-default-600">Powered by</span>
-          <p className="text-primary">NextUI</p>
+          <span className="text-default-600">Developed by</span>
+          <p className="text-primary">Habib</p>
         </Link>
       </footer>
     </div>
