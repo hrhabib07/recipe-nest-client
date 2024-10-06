@@ -13,6 +13,16 @@ export const getAllPosts = async () => {
     );
   }
 };
+export const getSinglePost = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/items/${postId}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch item data."
+    );
+  }
+};
 
 // Create a new post
 export const createPost = async (formData: FormData): Promise<any> => {

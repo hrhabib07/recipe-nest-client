@@ -11,16 +11,19 @@ import { getAllPostData } from "@/src/hooks/post.hook";
 import PostCard from "@/src/components/ui/PostCard";
 import CreatePostModal from "@/src/components/ui/createPostModal";
 import AllPosts from "@/src/components/ui/AllPosts";
+import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
   const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
   const userData = data?.data;
   const posts = postsData?.data;
+  if (isLoading) {
+    return <SkeletonProfileHeader></SkeletonProfileHeader>;
+  }
 
   return (
     <>
-      {!!isLoading && <LoadingSpinner />}{" "}
       <div className="w-full  overflow-hidden shadow-md bg-gradient-to-b from-default-50 relative">
         {/* Cover Photo */}
         <div
