@@ -13,6 +13,18 @@ export const getAllPosts = async () => {
     );
   }
 };
+// get posts withUserId
+export const getPostsWithQuery = async (query: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/items?${query}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch item data."
+    );
+  }
+};
+
 export const getSinglePost = async (postId: string) => {
   try {
     const { data } = await axiosInstance.get(`/items/${postId}`);

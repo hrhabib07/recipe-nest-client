@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createPost,
   getAllPosts,
+  getPostsWithQuery,
   getSinglePost,
   updatePost,
 } from "../services/itemServices";
@@ -62,13 +63,12 @@ export const useSinglePostData = (postId: string) => {
     },
   });
 };
-
-// export const getSinglePostData = (postId: string) => {
-//   return useQuery({
-//     queryKey: ["posts", postId], // Use an object with 'queryKey' property
-//     queryFn: async () => {
-//       const data = await getSinglePostData(postId);
-//       return data;
-//     },
-//   });
-// };
+export const useGetPostDataWithQuery = (query: string) => {
+  return useQuery({
+    queryKey: ["posts", query], // Include postId in the queryKey
+    queryFn: async () => {
+      const data = await getPostsWithQuery(query); // Call the correct function to fetch post data
+      return data;
+    },
+  });
+};

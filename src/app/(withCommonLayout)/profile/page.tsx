@@ -7,17 +7,19 @@ import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
 import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
-import { getAllPostData } from "@/src/hooks/post.hook";
-import PostCard from "@/src/components/ui/PostCard";
+import { getAllPostData, useGetPostDataWithQuery } from "@/src/hooks/post.hook";
 import CreatePostModal from "@/src/components/ui/createPostModal";
 import AllPosts from "@/src/components/ui/AllPosts";
 import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
+import UsersPostsData from "@/src/components/ui/UsersPostsData";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
-  const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
   const userData = data?.data;
-  const posts = postsData?.data;
+  // const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
+  // const { data: postsData, isLoading: isPostsDataLoading } =
+  //   useGetPostDataWithQuery(`user=${userData._id}`);
+  // const posts = postsData?.data;
   if (isLoading) {
     return <SkeletonProfileHeader></SkeletonProfileHeader>;
   }
@@ -88,7 +90,8 @@ const page = () => {
           </div>
         </div>
         {/* ALl posts container */}
-        <AllPosts></AllPosts>
+        {/* <AllPosts></AllPosts> */}
+        <UsersPostsData userId={userData._id}></UsersPostsData>
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
         </div> */}
