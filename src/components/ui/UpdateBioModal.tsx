@@ -1,4 +1,3 @@
-import { useUserInfoUpdate } from "@/src/hooks/auth.hook";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import {
@@ -11,6 +10,8 @@ import {
 } from "@nextui-org/modal";
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
+
+import { useUserInfoUpdate } from "@/src/hooks/auth.hook";
 
 const UpdateBioModal = ({
   buttonText,
@@ -25,7 +26,7 @@ const UpdateBioModal = ({
   const [bio, setBio] = useState(""); // State to track the bio input value
   const [remainingChars, setRemainingChars] = useState(101); // State to track remaining characters
 
-  console.log(updateInfoData);
+  // console.log(updateInfoData);
   const {
     isOpen: isOpenBioModal,
     onOpen: onOpenBioModal,
@@ -35,6 +36,7 @@ const UpdateBioModal = ({
   // Function to handle bio input change
   const handleBioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newBio = e.target.value;
+
     if (newBio.length <= 101) {
       setBio(newBio);
       setRemainingChars(101 - newBio.length); // Update remaining characters
@@ -84,10 +86,10 @@ const UpdateBioModal = ({
               </ModalBody>
               <ModalFooter>
                 <Button
+                  className="mr-2"
                   color="danger"
                   variant="light"
                   onPress={onClose}
-                  className="mr-2"
                 >
                   Close
                 </Button>

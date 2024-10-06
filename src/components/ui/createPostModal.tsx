@@ -1,22 +1,14 @@
 "use client";
 
-import { Divider } from "@nextui-org/divider";
 import { Button } from "@nextui-org/button";
 import {
   FieldValues,
   FormProvider,
   SubmitHandler,
-  useFieldArray,
   useForm,
 } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
-
-import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/src/context/user.provider";
-import RNInput from "../form/RNInput";
-import RNTextarea from "../form/RNTextArea";
-import { useCreatePost } from "@/src/hooks/post.hook";
 import {
   Modal,
   ModalBody,
@@ -24,6 +16,13 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
+
+import RNInput from "../form/RNInput";
+import RNTextarea from "../form/RNTextArea";
+
+import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
+import { useUser } from "@/src/context/user.provider";
+import { useCreatePost } from "@/src/hooks/post.hook";
 
 // export default function CreatePost() {
 const CreatePostModal = () => {
@@ -53,6 +52,7 @@ const CreatePostModal = () => {
       ...data,
       user: user?._id,
     };
+
     formData.append("data", JSON.stringify(postData));
     // console.log(postData);
     for (let image of imageFiles) {
@@ -63,10 +63,12 @@ const CreatePostModal = () => {
 
   const handleImageChange = (e: any) => {
     const file = e?.target?.files[0];
+
     setImageFiles((prev) => [...prev, file]);
 
     if (file) {
       const reader = new FileReader();
+
       reader.onloadend = () => {
         setImagePreviews((prev) => [...prev, reader.result as string]);
       };
@@ -77,6 +79,7 @@ const CreatePostModal = () => {
   if (!createPostPending && createPostSuccess) {
     router.push("/");
   }
+
   return (
     <>
       <Button onPress={onOpen}>Create a post</Button>

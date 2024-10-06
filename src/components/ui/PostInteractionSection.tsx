@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
-import { MdComment, MdThumbDown, MdThumbUp } from "react-icons/md";
-import { useUpdatePost } from "@/src/hooks/post.hook";
-import { useUser } from "@/src/context/user.provider";
+import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -15,6 +13,9 @@ import {
   useDisclosure,
 } from "@nextui-org/modal";
 import Link from "next/link";
+
+import { useUser } from "@/src/context/user.provider";
+import { useUpdatePost } from "@/src/hooks/post.hook";
 
 type TProps = {
   _id: string;
@@ -47,6 +48,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const handleLikeClick = () => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     }
     if (disliked) {
@@ -57,6 +59,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       postId,
       postData: { likedUsers: [userId] },
     };
+
     handleUpdatePost(payload);
   };
 
@@ -64,6 +67,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const handleDislikeClick = () => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     }
     if (liked) {
@@ -74,6 +78,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       postId,
       postData: { dislikedUsers: [userId] },
     };
+
     handleUpdatePost(payload);
   };
 
@@ -89,6 +94,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       postId: post._id,
       postData: { comments: [{ users: userId, comment }] }, // Use the FormData object
     };
+
     handleUpdatePost(updatedPost);
   };
 
@@ -108,33 +114,33 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       <div className="flex gap-6 items-center">
         {/* Like button */}
         <Button
-          startContent={<MdThumbUp className="size-4" />}
-          onClick={handleLikeClick}
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             liked ? "text-primary-500 scale-110" : "text-default-500"
           }`}
+          startContent={<MdThumbUp className="size-4" />}
+          onClick={handleLikeClick}
         >
           ({likedUsers.length})
         </Button>
 
         {/* Dislike button */}
         <Button
-          startContent={<MdThumbDown className="size-4" />}
-          onClick={handleDislikeClick}
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             disliked ? "text-danger-500 scale-110" : "text-default-500"
           }`}
+          startContent={<MdThumbDown className="size-4" />}
+          onClick={handleDislikeClick}
         >
           ({dislikedUsers.length})
         </Button>
 
         {/* Comment button */}
         <Button
-          startContent={<AiOutlineComment className="size-4" />}
-          onClick={handleCommentClick}
           className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
             commentsVisible ? "text-primary-500 scale-110" : "text-default-500"
           }`}
+          startContent={<AiOutlineComment className="size-4" />}
+          onClick={handleCommentClick}
         >
           ({comments.length})
         </Button>
@@ -146,15 +152,15 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
           {/* Comment Input Box */}
           <div className="flex items-center gap-4 p-4 rounded-lg shadow-lg">
             <Input
+              className="flex-1 mb-0 shadow-sm rounded-md focus:ring-2 focus:ring-default-200 transition-all"
               label="Write a comment"
               placeholder="Share your thoughts..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="flex-1 mb-0 shadow-sm rounded-md focus:ring-2 focus:ring-default-200 transition-all"
             />
             <Button
-              onPress={handleCommentSubmit}
               className="bg-gradient-to-l from-default-100  hover:from-default-200  text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+              onPress={handleCommentSubmit}
             >
               Comment
             </Button>
@@ -170,11 +176,11 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
                   {/* User Avatar */}
                   {comment?.users?.profilePhoto ? (
                     <Image
-                      src={comment?.users?.profilePhoto}
                       alt={comment?.users?.name}
-                      width={50}
-                      height={50}
                       className="rounded-full border-2 border-primary-500"
+                      height={50}
+                      src={comment?.users?.profilePhoto}
+                      width={50}
                     />
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-default-100 flex items-center justify-center">

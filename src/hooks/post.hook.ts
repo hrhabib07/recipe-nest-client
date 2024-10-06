@@ -1,4 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import {
   createPost,
   getAllPosts,
@@ -6,7 +8,6 @@ import {
   getSinglePost,
   updatePost,
 } from "../services/itemServices";
-import { toast } from "sonner";
 
 // Fetch all posts
 export const getAllPostData = () => {
@@ -14,6 +15,7 @@ export const getAllPostData = () => {
     queryKey: ["posts"], // Use an object with 'queryKey' property
     queryFn: async () => {
       const data = await getAllPosts();
+
       return data;
     },
   });
@@ -59,6 +61,7 @@ export const useSinglePostData = (postId: string) => {
     queryKey: ["posts", postId], // Include postId in the queryKey
     queryFn: async () => {
       const data = await getSinglePost(postId); // Call the correct function to fetch post data
+
       return data;
     },
   });
@@ -68,6 +71,7 @@ export const useGetPostDataWithQuery = (query: string) => {
     queryKey: ["posts", query], // Include postId in the queryKey
     queryFn: async () => {
       const data = await getPostsWithQuery(query); // Call the correct function to fetch post data
+
       return data;
     },
   });

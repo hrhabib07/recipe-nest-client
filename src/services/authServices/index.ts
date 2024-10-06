@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
+
 import { axiosInstance } from "@/src/lib/axiosInstence";
 
 export const registerUser = async (userData: FieldValues) => {
@@ -74,7 +75,7 @@ export const getCurrentUserWithId = async () => {
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data."
+        error.response?.data?.message || "Failed to fetch user data.",
       );
     }
   }

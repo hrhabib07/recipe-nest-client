@@ -1,11 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { AiOutlineComment } from "react-icons/ai";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Image from "next/image";
+
 import { useSinglePostData } from "@/src/hooks/post.hook";
-import { useRouter } from "next/navigation";
 const PostDetailCard = ({ postId }: { postId: string }) => {
   const [newComment, setNewComment] = useState("");
   const { data: post, isLoading } = useSinglePostData(postId as string);
@@ -55,11 +54,11 @@ const PostDetailCard = ({ postId }: { postId: string }) => {
       <div className="flex items-center gap-4">
         {post.user?.profilePhoto ? (
           <Image
-            src={post.user.profilePhoto}
             alt={post.user.name}
-            width={50}
-            height={50}
             className="rounded-full"
+            height={50}
+            src={post.user.profilePhoto}
+            width={50}
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-default-200" />
@@ -78,11 +77,11 @@ const PostDetailCard = ({ postId }: { postId: string }) => {
         <p className="text-default-700">{post.description}</p>
         {post.images?.length > 0 && (
           <Image
-            src={post.images[0]}
             alt={post.title}
-            width={500}
-            height={300}
             className="rounded-lg object-cover my-4"
+            height={300}
+            src={post.images[0]}
+            width={500}
           />
         )}
       </div>
@@ -100,11 +99,11 @@ const PostDetailCard = ({ postId }: { postId: string }) => {
                 className="flex gap-4 p-4 mb-4 bg-white rounded-lg shadow-sm"
               >
                 <Image
-                  src={comment.users?.profilePhoto || "/default-avatar.png"}
                   alt={comment.users?.name || "User"}
-                  width={40}
-                  height={40}
                   className="rounded-full"
+                  height={40}
+                  src={comment.users?.profilePhoto || "/default-avatar.png"}
+                  width={40}
                 />
                 <div>
                   <h4 className="font-semibold">

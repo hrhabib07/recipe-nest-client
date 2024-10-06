@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+
 import PostInteractionSection from "./PostInteractionSection";
 
 // Single post card component
@@ -11,17 +12,18 @@ const PostCard = ({ post }: any) => {
     dislikedUsers,
     comments,
   };
+
   return (
     <div className="p-4 bg-gradient-to-b from-default-100 rounded-xl shadow-lg flex flex-col gap-4">
       {/* Post header with user profile info */}
       <div className="flex items-center gap-4">
         {post.user?.profilePhoto ? (
           <Image
-            src={post.user.profilePhoto}
             alt={post.user.name}
-            width={50}
-            height={50}
             className="rounded-full"
+            height={50}
+            src={post.user.profilePhoto}
+            width={50}
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-default-200" />
@@ -41,16 +43,16 @@ const PostCard = ({ post }: any) => {
         {post.images?.length > 0 && (
           <div className="my-4">
             <Image
-              src={post.images[0]}
               alt={post.title}
-              width={500}
-              height={300}
               className="rounded-lg object-cover"
+              height={300}
+              src={post.images[0]}
+              width={500}
             />
           </div>
         )}
       </div>
-      <PostInteractionSection post={dynamicPostInfo}></PostInteractionSection>
+      <PostInteractionSection post={dynamicPostInfo} />
     </div>
   );
 };

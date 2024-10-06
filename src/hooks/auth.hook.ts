@@ -40,6 +40,7 @@ export const useUserData = () => {
     queryKey: ["GET_USER_WITH_ID"], // Use an object with 'queryKey' property
     queryFn: async () => {
       const data = await getCurrentUserWithId();
+
       return data;
     },
   });

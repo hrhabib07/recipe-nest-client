@@ -1,4 +1,3 @@
-import { useUserInfoUpdate } from "@/src/hooks/auth.hook";
 import {
   Modal,
   ModalBody,
@@ -8,12 +7,15 @@ import {
 } from "@nextui-org/modal";
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import RNForm from "../form/RNForm";
-import RNInput from "../form/RNInput";
 import { Button } from "@nextui-org/button";
 import { MdEdit } from "react-icons/md";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import RNInput from "../form/RNInput";
+import RNForm from "../form/RNForm";
+
+import { useUserInfoUpdate } from "@/src/hooks/auth.hook";
 
 // Define the Zod schema for form validation
 const profileSchema = z.object({
@@ -39,6 +41,7 @@ const UpdateProfileModal = ({ userData }: any) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsSubmitting(true);
     const payload = { _id: userData?._id, ...data };
+
     updateUser(payload, {
       onSuccess: () => {
         setIsSubmitting(false);
@@ -83,8 +86,8 @@ const UpdateProfileModal = ({ userData }: any) => {
                     mobileNumber: userData.mobileNumber,
                     profilePhoto: userData.profilePhoto,
                   }}
-                  onSubmit={onSubmit}
                   resolver={zodResolver(profileSchema)} // Use Zod resolver for validation
+                  onSubmit={onSubmit}
                 >
                   <div className="py-3">
                     <RNInput label="Name" name="name" size="sm" />
@@ -109,9 +112,9 @@ const UpdateProfileModal = ({ userData }: any) => {
 
                   <Button
                     className="my-3 w-full rounded-md bg-default-900 text-default"
+                    isLoading={isSubmitting} // Show loading state during submission
                     size="lg"
                     type="submit"
-                    isLoading={isSubmitting} // Show loading state during submission
                   >
                     {isSubmitting ? "Updating..." : "Update"}
                   </Button>

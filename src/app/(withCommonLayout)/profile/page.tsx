@@ -1,27 +1,25 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
-import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
-import { useUserData, useUserInfoUpdate } from "@/src/hooks/auth.hook";
 import Image from "next/image";
-import { Button } from "@nextui-org/button";
+
+import { useUserData } from "@/src/hooks/auth.hook";
 import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
 import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
-import { getAllPostData, useGetPostDataWithQuery } from "@/src/hooks/post.hook";
 import CreatePostModal from "@/src/components/ui/createPostModal";
-import AllPosts from "@/src/components/ui/AllPosts";
 import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
 import UsersPostsData from "@/src/components/ui/UsersPostsData";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
   const userData = data?.data;
+
   // const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
   // const { data: postsData, isLoading: isPostsDataLoading } =
   //   useGetPostDataWithQuery(`user=${userData._id}`);
   // const posts = postsData?.data;
   if (isLoading) {
-    return <SkeletonProfileHeader></SkeletonProfileHeader>;
+    return <SkeletonProfileHeader />;
   }
 
   return (
@@ -41,14 +39,14 @@ const page = () => {
         <div className="flex flex-col justify-center items-center -mt-16 relative">
           {/* Profile Photo */}
           <Image
+            alt="User profile photo"
+            className="rounded-full border-4 border-default shadow-lg size-28"
+            height={96}
             src={
               userData?.profilePhoto ||
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
             }
-            alt="User profile photo"
             width={96}
-            height={96}
-            className="rounded-full border-4 border-default shadow-lg size-28"
           />
 
           {/* User Name and Bio */}
@@ -58,7 +56,7 @@ const page = () => {
               {/* Bio Text */}
               <p className="text-2xl font-bold  me-2">{userData?.name}</p>
 
-              <UpdateProfileModal userData={userData}></UpdateProfileModal>
+              <UpdateProfileModal userData={userData} />
             </div>
 
             {/* User Bio Section */}
@@ -71,27 +69,21 @@ const page = () => {
                   </p>
 
                   {/* Edit Icon */}
-                  <UpdateBioModal
-                    buttonText="update"
-                    userData={userData}
-                  ></UpdateBioModal>
+                  <UpdateBioModal buttonText="update" userData={userData} />
                 </div>
               ) : (
-                <UpdateBioModal
-                  buttonText="Add Bio"
-                  userData={userData}
-                ></UpdateBioModal>
+                <UpdateBioModal buttonText="Add Bio" userData={userData} />
               )}
             </div>
           </div>
           {/* Create New Post Button */}
           <div className="mt-6">
-            <CreatePostModal></CreatePostModal>
+            <CreatePostModal />
           </div>
         </div>
         {/* ALl posts container */}
         {/* <AllPosts></AllPosts> */}
-        <UsersPostsData userId={userData._id}></UsersPostsData>
+        <UsersPostsData userId={userData._id} />
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
         </div> */}

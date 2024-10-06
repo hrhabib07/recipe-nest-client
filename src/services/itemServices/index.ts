@@ -1,11 +1,13 @@
 "use server";
-import { axiosInstance } from "@/src/lib/axiosInstence";
 import { revalidateTag } from "next/cache";
+
+import { axiosInstance } from "@/src/lib/axiosInstence";
 
 // Fetch all posts from the server
 export const getAllPosts = async () => {
   try {
     const { data } = await axiosInstance.get("/items");
+
     return data;
   } catch (error: any) {
     throw new Error(
@@ -17,6 +19,7 @@ export const getAllPosts = async () => {
 export const getPostsWithQuery = async (query: string) => {
   try {
     const { data } = await axiosInstance.get(`/items?${query}`);
+
     return data;
   } catch (error: any) {
     throw new Error(
@@ -28,6 +31,7 @@ export const getPostsWithQuery = async (query: string) => {
 export const getSinglePost = async (postId: string) => {
   try {
     const { data } = await axiosInstance.get(`/items/${postId}`);
+
     return data;
   } catch (error: any) {
     throw new Error(
@@ -44,10 +48,12 @@ export const createPost = async (formData: FormData): Promise<any> => {
         "Content-Type": "multipart/form-data",
       },
     });
+
     revalidateTag("posts"); // Optional: Server-side cache revalidation if applicable
+
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Failed to create post");
   }
 };
@@ -60,10 +66,12 @@ export const updatePost = async (
   try {
     // console.log("postData:", postData);
     const { data } = await axiosInstance.put(`/items/${postId}`, postData);
+
     revalidateTag("posts");
+
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Failed to update post");
   }
 };

@@ -1,8 +1,8 @@
 "use server";
 import axios from "axios";
+import { cookies } from "next/headers";
 
 import { envConfig } from "@/src/config/envConfig";
-import { cookies } from "next/headers";
 
 export const axiosInstance = axios.create({
   baseURL: envConfig.baseApi,
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;
