@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
-import { MdThumbDown, MdThumbUp } from "react-icons/md";
+import { MdComment, MdThumbDown, MdThumbUp } from "react-icons/md";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
 import Image from "next/image";
@@ -82,6 +82,16 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
     setCommentsVisible(!commentsVisible);
   };
 
+  // Handle comment submission
+  const handleCommentSubmit = () => {
+    if (!comment.trim()) return;
+    const updatedPost = {
+      postId: post._id,
+      postData: { comments: [{ users: userId, comment }] }, // Use the FormData object
+    };
+    handleUpdatePost(updatedPost);
+  };
+
   // Determine initial like and dislike states based on post data
   useEffect(() => {
     if (likedUsers.includes(userId as string)) {
@@ -141,6 +151,14 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
             onChange={(e) => setComment(e.target.value)}
             className="mb-6 shadow-md rounded-lg"
           />
+          <Button
+            color="primary"
+            variant="solid"
+            startContent={<MdComment />}
+            onPress={handleCommentSubmit}
+          >
+            Comment
+          </Button>
           {/* Comments Container */}
           <div className="p-2  rounded-lg shadow-sm">
             {comments.length > 0 ? (
