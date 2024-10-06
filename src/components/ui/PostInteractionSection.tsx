@@ -4,10 +4,17 @@ import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/modal";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/modal";
+import Link from "next/link";
 
 type TProps = {
   _id: string;
@@ -34,18 +41,12 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const [disliked, setDisliked] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [comment, setComment] = useState("");
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
-
-  const router = useRouter();
-
-  // Handle modal visibility
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   // Handle like button click
   const handleLikeClick = () => {
     if (!userId) {
-      handleOpenModal(); // Show modal if user is not logged in
+      onOpen(); // Show modal if user is not logged in
       return;
     }
     if (disliked) {
@@ -62,7 +63,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   // Handle dislike button click
   const handleDislikeClick = () => {
     if (!userId) {
-      handleOpenModal(); // Show modal if user is not logged in
+      onOpen(); // Show modal if user is not logged in
       return;
     }
     if (liked) {
@@ -187,30 +188,40 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       )}
 
       {/* Alert Modal */}
-      <Modal isOpen={showModal} onClose={handleCloseModal} className="z-99">
-        <ModalHeader>
-          <p>You need to be logged in!</p>
-        </ModalHeader>
-        <ModalBody>
-          <p>
-            Please log in to interact with the post. Would you like to be
-            redirected to the login page?
-          </p>
-        </ModalBody>
-        <ModalFooter>
-          <Button auto flat color="error" onClick={handleCloseModal}>
-            Cancel
-          </Button>
-          <Button
-            auto
-            onClick={() => {
-              router.push("/login");
-            }}
-          >
-            Login
-          </Button>
-        </ModalFooter>
-      </Modal>
+      <>
+        {/* <Button onPress={onOpen}>Open Modal</Button> */}
+        <Modal
+          className="bg-gradient-to-b from-default-100 shadow-lg"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  You need to be logged in!
+                </ModalHeader>
+                <ModalBody>
+                  <p>
+                    Please log in to interact with the post. Would you like to
+                    be redirected to the login page?
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Link href="/login">
+                    <Button color="primary" onPress={onClose}>
+                      Login
+                    </Button>
+                  </Link>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </>
     </div>
   );
 };
