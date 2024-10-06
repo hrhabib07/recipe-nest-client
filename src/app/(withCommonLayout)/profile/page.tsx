@@ -10,6 +10,7 @@ import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
 import { getAllPostData } from "@/src/hooks/post.hook";
 import PostCard from "@/src/components/ui/PostCard";
 import CreatePostModal from "@/src/components/ui/createPostModal";
+import AllPosts from "@/src/components/ui/AllPosts";
 
 const page = () => {
   const { data, isLoading, isError } = useUserData();
@@ -81,22 +82,13 @@ const page = () => {
           {/* Create New Post Button */}
           <div className="mt-6">
             <CreatePostModal></CreatePostModal>
-            {/* <Button color="primary" className="bg-blue-500 text-default-700">
-              Create New Post
-            </Button> */}
           </div>
         </div>
-        {/* Additional Content (Optional) */}
-        <div className="p-4 mt-6 text-center">
-          {/* <p className="text-lg text-default-700">
-            Welcome to your profile page! Here you can manage your posts and
-            update your personal information.
-          </p> */}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        {/* ALl posts container */}
+        <AllPosts></AllPosts>
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
-        </div>
-        {/* {console.log("posts: ", posts)} */}
+        </div> */}
       </div>
     </>
   );

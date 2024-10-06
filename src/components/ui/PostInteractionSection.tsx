@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/modal";
+
 type TProps = {
   _id: string;
   likedUsers: string[];
@@ -16,6 +19,7 @@ type TProps = {
     _id: string;
   }[];
 };
+
 const PostInteractionSection = ({ post }: { post: TProps }) => {
   const { user } = useUser();
   const userId = user?._id;
@@ -25,15 +29,25 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
     isSuccess: updatePostSuccess,
   } = useUpdatePost();
   const { _id: postId, likedUsers, dislikedUsers, comments } = post;
-  console.log(comments);
 
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [comment, setComment] = useState("");
+  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+
+  const router = useRouter();
+
+  // Handle modal visibility
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   // Handle like button click
   const handleLikeClick = () => {
+    if (!userId) {
+      handleOpenModal(); // Show modal if user is not logged in
+      return;
+    }
     if (disliked) {
       setDisliked(false); // Reset dislike if like is selected
     }
@@ -47,6 +61,10 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
 
   // Handle dislike button click
   const handleDislikeClick = () => {
+    if (!userId) {
+      handleOpenModal(); // Show modal if user is not logged in
+      return;
+    }
     if (liked) {
       setLiked(false); // Reset like if dislike is selected
     }
@@ -63,13 +81,12 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
     setCommentsVisible(!commentsVisible);
   };
 
+  // Determine initial like and dislike states based on post data
   useEffect(() => {
     if (likedUsers.includes(userId as string)) {
-      console.log("inclued", userId);
       setLiked(true);
     }
     if (dislikedUsers.includes(userId as string)) {
-      console.log("inclued", userId);
       setDisliked(true);
     }
   }, [likedUsers, disliked, userId, liked, disliked]);
@@ -154,22 +171,9 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
                       <h3 className="text-base font-semibold ">
                         {comment?.users?.name || "Unknown User"}
                       </h3>
-                      {/* <span className="text-sm text-gray-400">
-                        {comment?.users?.email}
-                      </span> */}
                     </div>
                     {/* Comment Text */}
                     <p className=" mb-2">{comment?.comment}</p>
-                    {/* Comment Interaction Buttons */}
-                    {/* <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <button className="hover:text-primary-500 transition-all duration-150 ease-in">
-                        👍 Like
-                      </button>
-                      <button className="hover:text-primary-500 transition-all duration-150 ease-in">
-                        💬 Reply
-                      </button>
-                      <span className="text-xs text-gray-400">2h ago</span>
-                    </div> */}
                   </div>
                 </div>
               ))
@@ -181,6 +185,32 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
           </div>
         </div>
       )}
+
+      {/* Alert Modal */}
+      <Modal isOpen={showModal} onClose={handleCloseModal} className="z-99">
+        <ModalHeader>
+          <p>You need to be logged in!</p>
+        </ModalHeader>
+        <ModalBody>
+          <p>
+            Please log in to interact with the post. Would you like to be
+            redirected to the login page?
+          </p>
+        </ModalBody>
+        <ModalFooter>
+          <Button auto flat color="error" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button
+            auto
+            onClick={() => {
+              router.push("/login");
+            }}
+          >
+            Login
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };
