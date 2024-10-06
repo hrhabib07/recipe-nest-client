@@ -144,21 +144,21 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       {commentsVisible && (
         <div className="mt-6">
           {/* Comment Input Box */}
-          <Input
-            label="Write a comment"
-            placeholder="Share your thoughts..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className="mb-6 shadow-md rounded-lg"
-          />
-          <Button
-            color="primary"
-            variant="solid"
-            startContent={<MdComment />}
-            onPress={handleCommentSubmit}
-          >
-            Comment
-          </Button>
+          <div className="flex items-center gap-4 p-4 rounded-lg shadow-lg">
+            <Input
+              label="Write a comment"
+              placeholder="Share your thoughts..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="flex-1 mb-0 shadow-sm rounded-md focus:ring-2 focus:ring-default-200 transition-all"
+            />
+            <Button
+              onPress={handleCommentSubmit}
+              className="bg-gradient-to-l from-default-100  hover:from-default-200  text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+            >
+              Comment
+            </Button>
+          </div>
           {/* Comments Container */}
           <div className="p-2  rounded-lg shadow-sm">
             {comments.length > 0 ? (
