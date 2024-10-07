@@ -5,6 +5,16 @@ import React from "react";
 
 import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
 import UsersPostsData from "@/src/components/ui/UsersPostsData";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/modal";
+import { Button } from "@nextui-org/button";
+import Link from "next/link";
 
 const page = () => {
   const pathName = usePathname();
@@ -12,6 +22,19 @@ const page = () => {
   const { data } = useGetSingleUsersProfileData(userId as string);
   //   console.log("userData", data?.data);
   const userData = data?.data;
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isOpenFollowingModal,
+    onOpen: onOpenFollowingModal,
+    onOpenChange: onOpenChangeFollowingModal,
+  } = useDisclosure();
+  const handleDisplayFollowers = () => {
+    onOpen();
+  };
+  const handleDisplayFollowing = () => {
+    onOpenFollowingModal();
+  };
+  console.log(userData?.followers);
 
   return (
     <div className="container mx-auto max-w-7xl min-h-screen overflow-hidden shadow-md bg-gradient-to-b from-default-50 relative">
@@ -45,10 +68,16 @@ const page = () => {
             <p className="text-2xl font-bold  me-2">{userData?.name}</p>
           </div>
           <div className="flex gap-2">
-            <p className="text-default-500 hover:text-blue-500">
+            <p
+              onClick={handleDisplayFollowers}
+              className="text-default-500 hover:text-blue-500 cursor-pointer"
+            >
               {userData?.followers?.length} Followers
             </p>{" "}
-            <p className="text-default-500 hover:text-blue-500">
+            <p
+              onClick={handleDisplayFollowing}
+              className="text-default-500 hover:text-blue-500"
+            >
               {userData?.following?.length} Following
             </p>
           </div>
@@ -69,13 +98,133 @@ const page = () => {
       ) : (
         <UsersPostsData userId={userData?._id} />
       )}
-      {/* {userData?.posts?.length > 0 ? (
-        <UsersPostsData userId={userData?._id} />
-      ) : (
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-          No post yet
-        </div>
-      )} */}
+      <>
+        {/* <Button onPress={onOpen}>Open Modal</Button> */}
+        <Modal
+          className="bg-gradient-to-b from-default-100 shadow-lg"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Followers of {userData.name}
+                </ModalHeader>
+                <ModalBody>
+                  {userData.followers.map((follower: any) => (
+                    <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                      <div className="flex gap-4 text-start items-center">
+                        {/* Image Container */}
+                        <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
+                          <Link href={`/people/${follower._id}`}>
+                            <img
+                              alt={follower?.name}
+                              className="w-full h-full rounded-full object-cover"
+                              src={follower?.profilePhoto}
+                            />
+                          </Link>
+                        </div>
+
+                        {/* Name and Email */}
+                        <div className="flex-1 overflow-hidden">
+                          <Link href={`/people/${follower._id}`}>
+                            {/* Name with ellipsis and title for tooltip */}
+                            <h3
+                              className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                              title={follower?.name} // Tooltip for showing full name
+                            >
+                              {follower?.name}
+                            </h3>
+                          </Link>
+                          <div className="flex gap-2">
+                            <p className="text-default-500 ">
+                              {follower?.followers?.length} Followers
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </>
+      <>
+        {/* <Button onPress={onOpen}>Open Modal</Button> */}
+        <Modal
+          className="bg-gradient-to-b from-default-100 shadow-lg"
+          isOpen={isOpenFollowingModal}
+          onOpenChange={onOpenChangeFollowingModal}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  {userData.name} is Following
+                </ModalHeader>
+                <ModalBody>
+                  {userData.following.map((following: any) => (
+                    <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                      <div className="flex gap-4 text-start items-center">
+                        {/* Image Container */}
+                        <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
+                          <Link href={`/people/${following._id}`}>
+                            <img
+                              alt={following?.name}
+                              className="w-full h-full rounded-full object-cover"
+                              src={following?.profilePhoto}
+                            />
+                          </Link>
+                        </div>
+
+                        {/* Name and Email */}
+                        <div className="flex-1 overflow-hidden">
+                          <Link href={`/people/${following._id}`}>
+                            {/* Name with ellipsis and title for tooltip */}
+                            <h3
+                              className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                              title={following?.name} // Tooltip for showing full name
+                            >
+                              {following?.name}
+                            </h3>
+                          </Link>
+                          <div className="flex gap-2">
+                            <p className="text-default-500 ">
+                              {following?.followers?.length} Followers
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Link href="/login">
+                    <Button
+                      className="hidden"
+                      color="primary"
+                      onPress={onClose}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </>
     </div>
   );
 };
