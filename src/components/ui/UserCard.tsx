@@ -17,33 +17,47 @@ const UserCard: React.FC<UserCardProps> = ({
   userId,
 }) => {
   return (
-    <div className="p-4  bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-      <div className="flex backdrop-blur-sm gap-4 text-start">
-        <img
-          alt={name}
-          className="w-16 h-16 rounded-full object-cover"
-          src={profilePhoto}
-        />
-        <div className="w-3/4 overflow-ellipsis">
-          <h3 className="text-lg font-semibold">{name}</h3>
-          <p className="text-default-500 font-light">{email}</p>
-          {/* <p
-            className="backdrop-blur-sm opacity-50 transition-all duration-1000 delay-5"
-            onMouseEnter={(e) => {
-              e.currentTarget.classList.remove("blur-sm", "opacity-50");
-              e.currentTarget.classList.add("blur-none", "opacity-100");
-            }}
+    <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+      <div className="flex gap-4 text-start items-center">
+        {/* Image Container */}
+        <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
+          <Link href={`/people/${userId}`}>
+            <img
+              alt={name}
+              className="w-full h-full rounded-full object-cover"
+              src={profilePhoto}
+            />
+          </Link>
+        </div>
+
+        {/* Name and Email */}
+        <div className="flex-1 overflow-hidden">
+          <Link href={`/people/${userId}`}>
+            {/* Name with ellipsis and title for tooltip */}
+            <h3
+              className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+              title={name} // Tooltip for showing full name
+            >
+              {name}
+            </h3>
+          </Link>
+
+          {/* Email with ellipsis and title for tooltip */}
+          <p
+            className="text-default-500 font-light overflow-hidden overflow-ellipsis whitespace-nowrap"
+            title={email} // Tooltip for showing full email
           >
             {email}
-          </p> */}
+          </p>
         </div>
-        <div className="">
+
+        {/* View Profile Link */}
+        <div className="ml-auto">
           <Link href={`/people/${userId}`}>
-            <p className="text-blue-500 cursor-pointer">view profile</p>
+            <p className="text-blue-500 cursor-pointer">Follow</p>
           </Link>
         </div>
       </div>
-      {/* {bio && <p className="mt-2 text-sm">{bio}</p>} */}
     </div>
   );
 };

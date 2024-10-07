@@ -22,8 +22,9 @@ export default function BlogPage() {
       {/* <h1 className={title()}>User Profiles</h1> */}
 
       {/* Search Bar */}
-      <div className="my-8 w-8xl">
+      <div className="my-8">
         <Input
+          label="Search by name or email"
           endContent={
             <span className="text-default-400">
               <svg
@@ -42,18 +43,18 @@ export default function BlogPage() {
               </svg>
             </span>
           }
-          placeholder="Search by name or email"
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ width: "100%" }} // Set width to 100% or a fixed value
         />
       </div>
 
       {/* Users List */}
-      <div className="grid grid-cols-1 gap-6">
+      <div className="w-96 grid grid-cols-1 gap-6">
         {isLoading && <Spinner color="default" />}
         {isSuccess && data?.data.length < 1 && (
-          <p className="my-4 text-lg font-semibold">No user found</p>
+          <p className="w-96 my-4 text-lg font-semibold">No user found</p>
         )}
 
         {data?.data?.map((user: any) => (
