@@ -29,7 +29,6 @@ const UsersPostsData = ({ userId }: { userId: string }) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {posts.length < 1 && <p className="w-full">No posts Avaab</p>}
       {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
     </div>
   );

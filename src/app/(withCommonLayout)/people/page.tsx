@@ -56,7 +56,6 @@ export default function BlogPage() {
         {isSuccess && data?.data.length < 1 && (
           <p className="w-96 my-4 text-lg font-semibold">No user found</p>
         )}
-
         {data?.data?.map((user: any) => (
           <UserCard
             key={user._id}

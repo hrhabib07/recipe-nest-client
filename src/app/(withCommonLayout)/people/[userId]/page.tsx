@@ -44,22 +44,31 @@ const page = () => {
             {/* Bio Text */}
             <p className="text-2xl font-bold  me-2">{userData?.name}</p>
           </div>
+          <div className="flex gap-2">
+            <p className="text-default-500 hover:text-blue-500">
+              {userData?.followers?.length} Followers
+            </p>{" "}
+            <p className="text-default-500 hover:text-blue-500">
+              {userData?.following?.length} Following
+            </p>
+          </div>
 
           {/* User Bio Section */}
-          <div className="mt-2 text-center">
+          <div className="text-center">
             <div className="flex items-center justify-center">
               {/* Bio Text */}
-              <p className="text-sm text-default-900 max-w-xs mr-2">
-                {userData?.bio}
-              </p>
-
+              <p className="text-default-500 max-w-xs mr-2">{userData?.bio}</p>
               {/* Edit Icon */}
             </div>
           </div>
         </div>
         {/* Create New Post Button */}
       </div>
-      <UsersPostsData userId={userData?._id} />
+      {userData?.posts?.length < 1 ? (
+        <p className="w-full my-12 text-xl font-semibold">No posts Available</p>
+      ) : (
+        <UsersPostsData userId={userData?._id} />
+      )}
       {/* {userData?.posts?.length > 0 ? (
         <UsersPostsData userId={userData?._id} />
       ) : (

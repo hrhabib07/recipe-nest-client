@@ -38,6 +38,7 @@ const UserCard: React.FC<UserCardProps> = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const currentLoggedInUserId = user?._id;
   const isMyAccount = currentLoggedInUserId === userId;
+  const isFollowing = followers.includes(currentLoggedInUserId as string);
 
   const handleFollowUser = () => {
     const payload = { _id: userId, followers: currentLoggedInUserId };
@@ -72,30 +73,39 @@ const UserCard: React.FC<UserCardProps> = ({
               {name}
             </h3>
           </Link>
-          <FollowersList
+          <div className="flex gap-2">
+            <p className="text-default-500 ">{followers?.length} Followers</p>
+            {/* <p className="text-default-500 hover:text-blue-500">
+        Followings:{followings?.length}
+      </p> */}
+          </div>
+          {/* <FollowersList
             followers={followers}
             followings={following}
-          ></FollowersList>
+          ></FollowersList> */}
 
           {/* Email with ellipsis and title for tooltip */}
-          <p
+          {/* <p
             className="text-default-500 font-light overflow-hidden overflow-ellipsis whitespace-nowrap"
             title={email} // Tooltip for showing full email
           >
             {email}
-          </p>
+          </p> */}
         </div>
 
         {/* View Profile Link */}
 
         <div className="ml-auto">
-          {!isMyAccount && (
+          {!isMyAccount && !isFollowing && (
             <p
               onClick={handleFollowUser}
               className="text-blue-500 cursor-pointer"
             >
               Follow
             </p>
+          )}
+          {!isMyAccount && isFollowing && (
+            <p className="text-default-500 cursor-disabled">Following</p>
           )}
         </div>
       </div>
