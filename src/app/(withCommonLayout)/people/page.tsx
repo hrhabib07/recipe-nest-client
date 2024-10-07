@@ -64,6 +64,8 @@ export default function BlogPage() {
             name={user.name}
             profilePhoto={user.profilePhoto}
             userId={user._id}
+            followers={user?.followers}
+            following={user?.following}
           />
         ))}
       </div>

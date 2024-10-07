@@ -6,7 +6,6 @@ import {
   getCurrentUserWithId,
   loginUser,
   registerUser,
-  updateUserInfo,
 } from "../services/authServices";
 
 export const useUserRegistration = () => {
@@ -42,24 +41,6 @@ export const useUserData = () => {
       const data = await getCurrentUserWithId();
 
       return data;
-    },
-  });
-};
-export const useUserInfoUpdate = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, FieldValues>({
-    mutationKey: ["USER_INFO_UPDATED"],
-    mutationFn: async (userData) =>
-      await updateUserInfo(userData._id, userData),
-    onSuccess: () => {
-      toast.success("Your data updated successfully.");
-
-      // Invalidate and refetch the GET_USER_WITH_ID query to show updated data
-      queryClient.invalidateQueries({ queryKey: ["GET_USER_WITH_ID"] });
-    },
-    onError: (error) => {
-      toast.error(error.message);
     },
   });
 };

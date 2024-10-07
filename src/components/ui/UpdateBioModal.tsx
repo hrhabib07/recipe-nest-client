@@ -1,3 +1,4 @@
+import { useUserInfoUpdate } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import {
@@ -10,8 +11,6 @@ import {
 } from "@nextui-org/modal";
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
-
-import { useUserInfoUpdate } from "@/src/hooks/auth.hook";
 
 const UpdateBioModal = ({
   buttonText,

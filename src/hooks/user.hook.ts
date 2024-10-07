@@ -1,10 +1,13 @@
 // hooks/user.hook.ts
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   getAllUsers,
   getSingleUsersProfileData,
+  updateUserInfo,
 } from "../services/userServices";
+import { toast } from "sonner";
+import { FieldValues } from "react-hook-form";
 
 export const useAllUsersData = (searchTerm = "") => {
   return useQuery({
@@ -17,5 +20,24 @@ export const useGetSingleUsersProfileData = (userId: string) => {
   return useQuery({
     queryKey: ["GET_USER_WITH_ID"], // Include `searchTerm` in the query key
     queryFn: async () => await getSingleUsersProfileData(userId),
+  });
+};
+
+export const useUserInfoUpdate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["USER_INFO_UPDATED"],
+    mutationFn: async (userData) =>
+      await updateUserInfo(userData._id, userData),
+    onSuccess: () => {
+      toast.success("Your data updated successfully.");
+
+      // Invalidate and refetch the GET_USER_WITH_ID query to show updated data
+      queryClient.invalidateQueries({ queryKey: ["GET_USER_WITH_ID"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 };
