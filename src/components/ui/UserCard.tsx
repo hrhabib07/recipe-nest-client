@@ -1,4 +1,5 @@
 // src/components/UserCard.tsx
+import Link from "next/link";
 import React from "react";
 
 type UserCardProps = {
@@ -6,16 +7,22 @@ type UserCardProps = {
   email: string;
   profilePhoto: string;
   //   bio: string;
+  userId: string;
 };
 
-const UserCard: React.FC<UserCardProps> = ({ name, email, profilePhoto }) => {
+const UserCard: React.FC<UserCardProps> = ({
+  name,
+  email,
+  profilePhoto,
+  userId,
+}) => {
   return (
     <div className="p-4  bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
       <div className="flex backdrop-blur-sm gap-4 text-start">
         <img
-          src={profilePhoto}
           alt={name}
           className="w-16 h-16 rounded-full object-cover"
+          src={profilePhoto}
         />
         <div className="w-3/4 overflow-ellipsis">
           <h3 className="text-lg font-semibold">{name}</h3>
@@ -31,7 +38,9 @@ const UserCard: React.FC<UserCardProps> = ({ name, email, profilePhoto }) => {
           </p> */}
         </div>
         <div className="">
-          <p className="text-blue-500 cursor-pointer">view profile</p>
+          <Link href={`/people/${userId}`}>
+            <p className="text-blue-500 cursor-pointer">view profile</p>
+          </Link>
         </div>
       </div>
       {/* {bio && <p className="mt-2 text-sm">{bio}</p>} */}

@@ -9,17 +9,24 @@ import {
   updatePost,
 } from "../services/itemServices";
 
-// Fetch all posts
 export const getAllPostData = () => {
   return useQuery({
-    queryKey: ["posts"], // Use an object with 'queryKey' property
-    queryFn: async () => {
-      const data = await getAllPosts();
-
-      return data;
-    },
+    queryKey: ["posts"], // Include `searchTerm` in the query key
+    queryFn: async () => await getAllPosts(), // Pass `searchTerm` to the API function
   });
 };
+
+// Fetch all posts
+// export const getAllPostData = () => {
+//   return useQuery({
+//     queryKey: ["posts"], // Use an object with 'queryKey' property
+//     queryFn: async () => {
+//       const data = await getAllPosts();
+
+//       return data;
+//     },
+//   });
+// };
 
 // Create post mutation hook
 export const useCreatePost = () => {

@@ -11,7 +11,7 @@ export const getAllPosts = async () => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data."
+      error.response?.data?.message || "Failed to fetch item data.",
     );
   }
 };
@@ -23,7 +23,7 @@ export const getPostsWithQuery = async (query: string) => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data."
+      error.response?.data?.message || "Failed to fetch item data.",
     );
   }
 };
@@ -35,7 +35,7 @@ export const getSinglePost = async (postId: string) => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data."
+      error.response?.data?.message || "Failed to fetch item data.",
     );
   }
 };
@@ -61,7 +61,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
 // Update an existing post
 export const updatePost = async (
   postId: string,
-  postData: any
+  postData: any,
 ): Promise<any> => {
   try {
     // console.log("postData:", postData);
