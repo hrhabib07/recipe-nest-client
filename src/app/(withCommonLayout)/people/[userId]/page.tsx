@@ -15,6 +15,7 @@ import Link from "next/link";
 
 import UsersPostsData from "@/src/components/ui/UsersPostsData";
 import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
+import FollowButton from "@/src/components/ui/userInteraction/FollowButton";
 
 const page = () => {
   const pathName = usePathname();
@@ -93,6 +94,12 @@ const page = () => {
               {/* Edit Icon */}
             </div>
           </div>
+        </div>
+        <div>
+          <FollowButton
+            userId={userId as string}
+            followers={userData?.followers}
+          ></FollowButton>
         </div>
         {/* Create New Post Button */}
       </div>
