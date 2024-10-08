@@ -1,5 +1,5 @@
 import { useUser } from "@/src/context/user.provider";
-import { useUserInfoUpdate } from "@/src/hooks/user.hook";
+import { useUnfollowUser, useUserInfoUpdate } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
 import {
   Modal,
@@ -21,6 +21,11 @@ const FollowButton = ({
 }) => {
   const { user, setIsLoading: userLoading } = useUser();
   const { mutate: updateUser, isSuccess, isError } = useUserInfoUpdate();
+  const {
+    mutate: unfollowUser,
+    isSuccess: unfollowSuccess,
+    isError: unfollowError,
+  } = useUnfollowUser();
   const currentLoggedInUserId = user?._id;
   const isMyAccount = currentLoggedInUserId === userId;
   // let resultIsFollowing: boolean;
@@ -44,13 +49,14 @@ const FollowButton = ({
     }
   };
   const handleUnfollowUser = () => {
-    // const payload = { _id: userId, followers: currentLoggedInUserId };
+    onOpenChangeUnfollowModal();
+    // unfollowUser();
+  };
 
-    onOpenUnfollowModal();
-    // if (!currentLoggedInUserId) {
-    // } else {
-    //   // updateUser(payload);
-    // }
+  const handleUnfollowButton = () => {
+    const payload = { _id: userId, follower: currentLoggedInUserId };
+    unfollowUser(payload);
+    // onClose();
   };
 
   return (
@@ -93,7 +99,12 @@ const FollowButton = ({
                   </p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button
+                    color="danger"
+                    variant="light"
+                    onClick={handleUnfollowButton}
+                    onPress={onClose}
+                  >
                     Unfollow
                   </Button>
                   {/* <Link href="/login"> */}

@@ -6,6 +6,7 @@ import { FieldValues } from "react-hook-form";
 import {
   getAllUsers,
   getSingleUsersProfileData,
+  unfollowUser,
   updateUserInfo,
 } from "../services/userServices";
 
@@ -32,6 +33,23 @@ export const useUserInfoUpdate = () => {
       await updateUserInfo(userData._id, userData),
     onSuccess: () => {
       toast.success("Your data updated successfully.");
+
+      // Invalidate and refetch the GET_USER_WITH_ID query to show updated data
+      queryClient.invalidateQueries({ queryKey: ["GET_USER_WITH_ID"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useUnfollowUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["USER_INFO_UPDATED"],
+    mutationFn: async (userData) => await unfollowUser(userData._id, userData),
+    onSuccess: () => {
+      toast.success("user has been unfollowd successfully.");
 
       // Invalidate and refetch the GET_USER_WITH_ID query to show updated data
       queryClient.invalidateQueries({ queryKey: ["GET_USER_WITH_ID"] });
