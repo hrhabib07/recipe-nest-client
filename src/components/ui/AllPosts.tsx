@@ -1,28 +1,46 @@
 import React from "react";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import PostCard from "./PostCard";
 import SkeletonPostCard from "./SkeletonPostCard";
-
 import { getAllPostData } from "@/src/hooks/post.hook";
 
 const AllPosts = () => {
-  const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
-  const skeletonArray = Array.from({ length: 9 }, (_, index) => index);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    getAllPostData();
 
-  if (isPostsDataLoading) {
+  const posts = data?.pages.flatMap((page: { data: any }) => page.data) || [];
+
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        {skeletonArray.map((item) => (
-          <SkeletonPostCard key={item} />
+        {Array.from({ length: 9 }, (_, index) => (
+          <SkeletonPostCard key={index} />
         ))}
       </div>
     );
   }
-  const posts = postsData?.data;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
+    <div>
+      <InfiniteScroll
+        dataLength={posts.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={<h4>Loading more posts...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>No more posts to display!</b>
+          </p>
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+          {posts.map((post: any) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
+      </InfiniteScroll>
+
+      {isFetchingNextPage && <h4>Loading more...</h4>}
     </div>
   );
 };

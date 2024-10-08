@@ -75,22 +75,7 @@ const UserCard: React.FC<UserCardProps> = ({
           </Link>
           <div className="flex gap-2">
             <p className="text-default-500 ">{followers?.length} Followers</p>
-            {/* <p className="text-default-500 hover:text-blue-500">
-        Followings:{followings?.length}
-      </p> */}
           </div>
-          {/* <FollowersList
-            followers={followers}
-            followings={following}
-          ></FollowersList> */}
-
-          {/* Email with ellipsis and title for tooltip */}
-          {/* <p
-            className="text-default-500 font-light overflow-hidden overflow-ellipsis whitespace-nowrap"
-            title={email} // Tooltip for showing full email
-          >
-            {email}
-          </p> */}
         </div>
 
         {/* View Profile Link */}
@@ -124,8 +109,8 @@ const UserCard: React.FC<UserCardProps> = ({
                 </ModalHeader>
                 <ModalBody>
                   <p>
-                    Please log in to interact with the post. Would you like to
-                    be redirected to the login page?
+                    Please log in to interact. Would you like to be redirected
+                    to the login page?
                   </p>
                 </ModalBody>
                 <ModalFooter>

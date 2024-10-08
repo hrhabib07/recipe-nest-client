@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import {
@@ -10,9 +15,18 @@ import {
 } from "../services/itemServices";
 
 export const getAllPostData = () => {
-  return useQuery({
-    queryKey: ["posts"], // Include `searchTerm` in the query key
-    queryFn: async () => await getAllPosts(), // Pass `searchTerm` to the API function
+  return useInfiniteQuery({
+    queryKey: ["posts"],
+    queryFn: async ({ pageParam = 1 }) => {
+      return await getAllPosts(pageParam, 10); // Fetch with pagination (pageParam and limit)
+    },
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage?.data?.length < 10) {
+        return undefined; // No more posts to load
+      }
+      return pages.length + 1; // Increment page number for the next query
+    },
+    initialPageParam: 1, // This is required to avoid the error
   });
 };
 
