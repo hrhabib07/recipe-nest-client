@@ -1,7 +1,5 @@
 // src/components/UserCard.tsx
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import { useUserInfoUpdate } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
 import {
   Modal,
@@ -13,7 +11,9 @@ import {
 } from "@nextui-org/modal";
 import Link from "next/link";
 import React from "react";
-import FollowersList from "./FollowersList";
+
+import { useUserInfoUpdate } from "@/src/hooks/user.hook";
+import { useUser } from "@/src/context/user.provider";
 
 type UserCardProps = {
   name: string;
@@ -42,49 +42,51 @@ const UserCard: React.FC<UserCardProps> = ({
 
   const handleFollowUser = () => {
     const payload = { _id: userId, followers: currentLoggedInUserId };
+
     if (!currentLoggedInUserId) {
       onOpen();
     } else {
       updateUser(payload);
     }
   };
-  return (
-    <div className="">
-      <div className="flex gap-4 text-start items-center">
-        {/* Image Container */}
-        <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
-          <Link href={`/people/${userId}`}>
-            <img
-              alt={name}
-              className="w-full h-full rounded-full object-cover"
-              src={profilePhoto}
-            />
-          </Link>
-        </div>
 
-        {/* Name and Email */}
-        <div className="flex-1 overflow-hidden">
-          <Link href={`/people/${userId}`}>
-            {/* Name with ellipsis and title for tooltip */}
-            <h3
-              className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
-              title={name} // Tooltip for showing full name
-            >
-              {name}
-            </h3>
-          </Link>
-          <div className="flex gap-2">
-            <p className="text-default-500 ">{followers?.length} Followers</p>
+  return (
+    <div className="w-full">
+      <div className="flex justify-between w-full">
+        <div className="flex gap-2">
+          {/* Image Container */}
+          <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
+            <Link href={`/people/${userId}`}>
+              <img
+                alt={name}
+                className="w-full h-full rounded-full object-cover"
+                src={profilePhoto}
+              />
+            </Link>
+          </div>
+
+          {/* Name and Email */}
+          <div className="flex-1 overflow-hidden">
+            <Link href={`/people/${userId}`}>
+              {/* Name with ellipsis and title for tooltip */}
+              <h3
+                className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                title={name} // Tooltip for showing full name
+              >
+                {name}
+              </h3>
+            </Link>
+            <div className="flex gap-2">
+              <p className="text-default-500 ">{followers?.length} Followers</p>
+            </div>
           </div>
         </div>
-
         {/* View Profile Link */}
-
-        <div className="ml-auto">
+        <div className="mx-auto w-full text-end">
           {!isMyAccount && !isFollowing && (
             <p
-              onClick={handleFollowUser}
               className="text-blue-500 cursor-pointer"
+              onClick={handleFollowUser}
             >
               Follow
             </p>

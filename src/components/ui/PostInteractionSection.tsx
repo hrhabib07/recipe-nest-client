@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
-import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import {

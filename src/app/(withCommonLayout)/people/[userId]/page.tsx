@@ -2,9 +2,6 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
-
-import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
-import UsersPostsData from "@/src/components/ui/UsersPostsData";
 import {
   Modal,
   ModalBody,
@@ -15,6 +12,9 @@ import {
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+
+import UsersPostsData from "@/src/components/ui/UsersPostsData";
+import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
 
 const page = () => {
   const pathName = usePathname();
@@ -48,7 +48,7 @@ const page = () => {
           backgroundImage:
             "url('https://images.unsplash.com/photo-1512058454905-6b841e7ad132?q=80&w=1995&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
         }}
-      ></div>
+      />
       {/* Profile Photo and Info */}
       <div className="flex flex-col justify-center items-center -mt-16 relative">
         {/* Profile Photo */}
@@ -72,14 +72,14 @@ const page = () => {
           </div>
           <div className="flex gap-2">
             <p
-              onClick={handleDisplayFollowers}
               className="text-default-500 hover:text-blue-500 cursor-pointer"
+              onClick={handleDisplayFollowers}
             >
               {userData?.followers?.length} Followers
             </p>{" "}
             <p
-              onClick={handleDisplayFollowing}
               className="text-default-500 hover:text-blue-500"
+              onClick={handleDisplayFollowing}
             >
               {userData?.following?.length} Following
             </p>

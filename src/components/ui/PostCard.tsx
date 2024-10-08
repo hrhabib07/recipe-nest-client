@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 import PostInteractionSection from "./PostInteractionSection";
 import ImageGallery from "./ImageGallery";
@@ -21,25 +20,23 @@ const PostCard = ({ post }: any) => {
       <div className="flex items-center gap-4">
         <UserCard
           email={post?.user?.email}
+          followers={post?.user?.followers}
+          following={post?.user?.following}
           name={post?.user?.name}
           profilePhoto={post?.user?.profilePhoto}
           userId={post?.user?._id}
-          followers={post?.user?.followers}
-          following={post?.user?.following}
         />
       </div>
 
       {/* Post content */}
-      <div>
+      <div className="text-start">
         <h2 className="text-xl font-semibold">{post.title}</h2>
         <div
-          className="text-default-700"
           dangerouslySetInnerHTML={{ __html: post.description }}
+          className="text-default-700"
         />
         {/* <p className="text-default-700">{post.description}</p> */}
-        {post.images?.length > 0 && (
-          <ImageGallery images={post.images}></ImageGallery>
-        )}
+        {post.images?.length > 0 && <ImageGallery images={post.images} />}
       </div>
       <PostInteractionSection post={dynamicPostInfo} />
     </div>

@@ -18,12 +18,11 @@ import {
 } from "@nextui-org/modal";
 
 import RNInput from "../form/RNInput";
-import RNTextarea from "../form/RNTextArea";
+import RNTextEditor from "../form/RNTextEditor";
 
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 import { useCreatePost } from "@/src/hooks/post.hook";
-import RNTextEditor from "../form/RNTextEditor";
 
 // export default function CreatePost() {
 const CreatePostModal = () => {
@@ -55,6 +54,7 @@ const CreatePostModal = () => {
       user: user?._id,
       description: editorValue,
     };
+
     console.log(postData);
 
     formData.append("data", JSON.stringify(postData));

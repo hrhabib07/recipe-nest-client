@@ -24,6 +24,7 @@ export const getAllPostData = () => {
       if (lastPage?.data?.length < 10) {
         return undefined; // No more posts to load
       }
+
       return pages.length + 1; // Increment page number for the next query
     },
     initialPageParam: 1, // This is required to avoid the error

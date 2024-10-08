@@ -24,7 +24,6 @@ export default function BlogPage() {
       {/* Search Bar */}
       <div className="my-8">
         <Input
-          label="Search by name or email"
           endContent={
             <span className="text-default-400">
               <svg
@@ -43,10 +42,11 @@ export default function BlogPage() {
               </svg>
             </span>
           }
+          label="Search by name or email"
+          style={{ width: "100%" }} // Set width to 100% or a fixed value
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: "100%" }} // Set width to 100% or a fixed value
         />
       </div>
 
@@ -61,11 +61,11 @@ export default function BlogPage() {
             <UserCard
               key={user._id}
               email={user.email}
+              followers={user?.followers}
+              following={user?.following}
               name={user.name}
               profilePhoto={user.profilePhoto}
               userId={user._id}
-              followers={user?.followers}
-              following={user?.following}
             />
           </div>
         ))}

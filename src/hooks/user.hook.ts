@@ -1,13 +1,13 @@
 // hooks/user.hook.ts
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { FieldValues } from "react-hook-form";
 
 import {
   getAllUsers,
   getSingleUsersProfileData,
   updateUserInfo,
 } from "../services/userServices";
-import { toast } from "sonner";
-import { FieldValues } from "react-hook-form";
 
 export const useAllUsersData = (searchTerm = "") => {
   return useQuery({

@@ -75,7 +75,7 @@ export const getCurrentUserWithId = async () => {
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data."
+        error.response?.data?.message || "Failed to fetch user data.",
       );
     }
   }

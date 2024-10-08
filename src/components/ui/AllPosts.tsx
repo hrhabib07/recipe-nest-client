@@ -1,7 +1,9 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import PostCard from "./PostCard";
 import SkeletonPostCard from "./SkeletonPostCard";
+
 import { getAllPostData } from "@/src/hooks/post.hook";
 
 const AllPosts = () => {
@@ -24,14 +26,14 @@ const AllPosts = () => {
     <div>
       <InfiniteScroll
         dataLength={posts.length}
-        next={fetchNextPage}
-        hasMore={!!hasNextPage}
-        loader={<h4>Loading more posts...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>No more posts to display!</b>
           </p>
         }
+        hasMore={!!hasNextPage}
+        loader={<h4>Loading more posts...</h4>}
+        next={fetchNextPage}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
           {posts.map((post: any) => (
