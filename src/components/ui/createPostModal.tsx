@@ -135,7 +135,7 @@ const CreatePostModal = () => {
                             {imagePreviews.map((imageDataUrl) => (
                               <div
                                 key={imageDataUrl}
-                                className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
+                                className="relative size-24 rounded-xl border-2 border-dashed border-default-300 p-2"
                               >
                                 <img
                                   alt="item"

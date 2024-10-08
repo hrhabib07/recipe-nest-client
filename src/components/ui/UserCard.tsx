@@ -38,7 +38,7 @@ const UserCard: React.FC<UserCardProps> = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const currentLoggedInUserId = user?._id;
   const isMyAccount = currentLoggedInUserId === userId;
-  const isFollowing = followers.includes(currentLoggedInUserId as string);
+  const isFollowing = followers?.includes(currentLoggedInUserId as string);
 
   const handleFollowUser = () => {
     const payload = { _id: userId, followers: currentLoggedInUserId };
@@ -49,7 +49,7 @@ const UserCard: React.FC<UserCardProps> = ({
     }
   };
   return (
-    <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="">
       <div className="flex gap-4 text-start items-center">
         {/* Image Container */}
         <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">

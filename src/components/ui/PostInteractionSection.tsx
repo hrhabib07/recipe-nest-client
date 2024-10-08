@@ -109,12 +109,12 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   }, [likedUsers, disliked, userId, liked, disliked]);
 
   return (
-    <div className="flex flex-col gap-4 p-4 rounded-lg bg-gradient-to-r from-default-100 shadow-lg">
+    <div className="flex flex-col gap-4 p-4 rounded-lg  ">
       {/* Action buttons with like and dislike counts */}
       <div className="flex gap-6 items-center">
         {/* Like button */}
         <Button
-          className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
+          className={`bg-default-100 transition-transform duration-300 ${
             liked ? "text-primary-500 scale-110" : "text-default-500"
           }`}
           startContent={<MdThumbUp className="size-4" />}
@@ -125,7 +125,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
 
         {/* Dislike button */}
         <Button
-          className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
+          className={`bg-default-100 transition-transform duration-300 ${
             disliked ? "text-danger-500 scale-110" : "text-default-500"
           }`}
           startContent={<MdThumbDown className="size-4" />}
@@ -136,7 +136,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
 
         {/* Comment button */}
         <Button
-          className={`bg-gradient-to-l from-default-100 transition-transform duration-300 ${
+          className={`bg-default-100 transition-transform duration-300 ${
             commentsVisible ? "text-primary-500 scale-110" : "text-default-500"
           }`}
           startContent={<AiOutlineComment className="size-4" />}

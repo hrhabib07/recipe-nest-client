@@ -11,58 +11,39 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 import Image from "next/image";
 import Link from "next/link";
-const ImageGallery = ({
-  images,
-  title,
-}: {
-  images: string[];
-  title: string;
-}) => {
+const ImageGallery = ({ images }: { images: string[] }) => {
   const onInit = () => {
     console.log("lightGallery has been initialized");
   };
   return (
     <>
-      <>
-        <LightGallery
-          onInit={onInit}
-          speed={500}
-          plugins={[lgThumbnail, lgZoom]}
-        >
-          {images.map((image: string, index) => (
-            <Link href={`${image}`}>
-              <Image
-                alt={`$image-${index + 1}`}
-                className="rounded-lg object-cover"
-                height={500}
-                src={image}
-                width={500}
-                data-lg-size="1600-2400"
-              />
-            </Link>
-          ))}
-          {/* <a href="img/img1.jpg">
-            <img alt="img1" src="img/thumb1.jpg" />
-          </a>
-          <a href="img/img2.jpg">
-            <img alt="img2" src="img/thumb2.jpg" />
-          </a>
-          ... */}
-        </LightGallery>
-      </>
-
-      {/* {images.map((image: string) => (
-        <>
-          <Image
-            alt={title}
-            className="rounded-lg object-cover"
-            height={300}
-            src={image}
-            width={500}
-            data-lg-size="1600-2400"
-          />
-        </>
-      ))} */}
+      <LightGallery
+        elementClassNames={` mt-2 gap-2 grid place-items-center ${
+          images.length === 1 ? "grid-cols-1" : "grid-cols-2"
+        } `}
+        onInit={onInit}
+        speed={500}
+        plugins={[lgThumbnail, lgZoom]}
+      >
+        {images.map((image: string, index) => (
+          <Link
+            className={`w-full ${
+              images.length === 3 && index === 0 ? "col-span-2" : "col-span-1"
+            }`}
+            href={`${image}`}
+            key={index}
+          >
+            <Image
+              alt={`$image-${index + 1}`}
+              className="h-[400px] w-full object-cover"
+              height={500}
+              src={image}
+              width={500}
+              data-lg-size="1600-2400"
+            />
+          </Link>
+        ))}
+      </LightGallery>
     </>
   );
 };
