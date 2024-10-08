@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Remove the border from React Quill toolbar */
+.ql-toolbar {
+  border: none !important; /* Removes the toolbar border */
+}
+
+/* Remove the border from the Quill container */
+.ql-container {
+  border: none !important; /* Removes the container border */
+}

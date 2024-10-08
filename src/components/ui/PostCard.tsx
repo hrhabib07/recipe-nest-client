@@ -32,7 +32,11 @@ const PostCard = ({ post }: any) => {
       {/* Post content */}
       <div>
         <h2 className="text-xl font-semibold">{post.title}</h2>
-        <p className="text-default-700">{post.description}</p>
+        <div
+          className="text-default-700"
+          dangerouslySetInnerHTML={{ __html: post.description }}
+        />
+        {/* <p className="text-default-700">{post.description}</p> */}
         {post.images?.length > 0 && (
           <ImageGallery images={post.images}></ImageGallery>
         )}

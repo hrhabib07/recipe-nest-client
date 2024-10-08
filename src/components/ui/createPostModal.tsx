@@ -23,11 +23,13 @@ import RNTextarea from "../form/RNTextArea";
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 import { useCreatePost } from "@/src/hooks/post.hook";
+import RNTextEditor from "../form/RNTextEditor";
 
 // export default function CreatePost() {
 const CreatePostModal = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
+  const [editorValue, setEditorValue] = useState(""); // State for editor content
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   //   console.log(imagePreviews);
@@ -51,7 +53,9 @@ const CreatePostModal = () => {
     const postData = {
       ...data,
       user: user?._id,
+      description: editorValue,
     };
+    console.log(postData);
 
     formData.append("data", JSON.stringify(postData));
     // console.log(postData);
@@ -105,12 +109,23 @@ const CreatePostModal = () => {
 
                         <div className="flex flex-wrap-reverse gap-2 py-2">
                           <div className="min-w-fit flex-1">
-                            <RNTextarea
+                            <RNTextEditor
+                              label="Description"
+                              name="description"
+                              value={editorValue} // Pass the editor value
+                              onChange={setEditorValue} // Update the value on change
+                            />
+                          </div>
+                        </div>
+
+                        {/* <div className="flex flex-wrap-reverse gap-2 py-2">
+                          <div className="min-w-fit flex-1">
+                            <RNTextEditor
                               label="Description"
                               name="description"
                             />
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-wrap gap-2 py-2">
                           <div className="min-w-fit flex-1">
