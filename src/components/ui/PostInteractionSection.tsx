@@ -22,7 +22,7 @@ type TProps = {
   likedUsers: string[];
   dislikedUsers: string[];
   comments: {
-    users: { name: string; email: string; profilePhoto: string };
+    users: { name: string; email: string; profilePhoto: string; _id: string };
     comment: string;
     _id: string;
   }[];
@@ -175,13 +175,24 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
                 >
                   {/* User Avatar */}
                   {comment?.users?.profilePhoto ? (
-                    <Image
-                      alt={comment?.users?.name}
-                      className="rounded-full border-2 border-primary-500"
-                      height={50}
-                      src={comment?.users?.profilePhoto}
-                      width={50}
-                    />
+                    <>
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
+                        <Link href={`/people/${userId}`}>
+                          <img
+                            alt={comment?.users?.name}
+                            className="w-full h-full rounded-full object-cover border-2 border-primary-500"
+                            src={comment?.users?.profilePhoto}
+                          />
+                        </Link>
+                      </div>
+                      {/* <Image
+                        alt={comment?.users?.name}
+                        className="rounded-full "
+                        height={50}
+                        src={comment?.users?.profilePhoto}
+                        width={50}
+                      /> */}
+                    </>
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-default-100 flex items-center justify-center">
                       <span className="text-lg font-semibold text-gray-500">
@@ -193,12 +204,14 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
                   <div className="flex-1">
                     {/* User Information */}
                     <div className="flex items-center justify-between">
-                      <h3 className="text-base font-semibold ">
-                        {comment?.users?.name || "Unknown User"}
-                      </h3>
+                      <Link href={`/people/${comment?.users?._id}`}>
+                        <h3 className="text-base font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  ">
+                          {comment?.users?.name || "Unknown User"}
+                        </h3>
+                      </Link>
                     </div>
                     {/* Comment Text */}
-                    <p className=" mb-2">{comment?.comment}</p>
+                    <p className="text-left mb-2">{comment?.comment}</p>
                   </div>
                 </div>
               ))
