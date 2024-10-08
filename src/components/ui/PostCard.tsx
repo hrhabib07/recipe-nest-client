@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import PostInteractionSection from "./PostInteractionSection";
+import ImageGallery from "./ImageGallery";
 
 // Single post card component
 const PostCard = ({ post }: any) => {
@@ -41,15 +42,16 @@ const PostCard = ({ post }: any) => {
         <h2 className="text-xl font-semibold">{post.title}</h2>
         <p className="text-default-700">{post.description}</p>
         {post.images?.length > 0 && (
-          <div className="my-4">
-            <Image
-              alt={post.title}
-              className="rounded-lg object-cover"
-              height={300}
-              src={post.images[0]}
-              width={500}
-            />
-          </div>
+          <ImageGallery images={post.images} title={post.title}></ImageGallery>
+          // <div className="my-4">
+          //   <Image
+          //     alt={post.title}
+          //     className="rounded-lg object-cover"
+          //     height={300}
+          //     src={post.images[0]}
+          //     width={500}
+          //   />
+          // </div>
         )}
       </div>
       <PostInteractionSection post={dynamicPostInfo} />

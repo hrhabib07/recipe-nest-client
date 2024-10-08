@@ -98,6 +98,7 @@ const page = () => {
       ) : (
         <UsersPostsData userId={userData?._id} />
       )}
+      {/* followers list modal  */}
       <>
         {/* <Button onPress={onOpen}>Open Modal</Button> */}
         <Modal
@@ -157,6 +158,7 @@ const page = () => {
           </ModalContent>
         </Modal>
       </>
+      {/* following list modal */}
       <>
         {/* <Button onPress={onOpen}>Open Modal</Button> */}
         <Modal
