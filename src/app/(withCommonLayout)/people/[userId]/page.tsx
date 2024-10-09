@@ -141,20 +141,28 @@ const page = () => {
 
                           {/* Name and Email */}
                           <div className="flex-1 overflow-hidden">
-                            <Link href={`/people/${follower._id}`}>
-                              {/* Name with ellipsis and title for tooltip */}
-                              <h3
-                                className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
-                                title={follower?.name} // Tooltip for showing full name
-                              >
-                                {follower?.name}
-                              </h3>
-                            </Link>
-                            <div className="flex gap-2">
-                              <p className="text-default-500 ">
-                                {follower?.followers?.length} Followers
-                              </p>
+                            <div>
+                              <Link href={`/people/${follower._id}`}>
+                                {/* Name with ellipsis and title for tooltip */}
+                                <h3
+                                  className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                                  title={follower?.name} // Tooltip for showing full name
+                                >
+                                  {follower?.name}
+                                </h3>
+                              </Link>
+                              <div className="flex gap-2">
+                                <p className="text-default-500 ">
+                                  {follower?.followers?.length} Followers
+                                </p>
+                              </div>
                             </div>
+                          </div>
+                          <div>
+                            <FollowButton
+                              userId={follower._id}
+                              followers={follower.followers}
+                            ></FollowButton>
                           </div>
                         </div>
                       </div>

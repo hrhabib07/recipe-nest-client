@@ -21,7 +21,7 @@ type UserCardProps = {
   profilePhoto: string;
   //   bio: string;
   userId: string;
-  followers: string[];
+  followers: any[];
   following: string[];
 };
 
@@ -38,7 +38,10 @@ const UserCard: React.FC<UserCardProps> = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const currentLoggedInUserId = user?._id;
   const isMyAccount = currentLoggedInUserId === userId;
-  const isFollowing = followers?.includes(currentLoggedInUserId as string);
+  // const isFollowing = followers?.includes(currentLoggedInUserId as string);
+  const isFollowing =
+    followers?.some((follower) => follower?._id === currentLoggedInUserId) ||
+    false;
 
   const handleFollowUser = () => {
     const payload = { _id: userId, followers: currentLoggedInUserId };
