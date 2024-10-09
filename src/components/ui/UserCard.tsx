@@ -86,7 +86,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 {name}
               </h3>
             </Link>
-            <div className="">
+            <div className="text-start">
               {!postedOn && (
                 <p className="text-default-500">
                   {followers?.length} Followers

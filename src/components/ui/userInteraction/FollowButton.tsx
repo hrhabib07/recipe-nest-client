@@ -30,11 +30,23 @@ const FollowButton = ({
   } = useUnfollowUser();
   const currentLoggedInUserId = user?._id;
   const isMyAccount = currentLoggedInUserId === userId;
-  // let resultIsFollowing: boolean;
-  const isFollowing =
-    followers?.some((follower) => follower?._id === currentLoggedInUserId) ||
-    false;
-  // console.log(isFollowing);
+
+  let isFollowing = false;
+
+  if (Array.isArray(followers) && followers.length > 0) {
+    // Check if the first element is a string
+    if (typeof followers[0] === "string") {
+      // Array of strings: Check if `currentUser` exists in the array
+      isFollowing = followers.includes(currentLoggedInUserId);
+    }
+    // Check if the first element is an object
+    else if (typeof followers[0] === "object" && followers[0] !== null) {
+      // Array of objects: Use `some` to check if any object matches `currentUser`
+      isFollowing = followers.some(
+        (follower) => follower?._id === currentLoggedInUserId
+      );
+    }
+  }
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isOpenUnfollowModal,
@@ -61,6 +73,8 @@ const FollowButton = ({
     unfollowUser(payload);
     // onClose();
   };
+
+  console.log("isFOllowing", isFollowing);
 
   return (
     <>

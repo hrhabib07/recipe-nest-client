@@ -160,15 +160,9 @@ const UserProfilePage = () => {
                                 </div>
                               </div>
                             </div>
-                            <div>
-                              <FollowButton
-                                followers={follower.followers}
-                                userId={follower._id}
-                              />
-                            </div>
                           </div>
                         </div>
-                      ),
+                      )
                     )}
                 </ModalBody>
                 <ModalFooter>

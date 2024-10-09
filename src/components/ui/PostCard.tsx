@@ -20,17 +20,8 @@ const PostCard = ({ post }: any) => {
     comments,
   };
   const { user: currentUser } = useUser();
-
-  // const postDate = new Date(post?.createdAt); // Convert the post's date to a Date object
-  // const presentTime = new Date(); // Get the current time
-
   const timeDifference = customizedTimeDifference(post?.createdAt);
 
-  // console.log("Posted on", post?.createdAt);
-  // console.log("Current time", presentTime);
-  console.log(`Time difference: ${timeDifference}`);
-
-  // console.log("current user", currentUser);
   const currentUserId = currentUser?._id;
   const isMyPost = currentUser?._id === postedAuthor?._id;
 
