@@ -5,8 +5,10 @@ import { Input } from "@nextui-org/input";
 
 import { useAllUsersData } from "@/src/hooks/user.hook";
 import UserCard from "@/src/components/ui/UserCard";
+import { useUser } from "@/src/context/user.provider";
 
 export default function BlogPage() {
+  const { user: loggedInUser } = useUser();
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const { data, refetch, isLoading, isSuccess } = useAllUsersData(searchTerm); // Use the hook and pass the search term
 
@@ -63,12 +65,11 @@ export default function BlogPage() {
           >
             <UserCard
               key={user._id}
-              email={user.email}
+              authorId={user._id}
+              currentUser={loggedInUser?._id}
               followers={user?.followers}
-              following={user?.following}
               name={user.name}
               profilePhoto={user.profilePhoto}
-              userId={user._id}
             />
           </div>
         ))}

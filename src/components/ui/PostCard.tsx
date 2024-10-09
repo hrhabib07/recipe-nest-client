@@ -1,11 +1,12 @@
+"use client";
 import React, { useState } from "react";
 
 import PostInteractionSection from "./PostInteractionSection";
 import ImageGallery from "./ImageGallery";
 import UserCard from "./UserCard";
-import { useUser } from "@/src/context/user.provider";
-import { button } from "@nextui-org/theme";
 import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
+
+import { useUser } from "@/src/context/user.provider";
 
 // Single post card component
 const PostCard = ({ post }: any) => {
@@ -17,7 +18,7 @@ const PostCard = ({ post }: any) => {
     comments,
   };
   const { user: currentUser } = useUser();
-  // console.log("currentUser : ", currentUser);
+  const currentUserId = currentUser?._id;
   const isMyPost = currentUser?._id === postedAuthor?._id;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -37,19 +38,14 @@ const PostCard = ({ post }: any) => {
       <div className="flex justify-between gap-4">
         <div className="w-full">
           <UserCard
-            email={post?.user?.email}
+            authorId={post?.user?._id}
+            currentUser={currentUserId}
             followers={post?.user?.followers}
-            following={post?.user?.following}
             name={post?.user?.name}
             profilePhoto={post?.user?.profilePhoto}
-            userId={post?.user?._id}
           />
         </div>
-        <DeleteAndUpdatePost
-          postId={_id}
-          isMyPost={isMyPost}
-          post={post}
-        ></DeleteAndUpdatePost>
+        <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
       </div>
 
       {/* Post content */}
@@ -69,7 +65,7 @@ const PostCard = ({ post }: any) => {
           )}
         </div>
         {description.length > 70 && (
-          <button onClick={toggleExpand} className="text-blue-600">
+          <button className="text-blue-600" onClick={toggleExpand}>
             {isExpanded ? "See Less" : "See More"}
           </button>
         )}

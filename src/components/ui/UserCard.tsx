@@ -13,45 +13,42 @@ import Link from "next/link";
 import React from "react";
 
 import { useUserInfoUpdate } from "@/src/hooks/user.hook";
-import { useUser } from "@/src/context/user.provider";
 
 type UserCardProps = {
   name: string;
-  email: string;
   profilePhoto: string;
-  //   bio: string;
-  userId: string;
+  authorId: string;
   followers: any[];
-  following: string[];
+  currentUser: string | undefined;
 };
 
 const UserCard: React.FC<UserCardProps> = ({
   name,
-  email,
   profilePhoto,
-  userId,
+  authorId,
   followers,
-  following,
+  currentUser,
 }) => {
-  const { user, setIsLoading: userLoading } = useUser();
+  // const { user, isLoading: isUserLoading } = useUser();
   const { mutate: updateUser, isSuccess, isError } = useUserInfoUpdate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const currentLoggedInUserId = user?._id;
-  const isMyAccount = currentLoggedInUserId === userId;
-  // const isFollowing = followers?.includes(currentLoggedInUserId as string);
+  // const currentUser = user?._id;
+  const isMyAccount = currentUser === authorId;
   const isFollowing =
-    followers?.some((follower) => follower?._id === currentLoggedInUserId) ||
-    false;
+    followers?.some((follower) => follower?._id === currentUser) || false;
 
   const handleFollowUser = () => {
-    const payload = { _id: userId, followers: currentLoggedInUserId };
+    const payload = { _id: authorId, followers: currentUser };
 
-    if (!currentLoggedInUserId) {
+    if (!currentUser) {
       onOpen();
     } else {
       updateUser(payload);
     }
   };
+
+  // console.log(followers);
+  // console.log(currentUser);
 
   return (
     <div className="w-full">
@@ -59,7 +56,7 @@ const UserCard: React.FC<UserCardProps> = ({
         <div className="flex gap-2">
           {/* Image Container */}
           <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
-            <Link href={`/people/${userId}`}>
+            <Link href={`/people/${authorId}`}>
               <img
                 alt={name}
                 className="w-full h-full rounded-full object-cover"
@@ -70,7 +67,7 @@ const UserCard: React.FC<UserCardProps> = ({
 
           {/* Name and Email */}
           <div className="flex-1 overflow-hidden">
-            <Link href={`/people/${userId}`}>
+            <Link href={`/people/${authorId}`}>
               {/* Name with ellipsis and title for tooltip */}
               <h3
                 className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
@@ -85,7 +82,7 @@ const UserCard: React.FC<UserCardProps> = ({
           </div>
         </div>
         {/* View Profile Link */}
-        <div className="mx-auto w-full text-end">
+        <div className="text-end">
           {!isMyAccount && !isFollowing && (
             <button
               className="text-blue-500 cursor-pointer"

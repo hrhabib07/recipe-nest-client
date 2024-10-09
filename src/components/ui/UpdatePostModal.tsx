@@ -1,6 +1,5 @@
 import { Button } from "@nextui-org/button";
 import React, { useEffect, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
 import {
   Modal,
   ModalBody,
@@ -8,11 +7,11 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
-import { FormProvider } from "react-hook-form";
+
 import RNInput from "../form/RNInput";
 import RNForm from "../form/RNForm";
 import RNTextEditor from "../form/RNTextEditor";
-import { title } from "process";
+
 import { useUpdatePost } from "@/src/hooks/post.hook";
 
 const UpdatePostModal = ({ post }: any) => {
@@ -35,13 +34,17 @@ const UpdatePostModal = ({ post }: any) => {
       postId: post._id,
       postData: { ...data, description: editorValue },
     };
+
     updatePost(payload);
   };
 
   return (
     <>
       <>
-        <Button onPress={onOpen}> Update Post</Button>
+        <Button className="bg-transparent" onPress={onOpen}>
+          {" "}
+          Update Post
+        </Button>
         {/* {createPostPending && <LoadingSpinner />} */}
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
           <ModalContent className="bg-gradient-to-b from-default-100">
@@ -55,25 +58,9 @@ const UpdatePostModal = ({ post }: any) => {
                     <div className="h-full rounded-xl ">
                       <RNForm
                         // resolver={zodResolver(registerValidationSchema)}
-                        onSubmit={onSubmit}
                         defaultValues={defaultValuesOfPosts}
+                        onSubmit={onSubmit}
                       >
-                        {/* <div className="flex flex-wrap gap-2 py-2">
-                          <div className="min-w-fit flex-1">
-                            <RNInput label="Title" name="title" />
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap-reverse gap-2 py-2">
-                          <div className="min-w-fit flex-1">
-                            <RNTextEditor
-                              label="Description"
-                              name="description"
-                              value={editorValue} // Pass the editor value
-                              onChange={setEditorValue} // Update the value on change
-                            />
-                          </div>
-                        </div> */}
                         <div className="py-3">
                           <RNInput label="Title" name="title" size="sm" />
                         </div>
