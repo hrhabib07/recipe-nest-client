@@ -4,11 +4,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PostCard from "./PostCard";
 import SkeletonPostCard from "./SkeletonPostCard";
 
-import { getAllPostData } from "@/src/hooks/post.hook";
+import { useAllPostData } from "@/src/hooks/post.hook";
 
 const AllPosts = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    getAllPostData();
+    useAllPostData();
 
   const posts = data?.pages.flatMap((page: { data: any }) => page.data) || [];
 

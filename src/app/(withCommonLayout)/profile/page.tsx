@@ -11,7 +11,7 @@ import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
 import UsersPostsData from "@/src/components/ui/UsersPostsData";
 
 const page = () => {
-  const { data, isLoading, isError } = useUserData();
+  const { data, isLoading } = useUserData();
   const userData = data?.data;
 
   // const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();

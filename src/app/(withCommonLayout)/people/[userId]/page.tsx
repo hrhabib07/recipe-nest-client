@@ -17,7 +17,7 @@ import UsersPostsData from "@/src/components/ui/UsersPostsData";
 import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
 import FollowButton from "@/src/components/ui/userInteraction/FollowButton";
 
-const page = () => {
+const UserProfilePage = () => {
   const pathName = usePathname();
   const userId = pathName.split("/").pop();
   const { data } = useGetSingleUsersProfileData(userId as string);
@@ -72,18 +72,16 @@ const page = () => {
             <p className="text-2xl font-bold  me-2">{userData?.name}</p>
           </div>
           <div className="flex gap-2">
-            <p
-              className="text-default-500 hover:text-blue-500 cursor-pointer"
-              onClick={handleDisplayFollowers}
-            >
-              {userData?.followers?.length} Followers
-            </p>{" "}
-            <p
-              className="text-default-500 hover:text-blue-500"
-              onClick={handleDisplayFollowing}
-            >
-              {userData?.following?.length} Following
-            </p>
+            <button onClick={handleDisplayFollowers}>
+              <p className="text-default-500 hover:text-blue-500 cursor-pointer">
+                {userData?.followers?.length} Followers
+              </p>{" "}
+            </button>
+            <button onClick={handleDisplayFollowing}>
+              <p className="text-default-500 hover:text-blue-500">
+                {userData?.following?.length} Following
+              </p>
+            </button>
           </div>
 
           {/* User Bio Section */}
@@ -97,9 +95,9 @@ const page = () => {
         </div>
         <div>
           <FollowButton
-            userId={userId as string}
             followers={userData?.followers}
-          ></FollowButton>
+            userId={userId as string}
+          />
         </div>
         {/* Create New Post Button */}
       </div>
@@ -125,48 +123,53 @@ const page = () => {
                 <ModalBody>
                   {!hasFollowers && `${userData.name} has 0 Followers`}
                   {hasFollowers &&
-                    userData.followers.map((follower: any) => (
-                      <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                        <div className="flex gap-4 text-start items-center">
-                          {/* Image Container */}
-                          <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
-                            <Link href={`/people/${follower._id}`}>
-                              <img
-                                alt={follower?.name}
-                                className="w-full h-full rounded-full object-cover"
-                                src={follower?.profilePhoto}
-                              />
-                            </Link>
-                          </div>
-
-                          {/* Name and Email */}
-                          <div className="flex-1 overflow-hidden">
-                            <div>
+                    userData?.followers?.map(
+                      (follower: any, index: React.Key | null | undefined) => (
+                        <div
+                          key={index}
+                          className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                          <div className="flex gap-4 text-start items-center">
+                            {/* Image Container */}
+                            <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
                               <Link href={`/people/${follower._id}`}>
-                                {/* Name with ellipsis and title for tooltip */}
-                                <h3
-                                  className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
-                                  title={follower?.name} // Tooltip for showing full name
-                                >
-                                  {follower?.name}
-                                </h3>
+                                <img
+                                  alt={follower?.name}
+                                  className="w-full h-full rounded-full object-cover"
+                                  src={follower?.profilePhoto}
+                                />
                               </Link>
-                              <div className="flex gap-2">
-                                <p className="text-default-500 ">
-                                  {follower?.followers?.length} Followers
-                                </p>
+                            </div>
+
+                            {/* Name and Email */}
+                            <div className="flex-1 overflow-hidden">
+                              <div>
+                                <Link href={`/people/${follower._id}`}>
+                                  {/* Name with ellipsis and title for tooltip */}
+                                  <h3
+                                    className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                                    title={follower?.name} // Tooltip for showing full name
+                                  >
+                                    {follower?.name}
+                                  </h3>
+                                </Link>
+                                <div className="flex gap-2">
+                                  <p className="text-default-500 ">
+                                    {follower?.followers?.length} Followers
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <FollowButton
-                              userId={follower._id}
-                              followers={follower.followers}
-                            ></FollowButton>
+                            <div>
+                              <FollowButton
+                                followers={follower.followers}
+                                userId={follower._id}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
@@ -196,8 +199,11 @@ const page = () => {
                 <ModalBody>
                   {!hasFollowing && `${userData.name} is Not following anyone`}
                   {hasFollowing &&
-                    userData.following.map((following: any) => (
-                      <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                    userData?.following?.map((following: any, index: any) => (
+                      <div
+                        key={index}
+                        className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                      >
                         <div className="flex gap-4 text-start items-center">
                           {/* Image Container */}
                           <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
@@ -254,4 +260,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default UserProfilePage;

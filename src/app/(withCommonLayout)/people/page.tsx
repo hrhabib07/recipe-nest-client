@@ -57,7 +57,10 @@ export default function BlogPage() {
           <p className="w-96 my-4 text-lg font-semibold">No user found</p>
         )}
         {data?.data?.map((user: any) => (
-          <div className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+          <div
+            key={user._id}
+            className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+          >
             <UserCard
               key={user._id}
               email={user.email}

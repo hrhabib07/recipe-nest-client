@@ -87,12 +87,12 @@ const UserCard: React.FC<UserCardProps> = ({
         {/* View Profile Link */}
         <div className="mx-auto w-full text-end">
           {!isMyAccount && !isFollowing && (
-            <p
+            <button
               className="text-blue-500 cursor-pointer"
               onClick={handleFollowUser}
             >
               Follow
-            </p>
+            </button>
           )}
           {!isMyAccount && isFollowing && (
             <p className="text-default-500 cursor-disabled">Following</p>

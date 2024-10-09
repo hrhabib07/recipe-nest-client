@@ -14,7 +14,7 @@ import {
   updatePost,
 } from "../services/itemServices";
 
-export const getAllPostData = () => {
+export const useAllPostData = () => {
   return useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: async ({ pageParam = 1 }) => {

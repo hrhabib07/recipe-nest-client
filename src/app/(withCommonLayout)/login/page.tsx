@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
+"use client"; // Mark the component as a client-side component
 
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation"; // Client-side hooks only
 
 import loginValidationSchema from "@/src/schemas/login.schema";
 import RNForm from "@/src/components/form/RNForm";
@@ -15,11 +15,12 @@ import { useUserLogin } from "@/src/hooks/auth.hook";
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 
-const page = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
+export default function LoginPage() {
+  // Renamed to a more descriptive name
+  const searchParams = useSearchParams(); // Client-side hook
+  const router = useRouter(); // Client-side hook
   const { setIsLoading: userLoading } = useUser();
-  // const { mutate: handleUserLogin } = useUserLogin();
+
   const redirect = searchParams.get("redirect");
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
@@ -37,14 +38,14 @@ const page = () => {
         router.push("/");
       }
     }
-  }, [isPending, isSuccess]);
+  }, [isPending, isSuccess, redirect, router]);
 
   return (
     <>
       {isPending && <LoadingSpinner />}
 
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
-        <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
+        <h3 className="my-2 text-2xl font-bold">Login with RecipeNest</h3>
         <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
         <div className="w-[35%]">
           <RNForm
@@ -67,12 +68,10 @@ const page = () => {
             </Button>
           </RNForm>
           <div className="text-center">
-            Don&lsquo;t have account ? <Link href={"/register"}>Register</Link>
+            Don&lsquo;t have account? <Link href={"/register"}>Register</Link>
           </div>
         </div>
       </div>
     </>
   );
-};
-
-export default page;
+}

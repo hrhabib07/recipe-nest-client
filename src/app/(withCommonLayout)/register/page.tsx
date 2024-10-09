@@ -48,17 +48,10 @@ export default function RegisterPage() {
 
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
-      <h3 className="my-2 text-xl font-bold">Register with FoundX</h3>
+      <h3 className="my-2 text-xl font-bold">Register with RecipeNest</h3>
       <p className="mb-4">Help Lost Items Find Their Way Home</p>
       <div className="w-3/4 md:w-[35%]">
         <RNForm
-          //! Only for development
-          defaultValues={{
-            name: "Mir Hussain",
-            email: "mir@gmail.com",
-            mobileNumber: "01711223344",
-            password: "123456",
-          }}
           resolver={zodResolver(registerValidationSchema)}
           onSubmit={onSubmit}
         >

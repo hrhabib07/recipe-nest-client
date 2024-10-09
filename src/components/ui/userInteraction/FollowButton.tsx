@@ -1,5 +1,3 @@
-import { useUser } from "@/src/context/user.provider";
-import { useUnfollowUser, useUserInfoUpdate } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
 import {
   Modal,
@@ -11,6 +9,9 @@ import {
 } from "@nextui-org/modal";
 import Link from "next/link";
 import React from "react";
+
+import { useUnfollowUser, useUserInfoUpdate } from "@/src/hooks/user.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const FollowButton = ({
   userId,
@@ -55,6 +56,7 @@ const FollowButton = ({
 
   const handleUnfollowButton = () => {
     const payload = { _id: userId, follower: currentLoggedInUserId };
+
     unfollowUser(payload);
     // onClose();
   };
@@ -62,20 +64,20 @@ const FollowButton = ({
   return (
     <>
       {!isMyAccount && !isFollowing && (
-        <p
+        <button
           className="text-blue-500 hover:text-blue cursor-pointer  hover:underline"
           onClick={handleFollowUser}
         >
           follow
-        </p>
+        </button>
       )}
       {!isMyAccount && isFollowing && (
-        <p
+        <button
           className="text-red-500 hover:text-re-600 cursor-pointer  hover:underline"
           onClick={handleUnfollowUser}
         >
           unfollow
-        </p>
+        </button>
       )}
 
       {/* unfollow user modal */}
