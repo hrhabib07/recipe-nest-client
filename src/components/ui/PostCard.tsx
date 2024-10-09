@@ -17,7 +17,7 @@ const PostCard = ({ post }: any) => {
     comments,
   };
   const { user: currentUser } = useUser();
-  console.log("currentUser : ", currentUser);
+  // console.log("currentUser : ", currentUser);
   const isMyPost = currentUser?._id === postedAuthor?._id;
 
   const [isExpanded, setIsExpanded] = useState(false);

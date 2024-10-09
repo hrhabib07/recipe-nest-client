@@ -55,7 +55,7 @@ const CreatePostModal = () => {
       description: editorValue,
     };
 
-    console.log(postData);
+    // console.log(postData);
 
     formData.append("data", JSON.stringify(postData));
     // console.log(postData);
@@ -117,15 +117,6 @@ const CreatePostModal = () => {
                             />
                           </div>
                         </div>
-
-                        {/* <div className="flex flex-wrap-reverse gap-2 py-2">
-                          <div className="min-w-fit flex-1">
-                            <RNTextEditor
-                              label="Description"
-                              name="description"
-                            />
-                          </div>
-                        </div> */}
 
                         <div className="flex flex-wrap gap-2 py-2">
                           <div className="min-w-fit flex-1">

@@ -1,5 +1,6 @@
 import { useDeletePost } from "@/src/hooks/post.hook";
 import React, { useState } from "react";
+import UpdatePostModal from "./UpdatePostModal";
 
 const DeleteAndUpdatePost = ({ isMyPost, postId, post }: any) => {
   const { mutate: deletePost } = useDeletePost();
@@ -40,12 +41,12 @@ const DeleteAndUpdatePost = ({ isMyPost, postId, post }: any) => {
                 {/* Update Post option */}
                 <li
                   className="px-4 py-2 text-default-700 hover:bg-default-400 cursor-pointer"
-                  onClick={() => {
-                    // Placeholder for opening the update post modal
-                    console.log("Update Post clicked");
-                  }}
+                  //   onClick={() => {
+                  //     // Placeholder for opening the update post modal
+                  //     console.log("Update Post clicked");
+                  //   }}
                 >
-                  Update Post
+                  <UpdatePostModal post={post}></UpdatePostModal>
                 </li>
                 {/* Delete Post option */}
                 <li
