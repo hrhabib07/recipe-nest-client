@@ -5,6 +5,7 @@ import ImageGallery from "./ImageGallery";
 import UserCard from "./UserCard";
 import { useUser } from "@/src/context/user.provider";
 import { button } from "@nextui-org/theme";
+import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
 
 // Single post card component
 const PostCard = ({ post }: any) => {
@@ -19,12 +20,15 @@ const PostCard = ({ post }: any) => {
   console.log("currentUser : ", currentUser);
   const isMyPost = currentUser?._id === postedAuthor?._id;
 
-  // State to toggle the visibility of the dropdown menu
-  const [showMenu, setShowMenu] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  // Toggle dropdown menu
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
+  // Get the title and description
+  const title = post.title;
+  const description = post.description;
+
+  // Handle the toggle for "See More"
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
   };
 
   return (
@@ -41,62 +45,39 @@ const PostCard = ({ post }: any) => {
             userId={post?.user?._id}
           />
         </div>
-        {isMyPost && (
-          <div className="text-default-700 hover:text-blue-500 cursor-pointer">
-            <button className="relative" onClick={() => setShowMenu(!showMenu)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                />
-              </svg>
-            </button>
-            {/* Dropdown menu */}
-            {showMenu && (
-              <div className="absolute right-6 mt-2 w-40 bg-gradient-to-b from-default-100 to-default-50 rounded-md shadow-lg z-10 ">
-                <ul className="py-1">
-                  {/* Update Post option */}
-                  <li
-                    className="px-4 py-2 text-default-700 hover:bg-default-400 cursor-pointer"
-                    onClick={() => {
-                      // Placeholder for opening the update post modal
-                      console.log("Update Post clicked");
-                    }}
-                  >
-                    Update Post
-                  </li>
-                  {/* Delete Post option */}
-                  <li
-                    className="px-4 py-2 text-default-700 hover:bg-default-400 cursor-pointer"
-                    onClick={() => {
-                      // Placeholder for deleting the post
-                      console.log("Delete Post clicked");
-                    }}
-                  >
-                    Delete Post
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
+        <DeleteAndUpdatePost
+          postId={_id}
+          isMyPost={isMyPost}
+          post={post}
+        ></DeleteAndUpdatePost>
       </div>
 
       {/* Post content */}
       <div className="text-start">
-        <h2 className="text-xl font-semibold">{post.title}</h2>
+        <h2 className="text-xl font-semibold">
+          {title.length > 101 ? `${title.substring(0, 101)}...` : title}
+        </h2>
+        <div className="text-default-700">
+          {isExpanded ? (
+            <div dangerouslySetInnerHTML={{ __html: description }} />
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: description.substring(0, 70),
+              }}
+            />
+          )}
+        </div>
+        {description.length > 70 && (
+          <button onClick={toggleExpand} className="text-blue-600">
+            {isExpanded ? "See Less" : "See More"}
+          </button>
+        )}
+        {/* <h2 className="text-xl font-semibold">{post.title}</h2>
         <div
           dangerouslySetInnerHTML={{ __html: post.description }}
           className="text-default-700"
-        />
+        /> */}
         {/* <p className="text-default-700">{post.description}</p> */}
         {post.images?.length > 0 && <ImageGallery images={post.images} />}
       </div>

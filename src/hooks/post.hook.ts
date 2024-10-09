@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import {
   createPost,
+  deletePost,
   getAllPosts,
   getPostsWithQuery,
   getSinglePost,
@@ -68,6 +69,22 @@ export const useUpdatePost = () => {
     mutationKey: ["posts"],
     mutationFn: async ({ postId, postData }) =>
       await updatePost(postId, postData),
+    onSuccess: () => {
+      toast.success("Post updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["posts"] }); // Invalidate and refetch "posts" query to get updated data
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+// delete post mutation hook with postId
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, string>({
+    mutationKey: ["posts"],
+    mutationFn: async (postId) => await deletePost(postId),
     onSuccess: () => {
       toast.success("Post updated successfully");
       queryClient.invalidateQueries({ queryKey: ["posts"] }); // Invalidate and refetch "posts" query to get updated data
