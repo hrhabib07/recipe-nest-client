@@ -20,6 +20,7 @@ type UserCardProps = {
   authorId: string;
   followers: any[];
   currentUser: string | undefined;
+  postedOn?: string;
 };
 
 const UserCard: React.FC<UserCardProps> = ({
@@ -28,6 +29,7 @@ const UserCard: React.FC<UserCardProps> = ({
   authorId,
   followers,
   currentUser,
+  postedOn,
 }) => {
   const { mutate: updateUser, isSuccess, isError } = useUserInfoUpdate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -58,10 +60,6 @@ const UserCard: React.FC<UserCardProps> = ({
     }
   };
 
-  console.log("author", authorId);
-  console.log("followers", followers);
-  console.log("currentUser", currentUser);
-  console.log("isFollowing", isFollowing);
   return (
     <div className="w-full">
       <div className="flex justify-between w-full">
@@ -88,8 +86,17 @@ const UserCard: React.FC<UserCardProps> = ({
                 {name}
               </h3>
             </Link>
-            <div className="flex gap-2">
-              <p className="text-default-500 ">{followers?.length} Followers</p>
+            <div className="">
+              {!postedOn && (
+                <p className="text-default-500">
+                  {followers?.length} Followers
+                </p>
+              )}
+              <>
+                {postedOn && (
+                  <small className="text-default-500">{postedOn}</small>
+                )}
+              </>
             </div>
           </div>
         </div>

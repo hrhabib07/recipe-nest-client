@@ -7,6 +7,8 @@ import UserCard from "./UserCard";
 import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
 
 import { useUser } from "@/src/context/user.provider";
+import { formatDistanceToNow } from "date-fns";
+import { customizedTimeDifference } from "@/src/utils/customedTimeDifference";
 
 // Single post card component
 const PostCard = ({ post }: any) => {
@@ -18,6 +20,15 @@ const PostCard = ({ post }: any) => {
     comments,
   };
   const { user: currentUser } = useUser();
+
+  // const postDate = new Date(post?.createdAt); // Convert the post's date to a Date object
+  // const presentTime = new Date(); // Get the current time
+
+  const timeDifference = customizedTimeDifference(post?.createdAt);
+
+  // console.log("Posted on", post?.createdAt);
+  // console.log("Current time", presentTime);
+  console.log(`Time difference: ${timeDifference}`);
 
   // console.log("current user", currentUser);
   const currentUserId = currentUser?._id;
@@ -47,11 +58,12 @@ const PostCard = ({ post }: any) => {
             followers={post?.user?.followers}
             name={post?.user?.name}
             profilePhoto={post?.user?.profilePhoto}
+            postedOn={timeDifference}
           />
         </div>
         <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
       </div>
-
+      <div>{/* <small>{timeDifference}</small> */}</div>
       {/* Post content */}
       <div className="text-start">
         <h2 className="text-xl font-semibold">
