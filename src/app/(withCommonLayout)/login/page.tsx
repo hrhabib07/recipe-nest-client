@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"; // Mark the component as a client-side component
 
+import { Suspense, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation"; // Client-side hooks only
 
 import loginValidationSchema from "@/src/schemas/login.schema";
@@ -16,7 +16,14 @@ import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 
 export default function LoginPage() {
-  // Renamed to a more descriptive name
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const searchParams = useSearchParams(); // Client-side hook
   const router = useRouter(); // Client-side hook
   const { setIsLoading: userLoading } = useUser();
@@ -68,7 +75,8 @@ export default function LoginPage() {
             </Button>
           </RNForm>
           <div className="text-center">
-            Don&lsquo;t have account? <Link href={"/register"}>Register</Link>
+            Don&lsquo;t have an account?{" "}
+            <Link href={"/register"}>Register</Link>
           </div>
         </div>
       </div>
