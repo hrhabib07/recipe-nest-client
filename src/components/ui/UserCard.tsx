@@ -29,13 +29,24 @@ const UserCard: React.FC<UserCardProps> = ({
   followers,
   currentUser,
 }) => {
-  // const { user, isLoading: isUserLoading } = useUser();
   const { mutate: updateUser, isSuccess, isError } = useUserInfoUpdate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const currentUser = user?._id;
   const isMyAccount = currentUser === authorId;
-  const isFollowing =
-    followers?.some((follower) => follower?._id === currentUser) || false;
+
+  let isFollowing = false;
+
+  if (Array.isArray(followers) && followers.length > 0) {
+    // Check if the first element is a string
+    if (typeof followers[0] === "string") {
+      // Array of strings: Check if `currentUser` exists in the array
+      isFollowing = followers.includes(currentUser);
+    }
+    // Check if the first element is an object
+    else if (typeof followers[0] === "object" && followers[0] !== null) {
+      // Array of objects: Use `some` to check if any object matches `currentUser`
+      isFollowing = followers.some((follower) => follower?._id === currentUser);
+    }
+  }
 
   const handleFollowUser = () => {
     const payload = { _id: authorId, followers: currentUser };
@@ -47,9 +58,10 @@ const UserCard: React.FC<UserCardProps> = ({
     }
   };
 
-  // console.log(followers);
-  // console.log(currentUser);
-
+  console.log("author", authorId);
+  console.log("followers", followers);
+  console.log("currentUser", currentUser);
+  console.log("isFollowing", isFollowing);
   return (
     <div className="w-full">
       <div className="flex justify-between w-full">

@@ -9,6 +9,7 @@ import { useUser } from "@/src/context/user.provider";
 
 export default function BlogPage() {
   const { user: loggedInUser } = useUser();
+  // console.log("user", loggedInUser);
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const { data, refetch, isLoading, isSuccess } = useAllUsersData(searchTerm); // Use the hook and pass the search term
 

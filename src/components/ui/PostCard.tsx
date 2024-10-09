@@ -18,6 +18,8 @@ const PostCard = ({ post }: any) => {
     comments,
   };
   const { user: currentUser } = useUser();
+
+  // console.log("current user", currentUser);
   const currentUserId = currentUser?._id;
   const isMyPost = currentUser?._id === postedAuthor?._id;
 
@@ -31,6 +33,8 @@ const PostCard = ({ post }: any) => {
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  // console.log("user who has posted", post?.user?._id);
 
   return (
     <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4">
