@@ -81,12 +81,8 @@ const page = () => {
             <CreatePostModal />
           </div>
         </div>
-        {/* ALl posts container */}
-        {/* <AllPosts></AllPosts> */}
+
         <UsersPostsData userId={userData._id} />
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-          {posts?.map((post: any) => <PostCard key={post._id} post={post} />)}
-        </div> */}
       </div>
     </>
   );
