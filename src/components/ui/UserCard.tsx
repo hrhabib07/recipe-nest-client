@@ -76,11 +76,11 @@ const UserCard: React.FC<UserCardProps> = ({
           </div>
 
           {/* Name and Email */}
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 ml-1 overflow-hidden">
             <Link href={`/people/${authorId}`}>
               {/* Name with ellipsis and title for tooltip */}
               <h3
-                className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline  "
+                className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline text-start "
                 title={name} // Tooltip for showing full name
               >
                 {name}
