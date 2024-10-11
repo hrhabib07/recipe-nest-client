@@ -19,6 +19,7 @@ import {
 } from "@nextui-org/modal";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
+import ChangePasswordModal from "@/src/components/ui/ChangePasswordModal";
 
 const page = () => {
   const { data, isLoading } = useUserData();
@@ -113,8 +114,10 @@ const page = () => {
           <div className="mt-6">
             <CreatePostModal />
           </div>
+          <div className="mt-6">
+            <ChangePasswordModal></ChangePasswordModal>
+          </div>
         </div>
-
         <UsersPostsData userId={userData._id} />
         {/* followers list modal  */}
         <>

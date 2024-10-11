@@ -3,6 +3,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 import {
+  changePasswordUser,
   getCurrentUserWithId,
   loginUser,
   registerUser,
@@ -14,6 +15,17 @@ export const useUserRegistration = () => {
     mutationFn: async (userData) => await registerUser(userData),
     onSuccess: () => {
       toast.success("User registration successful.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const usePasswordChange = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (userData) => await changePasswordUser(userData),
+    onSuccess: () => {
+      toast.success("Password changed successfully.");
     },
     onError: (error) => {
       toast.error(error.message);

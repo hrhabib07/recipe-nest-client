@@ -62,6 +62,20 @@ export const getCurrentUser = async () => {
 
   return decodedToken;
 };
+export const changePasswordUser = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `/auth/change-password`,
+      userData
+    );
+
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to change password."
+    );
+  }
+};
 export const getCurrentUserWithId = async () => {
   const accessToken = cookies().get("accessToken")?.value;
 
@@ -75,7 +89,7 @@ export const getCurrentUserWithId = async () => {
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data.",
+        error.response?.data?.message || "Failed to fetch user data."
       );
     }
   }
