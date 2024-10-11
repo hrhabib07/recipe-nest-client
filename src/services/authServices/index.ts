@@ -76,6 +76,20 @@ export const changePasswordUser = async (userData: FieldValues) => {
     );
   }
 };
+export const forgetPassword = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `/auth/forget-password`,
+      userData
+    );
+
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to send the email."
+    );
+  }
+};
 export const getCurrentUserWithId = async () => {
   const accessToken = cookies().get("accessToken")?.value;
 

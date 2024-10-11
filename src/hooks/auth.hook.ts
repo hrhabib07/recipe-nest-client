@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import {
   changePasswordUser,
+  forgetPassword,
   getCurrentUserWithId,
   loginUser,
   registerUser,
@@ -26,6 +27,17 @@ export const usePasswordChange = () => {
     mutationFn: async (userData) => await changePasswordUser(userData),
     onSuccess: () => {
       toast.success("Password changed successfully.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useForgetPassword = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (userData) => await forgetPassword(userData),
+    onSuccess: () => {
+      toast.success("Reset URL email successfully.");
     },
     onError: (error) => {
       toast.error(error.message);

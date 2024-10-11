@@ -74,9 +74,25 @@ function LoginForm() {
               Login
             </Button>
           </RNForm>
+
           <div className="text-center">
-            Don&lsquo;t have an account?{" "}
-            <Link href={"/register"}>Register</Link>
+            <div>
+              Don&lsquo;t have an account?{" "}
+              <Link href={"/register"}>
+                {" "}
+                <span className="text-blue-500 hover:underline cursor-pointer">
+                  Register
+                </span>{" "}
+              </Link>
+            </div>
+            <div>
+              <Link href={"/forgot-password"}>
+                {" "}
+                <small className="text-blue-500 hover:underline cursor-pointer">
+                  Forgot Password?
+                </small>{" "}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
