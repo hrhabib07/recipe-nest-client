@@ -22,13 +22,15 @@ import { Logo } from "./icons";
 import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/src/config/site";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
-  // const {} = useUser();
+  const router = useRouter();
   const { user, setIsLoading: userLoading } = useUser();
   const handleUserLogout = () => {
     logout();
     userLoading(true);
+    router.push("/");
   };
 
   return (
@@ -46,7 +48,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}

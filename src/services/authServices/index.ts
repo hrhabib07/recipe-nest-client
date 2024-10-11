@@ -90,6 +90,25 @@ export const forgetPassword = async (userData: FieldValues) => {
     );
   }
 };
+export const resetPassword = async (userData: FieldValues) => {
+  const accessToken = userData.accessToken;
+  cookies().set("accessToken", accessToken);
+  const payload = {
+    email: userData.email,
+    newPassword: userData.newPassword,
+  };
+  // console.log("final payload", payload);
+  try {
+    const { data } = await axiosInstance.post(`/auth/reset-password`, payload);
+    cookies().delete("accessToken");
+    // console.log(data);
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to reset the password."
+    );
+  }
+};
 export const getCurrentUserWithId = async () => {
   const accessToken = cookies().get("accessToken")?.value;
 

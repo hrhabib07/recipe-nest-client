@@ -8,6 +8,7 @@ import {
   getCurrentUserWithId,
   loginUser,
   registerUser,
+  resetPassword,
 } from "../services/authServices";
 
 export const useUserRegistration = () => {
@@ -36,6 +37,19 @@ export const usePasswordChange = () => {
 export const useForgetPassword = () => {
   return useMutation<any, Error, FieldValues>({
     mutationFn: async (userData) => await forgetPassword(userData),
+    onSuccess: () => {
+      toast.success("Reset URL email successfully.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useResetPassword = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (userData) => {
+      await resetPassword(userData);
+    },
     onSuccess: () => {
       toast.success("Reset URL email successfully.");
     },

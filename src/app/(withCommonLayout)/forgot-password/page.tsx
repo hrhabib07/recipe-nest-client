@@ -7,8 +7,8 @@ import { Button } from "@nextui-org/button";
 import React from "react";
 
 const page = () => {
-  const isSuccess = true;
-  const { mutate: forgetPassword, isPending } = useForgetPassword();
+  // const isSuccess = true;
+  const { mutate: forgetPassword, isSuccess, isPending } = useForgetPassword();
   const onSubmit = (data: { email: string }) => {
     forgetPassword(data);
   };
