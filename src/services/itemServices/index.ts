@@ -25,11 +25,14 @@ export const createPost = async (formData: FormData): Promise<any> => {
 export const getAllPosts = async (
   page: number = 1,
   limit: number = 10,
-  sortBy: string = "-likedUsers"
+  sortBy: string = "-likedUsers",
+  searchTerm: string = ""
+  // contentType: string = "Free" // Default value
 ) => {
   try {
     const { data } = await axiosInstance.get("/items", {
-      params: { page, limit, sortBy },
+      params: { page, limit, sortBy, searchTerm }, // Include searchTerm and contentType
+      // params: { page, limit, sortBy, searchTerm, contentType }, // Include searchTerm and contentType
     });
 
     return data;

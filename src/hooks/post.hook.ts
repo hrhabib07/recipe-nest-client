@@ -31,11 +31,17 @@ export const useCreatePost = () => {
   });
 };
 
-export const useAllPostData = () => {
+export const useAllPostData = (searchTerm: string, contentType: string) => {
   return useInfiniteQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts", searchTerm, contentType], // Add searchTerm and contentType to the query key for caching
     queryFn: async ({ pageParam = 1 }) => {
-      return await getAllPosts(pageParam, 10); // Fetch with pagination (pageParam and limit)
+      return await getAllPosts(
+        pageParam,
+        10,
+        "-likedUsers",
+        searchTerm
+        // contentType
+      ); // Fetch with pagination and additional parameters
     },
     getNextPageParam: (lastPage, pages) => {
       if (lastPage?.data?.length < 10) {
