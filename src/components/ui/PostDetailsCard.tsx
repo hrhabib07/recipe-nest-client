@@ -29,10 +29,7 @@ const PostDetailCard = ({ post }: any) => {
   const title = post.title;
   const description = post.description;
 
-  // Handle the toggle for "See More"
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+  console.log(description);
 
   return (
     <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4">
@@ -54,8 +51,13 @@ const PostDetailCard = ({ post }: any) => {
       {/* Post content */}
       <div className="text-start">
         <h2 className="text-xl font-semibold">{title}</h2>
-        <div className="text-default-700">
-          <div dangerouslySetInnerHTML={{ __html: description }} />
+        {/* Description content with enhanced styles */}
+        {/* Rich text content */}
+        <div className="text-default-900">
+          <div
+            className="prose text-default-900"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         </div>
 
         {post.images?.length > 0 && <ImageGallery images={post.images} />}
