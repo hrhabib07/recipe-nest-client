@@ -1,9 +1,10 @@
 import { title } from "@/src/components/primitives";
+import SubscriptionLayout from "@/src/components/ui/subscription/SubscriptionLayout";
 
 export default function PricingPage() {
   return (
-    <div>
-      <h1 className={title()}>Pricing</h1>
+    <div className="h-[calc(100vh-200px)] flex items-center justify-center">
+      <SubscriptionLayout></SubscriptionLayout>
     </div>
   );
 }
