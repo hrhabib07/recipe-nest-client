@@ -15,6 +15,22 @@ import {
   updatePost,
 } from "../services/itemServices";
 
+export const useCreatePost = () => {
+  const queryClient = useQueryClient(); // Initialize the query client to use for invalidation
+
+  return useMutation<any, Error, FormData>({
+    mutationKey: ["posts"],
+    mutationFn: async (postData) => await createPost(postData),
+    onSuccess: () => {
+      toast.success("Post created successfully");
+      queryClient.invalidateQueries({ queryKey: ["posts"] }); // Invalidate and refetch "posts" query to get updated data
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
 export const useAllPostData = () => {
   return useInfiniteQuery({
     queryKey: ["posts"],
@@ -45,21 +61,6 @@ export const useAllPostData = () => {
 // };
 
 // Create post mutation hook
-export const useCreatePost = () => {
-  const queryClient = useQueryClient(); // Initialize the query client to use for invalidation
-
-  return useMutation<any, Error, FormData>({
-    mutationKey: ["posts"],
-    mutationFn: async (postData) => await createPost(postData),
-    onSuccess: () => {
-      toast.success("Post created successfully");
-      queryClient.invalidateQueries({ queryKey: ["posts"] }); // Invalidate and refetch "posts" query to get updated data
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
 
 // Update post mutation hook with postId
 export const useUpdatePost = () => {

@@ -5,10 +5,16 @@ import SubscriptionCard from "./SubscriptionCard";
 const membershipPlans = [
   {
     type: "Silver",
-    price: "$9.99/month",
-    description: "Basic membership with access to limited features.",
-    features: ["Access to premium content", "Email support"],
-    validity: "1 month",
+    price: "$0.99/Day",
+    description:
+      "Basic membership with access to limited features. To try out ",
+    features: [
+      "Access to premium content",
+      "Email support",
+      "Daily updates",
+      "Special discount",
+    ],
+    validity: "1 day",
   },
   {
     type: "Gold",
@@ -18,6 +24,7 @@ const membershipPlans = [
       "Access to premium content",
       "Priority email support",
       "Monthly updates",
+      "Special discount",
     ],
     validity: "1 month",
   },
