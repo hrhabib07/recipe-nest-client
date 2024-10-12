@@ -34,14 +34,26 @@ export interface ICategory {
 }
 
 export interface IUser {
-  _id: string;
+  _id?: string;
   name: string;
   role: string;
   email: string;
+  password: string;
   status: string;
-  mobileNumber: string;
-  profilePhoto: string;
-  createdAt?: string;
-  updatedAt?: string;
-  __v?: number;
+  passwordChangedAt?: Date;
+  mobileNumber?: string;
+  profilePhoto?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  bio?: string;
+  followers?: string[] | [];
+  following?: string[] | [];
+  posts?: string[] | [];
+  dislikedPosts?: string[] | [];
+  likedPosts?: string[] | [];
+  subscription?: {
+    _id: string;
+    createdAt: Date;
+    validUntil: string;
+  } | null;
 }

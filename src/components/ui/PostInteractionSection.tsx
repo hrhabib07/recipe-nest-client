@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
+import {
+  BiDownvote,
+  BiSolidDownvote,
+  BiSolidUpvote,
+  BiUpvote,
+} from "react-icons/bi";
+
 import { FiShare2 } from "react-icons/fi"; // Importing share icon
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -133,7 +140,13 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
           className={`bg-default-100 transition-transform duration-300 ${
             liked ? "text-primary-500 scale-110" : "text-default-500"
           }`}
-          startContent={<MdThumbUp className="size-4" />}
+          startContent={
+            !liked ? (
+              <BiUpvote className="size-4" />
+            ) : (
+              <BiSolidUpvote className="size-4" />
+            )
+          }
           onClick={handleLikeClick}
         >
           ({likedUsers.length})
@@ -144,7 +157,13 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
           className={`bg-default-100 transition-transform duration-300 ${
             disliked ? "text-danger-500 scale-110" : "text-default-500"
           }`}
-          startContent={<MdThumbDown className="size-4" />}
+          startContent={
+            !disliked ? (
+              <BiDownvote className="size-4" />
+            ) : (
+              <BiSolidDownvote className="size-4" />
+            )
+          }
           onClick={handleDislikeClick}
         >
           ({dislikedUsers.length})

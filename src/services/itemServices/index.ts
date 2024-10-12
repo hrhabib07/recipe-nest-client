@@ -22,10 +22,14 @@ export const createPost = async (formData: FormData): Promise<any> => {
 };
 
 // Fetch all posts from the server
-export const getAllPosts = async (page: number = 1, limit: number = 10) => {
+export const getAllPosts = async (
+  page: number = 1,
+  limit: number = 10,
+  sortBy: string = "-likedUsers"
+) => {
   try {
     const { data } = await axiosInstance.get("/items", {
-      params: { page, limit },
+      params: { page, limit, sortBy },
     });
 
     return data;

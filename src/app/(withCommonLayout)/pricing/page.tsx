@@ -3,8 +3,10 @@ import SubscriptionLayout from "@/src/components/ui/subscription/SubscriptionLay
 
 export default function PricingPage() {
   return (
-    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center">
-      <SubscriptionLayout></SubscriptionLayout>
+    <div className="min-h-[calc(100vh-200px)]">
+      <div className="">
+        <SubscriptionLayout></SubscriptionLayout>
+      </div>
     </div>
   );
 }
