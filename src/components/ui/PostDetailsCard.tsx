@@ -1,133 +1,67 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import Image from "next/image";
 
-import { useSinglePostData } from "@/src/hooks/post.hook";
-const PostDetailCard = ({ postId }: { postId: string }) => {
-  const [newComment, setNewComment] = useState("");
-  const { data: post, isLoading } = useSinglePostData(postId as string);
+import { useUser } from "@/src/context/user.provider";
+import { customizedTimeDifference } from "@/src/utils/customedTimeDifference";
+import { useState } from "react";
+import UserCard from "./UserCard";
+import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
+import PostInteractionSection from "./PostInteractionSection";
+import ImageGallery from "./ImageGallery";
+import PostDetailsInteraction from "./PostDetailsInteraction";
 
-  //   if (id) {
-  //     // Fetch post details by postId (you can replace this with your API call)
-  //     fetch(`/api/items/${id}`)
-  //       .then((res) => res.json())
-  //       .then((data) => setPost(data));
-  //   }
-  // }, [id]);
+const PostDetailCard = ({ post }: any) => {
+  const { _id, likedUsers, dislikedUsers, comments, user: postedAuthor } = post;
+  const dynamicPostInfo = {
+    _id,
+    likedUsers,
+    dislikedUsers,
+    comments,
+  };
+  const { user: currentUser } = useUser();
+  const timeDifference = customizedTimeDifference(post?.createdAt);
 
-  // Submit a new comment
-  // const handleCommentSubmit = () => {
-  //   if (newComment.trim()) {
-  //     const updatedComments = [
-  //       ...post.comments,
-  //       {
-  //         users: {
-  //           name: "Current User",
-  //           email: "user@example.com",
-  //           profilePhoto: "",
-  //         },
-  //         comment: newComment,
-  //       },
-  //     ];
+  const currentUserId = currentUser?._id;
+  const isMyPost = currentUser?._id === postedAuthor?._id;
 
-  //     // Call the API to update comments (replace with your own implementation)
-  //     fetch(`/api/posts/${id}`, {
-  //       method: "POST",
-  //       body: JSON.stringify({ comments: updatedComments }),
-  //     }).then(() => {
-  //       setPost((prevPost: any) => ({
-  //         ...prevPost,
-  //         comments: updatedComments,
-  //       }));
-  //       setNewComment(""); // Clear input
-  //     });
-  //   }
-  // };
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  if (!post) return <div>Loading...</div>;
+  // Get the title and description
+  const title = post.title;
+  const description = post.description;
+
+  // Handle the toggle for "See More"
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
-    <div className="p-6 bg-default-100 rounded-lg shadow-lg">
-      {/* Post header */}
-      <div className="flex items-center gap-4">
-        {post.user?.profilePhoto ? (
-          <Image
-            alt={post.user.name}
-            className="rounded-full"
-            height={50}
-            src={post.user.profilePhoto}
-            width={50}
+    <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4">
+      {/* Post header with user profile info */}
+      <div className="flex justify-between gap-4">
+        <div className="w-full">
+          <UserCard
+            authorId={post?.user?._id}
+            currentUser={currentUserId}
+            followers={post?.user?.followers}
+            name={post?.user?.name}
+            profilePhoto={post?.user?.profilePhoto}
+            postedOn={timeDifference}
           />
-        ) : (
-          <div className="w-12 h-12 rounded-full bg-default-200" />
-        )}
-        <div>
-          <h3 className="text-lg font-semibold">
-            {post.user?.name || "Unknown User"}
-          </h3>
-          <p className="text-sm text-default-500">{post.user?.email}</p>
         </div>
+        <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
       </div>
-
+      <div>{/* <small>{timeDifference}</small> */}</div>
       {/* Post content */}
-      <div>
-        <h2 className="text-xl font-semibold">{post.title}</h2>
-        <p className="text-default-700">{post.description}</p>
-        {post.images?.length > 0 && (
-          <Image
-            alt={post.title}
-            className="rounded-lg object-cover my-4"
-            height={300}
-            src={post.images[0]}
-            width={500}
-          />
-        )}
+      <div className="text-start">
+        <h2 className="text-xl font-semibold">{title}</h2>
+        <div className="text-default-700">
+          <div dangerouslySetInnerHTML={{ __html: description }} />
+        </div>
+
+        {post.images?.length > 0 && <ImageGallery images={post.images} />}
       </div>
-
-      {/* Comments Section */}
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold">
-          Comments ({post.comments.length})
-        </h3>
-        <div className="p-4 rounded-lg shadow-lg bg-default-200">
-          {post.comments.length > 0 ? (
-            post.comments.map((comment: any, index: number) => (
-              <div
-                key={index}
-                className="flex gap-4 p-4 mb-4 bg-white rounded-lg shadow-sm"
-              >
-                <Image
-                  alt={comment.users?.name || "User"}
-                  className="rounded-full"
-                  height={40}
-                  src={comment.users?.profilePhoto || "/default-avatar.png"}
-                  width={40}
-                />
-                <div>
-                  <h4 className="font-semibold">
-                    {comment.users?.name || "Unknown User"}
-                  </h4>
-                  <p>{comment.comment}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No comments yet. Be the first to comment!</p>
-          )}
-        </div>
-
-        {/* New comment input */}
-        <div className="mt-4">
-          <Input
-            label="Add a comment"
-            placeholder="Write your comment..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <Button className="mt-2">Submit Comment</Button>
-        </div>
+      <div className="w-full mx-auto flex justify-center">
+        <PostDetailsInteraction post={dynamicPostInfo} />
       </div>
     </div>
   );
