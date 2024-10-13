@@ -147,7 +147,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
   return (
     <div className="w-full flex flex-col gap-4 p-4 rounded-lg  ">
       {/* Action buttons with like and dislike counts */}
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-1 lg:gap-6 items-center">
         {/* Like button */}
         <Button
           className={`bg-default-100 transition-transform duration-300 ${
@@ -289,7 +289,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
           )}
         </div>
       </div>
-      <div>
+      <div className="flex justify-center items-center">
         {/* Rating stars */}
         <div className="flex items-center gap-1">
           {[1, 2, 3, 4, 5].map((star) => (

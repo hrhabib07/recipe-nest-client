@@ -137,11 +137,11 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   return (
     <div className="flex flex-col rounded-lg">
       {/* Action buttons with like and dislike counts */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-1 lg:gap-4  items-center">
         {/* Like button */}
         <Button
           className={`bg-default-100 transition-transform duration-300 ${
-            liked ? "text-primary-500 scale-110" : "text-default-500"
+            liked ? "text-primary-500 " : "text-default-500"
           }`}
           startContent={
             !liked ? (
@@ -158,7 +158,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
         {/* Dislike button */}
         <Button
           className={`bg-default-100 transition-transform duration-300 ${
-            disliked ? "text-danger-500 scale-110" : "text-default-500"
+            disliked ? "text-danger-500 " : "text-default-500"
           }`}
           startContent={
             !disliked ? (
@@ -175,7 +175,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
         {/* Comment button */}
         <Button
           className={`bg-default-100 transition-transform duration-300 ${
-            commentsVisible ? "text-primary-500 scale-110" : "text-default-500"
+            commentsVisible ? "text-primary-500 " : "text-default-500"
           }`}
           startContent={<AiOutlineComment className="size-4" />}
           onClick={handleCommentClick}
@@ -186,7 +186,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
         {/* Share button */}
         <Button
           className={`bg-default-100 transition-transform duration-300 ${
-            shareVisible ? "text-primary-500 scale-110" : "text-default-500"
+            shareVisible ? "text-primary-500 " : "text-default-500"
           }`}
           startContent={<FiShare2 className="size-4" />} // Share icon
           onClick={handleShareClick}
@@ -284,7 +284,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
             value={`${window.location.origin}/posts/${postId}`}
           />
           <Button
-            className="bg-gradient-to-l from-default-100 hover:from-default-200 text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+            className="bg-gradient-to-l from-default-100 hover:from-default-200  font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
             onClick={handleCopyLink}
           >
             Copy Link
