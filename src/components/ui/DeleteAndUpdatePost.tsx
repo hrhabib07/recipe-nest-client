@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import UpdatePostModal from "./UpdatePostModal";
 
 import { useDeletePost } from "@/src/hooks/post.hook";
+import { Button } from "@nextui-org/button";
 
 const DeleteAndUpdatePost = ({ isMyPost, postId, post }: any) => {
   const { mutate: deletePost } = useDeletePost();
@@ -51,12 +52,17 @@ const DeleteAndUpdatePost = ({ isMyPost, postId, post }: any) => {
                   <UpdatePostModal post={post} />
                 </li>
                 {/* Delete Post option */}
-                <button
+                <li
                   className="px-4 py-2 text-default-700 hover:bg-default-400 cursor-pointer"
-                  onClick={handleDeletePost}
+                  //   onClick={() => {
+                  //     // Placeholder for opening the update post modal
+                  //     console.log("Update Post clicked");
+                  //   }}
                 >
-                  Delete Post
-                </button>
+                  <Button className="bg-transparent" onClick={handleDeletePost}>
+                    Delete Post
+                  </Button>
+                </li>
               </ul>
             </div>
           )}

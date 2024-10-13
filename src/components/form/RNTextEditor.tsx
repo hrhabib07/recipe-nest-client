@@ -31,7 +31,7 @@ const RNTextEditor = ({ label, name, value, onChange }: CustomEditorProps) => {
       <label className="text-sm font-semibold text-default-600">{label}</label>
       {/* React Quill Editor */}
       <ReactQuill
-        className="text-lg h-auto border border-default-200 rounded-md p-2 focus:outline-none"
+        className="text-lg h-[calc(100vh-500px)] border border-default-200 rounded-md p-2 focus:outline-none"
         modules={modules}
         theme="snow" // Use the snow theme
         value={value}

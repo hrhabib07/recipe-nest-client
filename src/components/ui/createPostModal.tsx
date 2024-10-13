@@ -23,6 +23,7 @@ import RNTextEditor from "../form/RNTextEditor";
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 import { useCreatePost } from "@/src/hooks/post.hook";
+import RNSelect from "../form/RNSelect";
 
 // export default function CreatePost() {
 const CreatePostModal = () => {
@@ -84,6 +85,11 @@ const CreatePostModal = () => {
     router.push("/");
   }
 
+  const contentTypeOptions = [
+    { key: "Free", label: "Free" },
+    { key: "Premium", label: "Premium" },
+  ];
+
   return (
     <>
       <Button onPress={onOpen}>Create a post</Button>
@@ -104,6 +110,15 @@ const CreatePostModal = () => {
                         <div className="flex flex-wrap gap-2 py-2">
                           <div className="min-w-fit flex-1">
                             <RNInput label="Title" name="title" />
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2 py-2">
+                          <div className="min-w-fit flex-1">
+                            <RNSelect
+                              options={contentTypeOptions}
+                              label="Content Type"
+                              name="contentType"
+                            />
                           </div>
                         </div>
 

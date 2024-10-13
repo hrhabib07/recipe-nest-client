@@ -203,7 +203,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
               onChange={(e) => setComment(e.target.value)}
             />
             <Button
-              className="bg-gradient-to-l from-default-100 hover:from-default-200 text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+              className="bg-gradient-to-l from-default-100 hover:from-default-200  font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
               onPress={handleCommentSubmit}
             >
               Comment

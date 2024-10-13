@@ -38,7 +38,7 @@ export interface IUser {
   name: string;
   role: string;
   email: string;
-  password: string;
+  password?: string; // Make password optional
   status: string;
   passwordChangedAt?: Date;
   mobileNumber?: string;

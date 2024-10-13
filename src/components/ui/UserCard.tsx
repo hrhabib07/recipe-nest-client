@@ -19,7 +19,7 @@ type UserCardProps = {
   profilePhoto: string;
   authorId: string;
   followers: any[];
-  currentUser: string | undefined;
+  currentUser?: string | undefined;
   postedOn?: string;
 };
 

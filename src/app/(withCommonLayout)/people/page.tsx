@@ -61,13 +61,13 @@ export default function BlogPage() {
         )}
         {data?.data?.map((user: any) => (
           <div
-            key={user._id}
+            key={user?._id}
             className="w-96 p-4 bg-gradient-to-b from-default-100 to-default-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
           >
             <UserCard
-              key={user._id}
-              authorId={user._id}
-              currentUser={loggedInUser?._id}
+              key={user?._id}
+              authorId={user?._id}
+              currentUser={loggedInUser?._id || undefined}
               followers={user?.followers}
               name={user.name}
               profilePhoto={user.profilePhoto}

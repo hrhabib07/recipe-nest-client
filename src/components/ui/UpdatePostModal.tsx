@@ -13,6 +13,7 @@ import RNForm from "../form/RNForm";
 import RNTextEditor from "../form/RNTextEditor";
 
 import { useUpdatePost } from "@/src/hooks/post.hook";
+import RNSelect from "../form/RNSelect";
 
 const UpdatePostModal = ({ post }: any) => {
   const [editorValue, setEditorValue] = useState(""); // State for editor content
@@ -28,6 +29,7 @@ const UpdatePostModal = ({ post }: any) => {
 
   const defaultValuesOfPosts = {
     title: post.title,
+    contentType: post.contentType,
   };
   const onSubmit = (data: any) => {
     const payload: { postId: string; postData: any } = {
@@ -37,6 +39,10 @@ const UpdatePostModal = ({ post }: any) => {
 
     updatePost(payload);
   };
+  const contentTypeOptions = [
+    { key: "Free", label: "Free" },
+    { key: "Premium", label: "Premium" },
+  ];
 
   return (
     <>
@@ -63,6 +69,15 @@ const UpdatePostModal = ({ post }: any) => {
                       >
                         <div className="py-3">
                           <RNInput label="Title" name="title" size="sm" />
+                        </div>
+                        <div className="flex flex-wrap gap-2 py-2">
+                          <div className="min-w-fit flex-1">
+                            <RNSelect
+                              options={contentTypeOptions}
+                              label="Content Type"
+                              name="contentType"
+                            />
+                          </div>
                         </div>
                         <div className="py-3">
                           <RNTextEditor
