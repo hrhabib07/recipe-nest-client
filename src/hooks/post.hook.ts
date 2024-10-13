@@ -10,6 +10,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getAllPostsForAdmin,
   getPostsWithQuery,
   getSinglePost,
   updatePost,
@@ -31,6 +32,16 @@ export const useCreatePost = () => {
   });
 };
 
+export const useAllPostDataForAdmin = (
+  searchTerm = "",
+  contentType = "Free"
+) => {
+  return useQuery({
+    queryKey: ["posts", searchTerm, contentType], // Add searchTerm and contentType for proper caching
+    queryFn: () => getAllPostsForAdmin(searchTerm, contentType),
+  });
+};
+
 export const useAllPostData = (searchTerm: string, contentType: string) => {
   return useInfiniteQuery({
     queryKey: ["posts", searchTerm, contentType], // Add searchTerm and contentType to the query key for caching
@@ -40,7 +51,7 @@ export const useAllPostData = (searchTerm: string, contentType: string) => {
         10,
         "-likedUsers",
         searchTerm,
-        contentType,
+        contentType
       ); // Fetch with pagination and additional parameters
     },
     getNextPageParam: (lastPage, pages) => {

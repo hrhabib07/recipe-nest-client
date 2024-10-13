@@ -7,7 +7,7 @@ export const getAllUsers = async (query?: string) => {
   try {
     if (query) {
       const { data } = await axiosInstance.get(
-        `/users?role=USER&searchTerm=${query}`,
+        `/users?role=USER&searchTerm=${query}`
       );
 
       return data;
@@ -18,7 +18,26 @@ export const getAllUsers = async (query?: string) => {
     }
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch user data.",
+      error.response?.data?.message || "Failed to fetch user data."
+    );
+  }
+};
+export const getAllAdmins = async (query?: string) => {
+  try {
+    if (query) {
+      const { data } = await axiosInstance.get(
+        `/users?role=ADMIN&searchTerm=${query}`
+      );
+
+      return data;
+    } else {
+      const { data } = await axiosInstance.get(`/users?role=ADMIN`);
+
+      return data;
+    }
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch user data."
     );
   }
 };
@@ -29,7 +48,7 @@ export const getSingleUsersProfileData = async (userId: string) => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch user data.",
+      error.response?.data?.message || "Failed to fetch user data."
     );
   }
 };
@@ -47,7 +66,7 @@ export const unfollowUser = async (userId: string, userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.put(
       `/users/unfollow/${userId}`,
-      userData,
+      userData
     );
 
     return data;

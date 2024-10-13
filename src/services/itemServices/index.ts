@@ -21,13 +21,31 @@ export const createPost = async (formData: FormData): Promise<any> => {
   }
 };
 
+// Fetch all posts without pagination for admin
+export const getAllPostsForAdmin = async (
+  searchTerm = "",
+  contentType = "Free"
+) => {
+  try {
+    const { data } = await axiosInstance.get("/items", {
+      params: { sortBy: "-likedUsers", searchTerm, contentType }, // Add your required params
+    });
+
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch item data."
+    );
+  }
+};
+
 // Fetch all posts from the server
 export const getAllPosts = async (
   page: number = 1,
   limit: number = 10,
   sortBy: string = "-likedUsers",
   searchTerm: string = "",
-  contentType: string = "Free", // Default value
+  contentType: string = "Free" // Default value
 ) => {
   try {
     const { data } = await axiosInstance.get("/items", {
@@ -38,7 +56,7 @@ export const getAllPosts = async (
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data.",
+      error.response?.data?.message || "Failed to fetch item data."
     );
   }
 };
@@ -51,7 +69,7 @@ export const getPostsWithQuery = async (query: string) => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data.",
+      error.response?.data?.message || "Failed to fetch item data."
     );
   }
 };
@@ -63,7 +81,7 @@ export const getSinglePost = async (postId: string) => {
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch item data.",
+      error.response?.data?.message || "Failed to fetch item data."
     );
   }
 };
@@ -71,7 +89,7 @@ export const getSinglePost = async (postId: string) => {
 // Update an existing post
 export const updatePost = async (
   postId: string,
-  postData: any,
+  postData: any
 ): Promise<any> => {
   try {
     // console.log("postData:", postData);

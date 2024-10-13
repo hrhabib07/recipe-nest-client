@@ -27,6 +27,8 @@ import { siteConfig } from "@/src/config/site";
 export const Navbar = () => {
   const router = useRouter();
   const { user, setIsLoading: userLoading } = useUser();
+  // console.log(user?.role);
+  const isAdmin = user?.role === "ADMIN";
 
   const handleUserLogout = () => {
     logout();
@@ -44,22 +46,44 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">RecipeNest</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
+        {isAdmin ? (
+          <ul className="hidden lg:flex gap-4 justify-start ml-2">
+            {siteConfig.navItems.slice(0, -1).map((item) => (
+              <NavbarItem key={item.href}>
+                <NextLink
+                  className={clsx(
+                    linkStyles({ color: "foreground" }),
+                    "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  )}
+                  color="foreground"
+                  href={item.href}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+            <NavbarItem key="admin">
+              <NextLink href="/admin">Dashboard</NextLink>
             </NavbarItem>
-          ))}
-        </ul>
+          </ul>
+        ) : (
+          <ul className="hidden lg:flex gap-4 justify-start ml-2">
+            {siteConfig.navItems.map((item) => (
+              <NavbarItem key={item.href}>
+                <NextLink
+                  className={clsx(
+                    linkStyles({ color: "foreground" }),
+                    "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  )}
+                  color="foreground"
+                  href={item.href}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+          </ul>
+        )}
       </NavbarContent>
 
       {/* Navbar content for large screens - Right side */}
@@ -72,13 +96,15 @@ export const Navbar = () => {
         </NavbarItem>
         {user?.email ? (
           <NavbarItem className="hidden md:flex">
-            <Button
-              className="text-sm font-normal text-default-600 bg-default-100"
-              variant="flat"
-              onClick={handleUserLogout}
-            >
-              Logout
-            </Button>
+            {
+              <Button
+                className="text-sm font-normal text-default-600 bg-default-100"
+                variant="flat"
+                onClick={handleUserLogout}
+              >
+                Logout
+              </Button>
+            }
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden md:flex">

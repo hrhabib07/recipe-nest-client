@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { FieldValues } from "react-hook-form";
 
 import {
+  getAllAdmins,
   getAllUsers,
   getSingleUsersProfileData,
   unfollowUser,
@@ -14,6 +15,13 @@ export const useAllUsersData = (searchTerm = "") => {
   return useQuery({
     queryKey: ["GET_USER_WITH_ID", searchTerm], // Include `searchTerm` in the query key
     queryFn: async () => await getAllUsers(searchTerm), // Pass `searchTerm` to the API function
+    enabled: true, // Keep enabled for refetching, it can be controlled with conditions if needed
+  });
+};
+export const useAllAdminsData = (searchTerm = "") => {
+  return useQuery({
+    queryKey: ["GET_USER_WITH_ID", searchTerm], // Include `searchTerm` in the query key
+    queryFn: async () => await getAllAdmins(searchTerm), // Pass `searchTerm` to the API function
     enabled: true, // Keep enabled for refetching, it can be controlled with conditions if needed
   });
 };
