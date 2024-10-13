@@ -7,6 +7,7 @@ import { envConfig } from "@/src/config/envConfig";
 export const axiosInstance = axios.create({
   baseURL: envConfig.baseApi,
 });
+// console.log(axiosInstance, "/stripe/create-checkout-session");
 axiosInstance.interceptors.request.use(
   function (config) {
     const cookieStore = cookies();
@@ -20,7 +21,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -29,7 +30,7 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

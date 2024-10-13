@@ -1,3 +1,4 @@
+// components/SubscriptionCard.tsx
 "use client";
 
 import { useState } from "react";
@@ -18,10 +19,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { useUser } from "@/src/context/user.provider";
+import { useCreateCheckoutSession } from "@/src/hooks/payment.hook";
 import { envConfig } from "@/src/config/envConfig";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
 interface MembershipPlan {
@@ -38,12 +40,12 @@ interface SubscriptionCardProps {
 
 const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const { user } = useUser();
-
   const isUserLoggedIn = !!user?.email;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  const { mutate: createSession } = useCreateCheckoutSession();
 
   const handleCheckout = async () => {
     if (!isUserLoggedIn) {
@@ -51,53 +53,41 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
     } else {
       setLoading(true);
       const stripe = await stripePromise;
-
-      // Call your backend to create the checkout session
-      const response = await fetch(
-        `${envConfig.baseApi}/stripe/create-checkout-session`,
+      // Use react-query to create the checkout session
+      createSession(
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            price: parseFloat(plan.price.replace(/[^0-9.-]+/g, "")), // Strip $ sign and convert to number
-            membershipType: plan.type,
-            email: user.email,
-          }),
+          price: parseFloat(plan.price.replace(/[^0-9.-]+/g, "")), // Strip $ sign and convert to number
+          email: user.email,
         },
+        {
+          onSuccess: async (sessionData) => {
+            const sessionId = sessionData.data?.sessionId;
+
+            // Check if the session has a valid id
+            if (!sessionId) {
+              console.error("Session ID is missing", sessionData);
+              setLoading(false);
+              return; // Exit if there's no session ID
+            }
+
+            // Redirect to Stripe Checkout
+            const { error } = await stripe!.redirectToCheckout({
+              sessionId, // Use the session ID returned from your backend
+            });
+
+            if (error) {
+              console.error("Stripe checkout error", error);
+            } else {
+              // Optionally, redirect to a success page after checkout
+              router.push("/success"); // Change this to your success page URL
+            }
+            setLoading(false);
+          },
+          onError: () => {
+            setLoading(false);
+          },
+        }
       );
-
-      if (!response.ok) {
-        console.error("Failed to create checkout session", response.statusText);
-        setLoading(false);
-
-        return; // Exit if there's an error
-      }
-
-      const session = await response.json();
-      const sessionData = session.data;
-
-      // Check if the session has a valid id
-      if (!sessionData.sessionId) {
-        console.error("Session ID is missing", sessionData);
-        setLoading(false);
-
-        return; // Exit if there's no session ID
-      }
-
-      // Redirect to Stripe Checkout
-      const { error } = await stripe!.redirectToCheckout({
-        sessionId: sessionData.sessionId, // Use the session ID returned from your backend
-      });
-
-      if (error) {
-        console.error("Stripe checkout error", error);
-      } else {
-        // Optionally, redirect to a success page after checkout
-        router.push("/success"); // Change this to your success page URL
-      }
-      setLoading(false);
     }
   };
 
@@ -136,40 +126,37 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
           </div>
         </CardBody>
       </Card>
-      <>
-        {/* <Button onPress={onOpen}>Open Modal</Button> */}
-        <Modal
-          className="bg-gradient-to-b from-default-100 shadow-lg"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  You need to be logged in!
-                </ModalHeader>
-                <ModalBody>
-                  <p>
-                    Please log in to interact. Would you like to be redirected
-                    to the login page?
-                  </p>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
+      <Modal
+        className="bg-gradient-to-b from-default-100 shadow-lg"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                You need to be logged in!
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  Please log in to interact. Would you like to be redirected to
+                  the login page?
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Link href="/login">
+                  <Button color="primary" onPress={onClose}>
+                    Login
                   </Button>
-                  <Link href="/login">
-                    <Button color="primary" onPress={onClose}>
-                      Login
-                    </Button>
-                  </Link>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      </>
+                </Link>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 };
