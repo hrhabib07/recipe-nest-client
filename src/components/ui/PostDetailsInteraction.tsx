@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineComment } from "react-icons/ai";
+import { AiFillStar, AiOutlineComment, AiOutlineStar } from "react-icons/ai";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import {
@@ -42,12 +42,13 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
     isSuccess: updatePostSuccess,
   } = useUpdatePost();
   const { _id: postId, likedUsers, dislikedUsers, comments } = post;
-  console.log(comments);
+  // console.log(comments);
 
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [comment, setComment] = useState("");
   const [shareVisible, setShareVisible] = useState(false); // Share link visibility state
+  const [userRating, setUserRating] = useState<number | null>(null); // User rating state
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -88,7 +89,21 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
 
     handleUpdatePost(payload);
   };
+  // Handle rating click
+  const handleRatingClick = (ratingValue: number) => {
+    if (!userId) {
+      onOpen(); // Show modal if user is not logged in
+      return;
+    }
+    setUserRating(ratingValue); // Update the local rating state
+    // console.log("User Rating:", ratingValue); // Log the rating
+    // const payload = {
+    //   postId,
+    //   postData: { rating: ratingValue },
+    // };
 
+    // handleUpdatePost(payload); // Update the post with the rating
+  };
   // Handle comment submission
   const handleCommentSubmit = () => {
     if (!userId) {
@@ -193,7 +208,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
               readOnly
             />
             <Button
-              className="bg-gradient-to-l from-default-100 hover:from-default-200 text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+              className="bg-gradient-to-l from-default-100 hover:from-default-200 font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
               onClick={handleCopyLink}
             >
               Copy Link
@@ -215,7 +230,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
             onChange={(e) => setComment(e.target.value)}
           />
           <Button
-            className="bg-gradient-to-l from-default-100  hover:from-default-200  text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
+            className="bg-gradient-to-l from-default-100  hover:from-default-200 font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"
             onPress={handleCommentSubmit}
           >
             Comment
@@ -272,7 +287,26 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
           )}
         </div>
       </div>
-      <div></div>
+      <div>
+        {/* Rating stars */}
+        <div className="flex items-center gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              className="text-yellow-500"
+              onClick={() => handleRatingClick(star)}
+            >
+              {userRating && userRating >= star ? (
+                <AiFillStar />
+              ) : (
+                <AiOutlineStar />
+              )}
+            </button>
+          ))}
+          <span className="ml-2">({4.8} average)</span>
+          {/* <span className="ml-2">({post?.rating || 0} average)</span> */}
+        </div>
+      </div>
 
       {/* Alert Modal */}
       <>
