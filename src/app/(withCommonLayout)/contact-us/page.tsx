@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { Input } from "@nextui-org/input";
-import { Button, Textarea } from "@nextui-org/react";
+import React from "react";
+import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import RNForm from "@/src/components/form/RNForm";
 import RNInput from "@/src/components/form/RNInput";
-import RNTextEditor from "@/src/components/form/RNTextEditor";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import RNTextarea from "@/src/components/form/RNTextArea";
 

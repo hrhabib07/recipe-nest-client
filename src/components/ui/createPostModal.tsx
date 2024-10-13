@@ -42,7 +42,15 @@ const CreatePostModal = () => {
     isSuccess: createPostSuccess,
   } = useCreatePost();
 
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!user) {
+    return <p>User not logged in</p>;
+  }
 
   const methods = useForm();
 

@@ -5,7 +5,7 @@ export const siteConfig = {
   description: "Recipe sharing social media web application",
   navItems: [
     {
-      label: "Home",
+      label: "Feed",
       href: "/",
     },
 

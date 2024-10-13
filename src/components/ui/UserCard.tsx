@@ -66,7 +66,7 @@ const UserCard: React.FC<UserCardProps> = ({
         <div className="flex gap-2">
           {/* Image Container */}
           <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 hover:opacity-70">
-            <Link href={`/people/${authorId}`}>
+            <Link href={!isMyAccount ? `/people/${authorId}` : "/profile"}>
               <img
                 alt={name}
                 className="w-full h-full rounded-full object-cover"
@@ -77,7 +77,7 @@ const UserCard: React.FC<UserCardProps> = ({
 
           {/* Name and Email */}
           <div className="flex-1 ml-1 overflow-hidden">
-            <Link href={`/people/${authorId}`}>
+            <Link href={!isMyAccount ? `/people/${authorId}` : "/profile"}>
               {/* Name with ellipsis and title for tooltip */}
               <h3
                 className="text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap hover:text-blue-500 hover:underline text-start "
