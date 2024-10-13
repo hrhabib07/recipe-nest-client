@@ -145,7 +145,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 p-4 rounded-lg  ">
+    <div className="w-full flex flex-col p-2 rounded-lg  ">
       {/* Action buttons with like and dislike counts */}
       <div className="flex gap-1 lg:gap-6 items-center">
         {/* Like button */}
