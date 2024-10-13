@@ -1,4 +1,4 @@
-"use client"; // Ensure you're using client components
+"use client";
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -25,9 +25,8 @@ const ResetPasswordForm = () => {
       setAccessToken(token);
 
       try {
-        // Decode the token to extract the email
-        const decodedToken = jwtDecode(token) as { email: string };
-        setEmail(decodedToken.email || emailFromParams); // Fallback to query email
+        const decodedToken = jwtDecode(token);
+        setEmail((decodedToken as any).email || emailFromParams); // Fallback to query email
       } catch (error) {
         console.error("Invalid token:", error);
       }
