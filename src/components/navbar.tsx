@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 export const Navbar = () => {
   const router = useRouter();
   const { user, setIsLoading: userLoading } = useUser();
+
   const handleUserLogout = () => {
     logout();
     userLoading(true);
@@ -35,6 +36,7 @@ export const Navbar = () => {
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
+      {/* Navbar content for large screens */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -60,6 +62,7 @@ export const Navbar = () => {
         </ul>
       </NavbarContent>
 
+      {/* Navbar content for large screens - Right side */}
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
@@ -91,30 +94,47 @@ export const Navbar = () => {
         )}
       </NavbarContent>
 
+      {/* Navbar content for small screens */}
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 
+      {/* Navbar Menu for small devices */}
+      {/* Navbar Menu for small devices */}
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                    ? "danger"
-                    : "foreground"
-                }
-                href="#"
+                color={"foreground"}
+                // color={
+                //   index === siteConfig.navMenuItems.length - 1
+                //     ? "danger"
+                //     : "foreground"
+                // }
+                href={item.href}
                 size="lg"
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
+          {user?.email ? (
+            <NavbarMenuItem>
+              <Button
+                className="w-full text-left text-lg text-danger"
+                variant="flat"
+                onClick={handleUserLogout}
+              >
+                Logout
+              </Button>
+            </NavbarMenuItem>
+          ) : (
+            <Link color={"foreground"} href={"/login"} size="lg">
+              Login
+            </Link>
+          )}
         </div>
       </NavbarMenu>
     </NextUINavbar>

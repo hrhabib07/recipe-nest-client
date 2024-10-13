@@ -74,7 +74,7 @@ const AllPosts = () => {
   return (
     <>
       {/* search and filter content bar */}
-      <div className="flex justify-end items-end me-8 gap-4">
+      <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
         {/* Search Bar */}
         <div className="my-8 w-96 justify-end">
           <Input
