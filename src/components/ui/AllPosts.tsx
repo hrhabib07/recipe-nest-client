@@ -8,21 +8,43 @@ import SkeletonPostCard from "./SkeletonPostCard";
 import { useAllPostData } from "@/src/hooks/post.hook";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
+import { useUser } from "@/src/context/user.provider";
+import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
+import { isBefore } from "date-fns";
 
 const AllPosts = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [contentType, setContentType] = useState("Free"); // Default value
-   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const [contentType, setContentType] = useState("Free");
+
+  const { user } = useUser();
+  const userId = user?._id;
+  const { data: currentUserFullInfo, isLoading: userDataLoading } =
+    useGetSingleUsersProfileData(userId as string);
+  const validityOfSubs = currentUserFullInfo?.data?.subscription?.validUntil;
+
+  // Check if the subscription is expired
+  const isSubscriptionValid =
+    (validityOfSubs && !isBefore(new Date(validityOfSubs), new Date())) ||
+    false;
+  const isUserLoggedIn = !!user;
+
+  console.log(
+    "isLoggedIn",
+    isUserLoggedIn,
+    "is valid subs",
+    isSubscriptionValid
+  );
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useAllPostData(searchTerm, contentType);
 
-  console.log(contentType, searchTerm);
+  // console.log(contentType, searchTerm);
 
   const posts = data?.pages.flatMap((page: { data: any }) => page.data) || [];
 
-  
-
   return (
     <>
+      {/* search and filter content bar */}
       <>
         <div className="flex justify-end items-end me-8 gap-4">
           {/* Search Bar */}
@@ -63,6 +85,7 @@ const AllPosts = () => {
               <SelectItem key="Free" value="Free">
                 Free
               </SelectItem>
+              {}
               <SelectItem key="Premium" value="Premium">
                 Premium
               </SelectItem>
@@ -71,33 +94,35 @@ const AllPosts = () => {
         </div>
       </>
       <>
-      {
-        isLoading ? <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        {Array.from({ length: 9 }, (_, index) => (
-          <SkeletonPostCard key={index} />
-        ))}
-      </div> : <>
-      <InfiniteScroll
-        dataLength={posts.length}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>No more posts to display!</b>
-          </p>
-        }
-        hasMore={!!hasNextPage}
-        loader={<h4>Loading more posts...</h4>}
-        next={fetchNextPage}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-          {posts.map((post: any) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
-      </InfiniteScroll>
+        {isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            {Array.from({ length: 9 }, (_, index) => (
+              <SkeletonPostCard key={index} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <InfiniteScroll
+              dataLength={posts.length}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>No more posts to display!</b>
+                </p>
+              }
+              hasMore={!!hasNextPage}
+              loader={<h4>Loading more posts...</h4>}
+              next={fetchNextPage}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                {posts.map((post: any) => (
+                  <PostCard key={post._id} post={post} />
+                ))}
+              </div>
+            </InfiniteScroll>
 
-      {isFetchingNextPage && <h4>Loading more...</h4>}
-       </>
-      }
+            {isFetchingNextPage && <h4>Loading more...</h4>}
+          </>
+        )}
       </>
     </>
   );

@@ -41,7 +41,6 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const { user } = useUser();
-  const userId = user?._id;
 
   const isUserLoggedIn = !!user?.email;
   const router = useRouter();

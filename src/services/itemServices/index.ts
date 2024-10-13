@@ -26,13 +26,13 @@ export const getAllPosts = async (
   page: number = 1,
   limit: number = 10,
   sortBy: string = "-likedUsers",
-  searchTerm: string = ""
-  // contentType: string = "Free" // Default value
+  searchTerm: string = "",
+  contentType: string = "Free" // Default value
 ) => {
   try {
     const { data } = await axiosInstance.get("/items", {
-      params: { page, limit, sortBy, searchTerm }, // Include searchTerm and contentType
-      // params: { page, limit, sortBy, searchTerm, contentType }, // Include searchTerm and contentType
+      params: { page, limit, sortBy, searchTerm, contentType }, // Include searchTerm and contentType
+      // params: { page, limit, sortBy, searchTerm }, // Include searchTerm and contentType
     });
 
     return data;

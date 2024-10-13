@@ -20,6 +20,7 @@ import {
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import ChangePasswordModal from "@/src/components/ui/ChangePasswordModal";
+import UserProfilePostData from "@/src/components/ui/UserProfilePostData";
 
 const page = () => {
   const { data, isLoading } = useUserData();
@@ -118,7 +119,8 @@ const page = () => {
             <ChangePasswordModal></ChangePasswordModal>
           </div>
         </div>
-        <UsersPostsData userId={userData._id} />
+        <UserProfilePostData userId={userData._id} />
+        {/* <UsersPostsData userId={userData._id} /> */}
         {/* followers list modal  */}
         <>
           {/* <Button onPress={onOpen}>Open Modal</Button> */}

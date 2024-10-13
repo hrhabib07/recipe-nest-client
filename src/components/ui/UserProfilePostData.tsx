@@ -5,13 +5,13 @@ import SkeletonPostCard from "./SkeletonPostCard";
 
 import { useGetPostDataWithQuery } from "@/src/hooks/post.hook";
 
-const UsersPostsData = ({ userId }: { userId: string }) => {
+const UserProfilePostData = ({ userId }: { userId: string }) => {
   //   const { data: postsData, isLoading: isPostsDataLoading } = getAllPostData();
   const {
     data: postsData,
     isLoading: isPostsDataLoading,
     isError,
-  } = useGetPostDataWithQuery(`user=${userId}&contentType=Free`);
+  } = useGetPostDataWithQuery(`user=${userId}`);
 
   //   const posts = postsData?.data;
   const skeletonArray = Array.from({ length: 9 }, (_, index) => index);
@@ -36,4 +36,4 @@ const UsersPostsData = ({ userId }: { userId: string }) => {
   );
 };
 
-export default UsersPostsData;
+export default UserProfilePostData;

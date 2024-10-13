@@ -39,8 +39,8 @@ export const useAllPostData = (searchTerm: string, contentType: string) => {
         pageParam,
         10,
         "-likedUsers",
-        searchTerm
-        // contentType
+        searchTerm,
+        contentType
       ); // Fetch with pagination and additional parameters
     },
     getNextPageParam: (lastPage, pages) => {
