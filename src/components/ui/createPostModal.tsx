@@ -19,11 +19,11 @@ import {
 
 import RNInput from "../form/RNInput";
 import RNTextEditor from "../form/RNTextEditor";
+import RNSelect from "../form/RNSelect";
 
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
 import { useCreatePost } from "@/src/hooks/post.hook";
-import RNSelect from "../form/RNSelect";
 
 // export default function CreatePost() {
 const CreatePostModal = () => {
@@ -32,6 +32,8 @@ const CreatePostModal = () => {
   const [editorValue, setEditorValue] = useState(""); // State for editor content
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const methods = useForm();
   //   console.log(imagePreviews);
 
   const router = useRouter();
@@ -51,8 +53,6 @@ const CreatePostModal = () => {
   if (!user) {
     return <p>User not logged in</p>;
   }
-
-  const methods = useForm();
 
   const { control, handleSubmit } = methods;
 
@@ -123,9 +123,9 @@ const CreatePostModal = () => {
                         <div className="flex flex-wrap gap-2 py-2">
                           <div className="min-w-fit flex-1">
                             <RNSelect
-                              options={contentTypeOptions}
                               label="Content Type"
                               name="contentType"
+                              options={contentTypeOptions}
                             />
                           </div>
                         </div>

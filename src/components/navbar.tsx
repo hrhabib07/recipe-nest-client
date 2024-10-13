@@ -14,6 +14,7 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 import { logout } from "../services/authServices";
 import { useUser } from "../context/user.provider";
@@ -22,7 +23,6 @@ import { Logo } from "./icons";
 import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/src/config/site";
-import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -50,7 +50,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color="foreground"
                 href={item.href}

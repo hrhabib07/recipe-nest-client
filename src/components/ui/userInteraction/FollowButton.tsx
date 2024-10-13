@@ -43,7 +43,7 @@ const FollowButton = ({
     else if (typeof followers[0] === "object" && followers[0] !== null) {
       // Array of objects: Use `some` to check if any object matches `currentUser`
       isFollowing = followers.some(
-        (follower) => follower?._id === currentLoggedInUserId
+        (follower) => follower?._id === currentLoggedInUserId,
       );
     }
   }

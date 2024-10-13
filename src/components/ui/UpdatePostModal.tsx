@@ -11,9 +11,9 @@ import {
 import RNInput from "../form/RNInput";
 import RNForm from "../form/RNForm";
 import RNTextEditor from "../form/RNTextEditor";
+import RNSelect from "../form/RNSelect";
 
 import { useUpdatePost } from "@/src/hooks/post.hook";
-import RNSelect from "../form/RNSelect";
 
 const UpdatePostModal = ({ post }: any) => {
   const [editorValue, setEditorValue] = useState(""); // State for editor content
@@ -73,9 +73,9 @@ const UpdatePostModal = ({ post }: any) => {
                         <div className="flex flex-wrap gap-2 py-2">
                           <div className="min-w-fit flex-1">
                             <RNSelect
-                              options={contentTypeOptions}
                               label="Content Type"
                               name="contentType"
+                              options={contentTypeOptions}
                             />
                           </div>
                         </div>

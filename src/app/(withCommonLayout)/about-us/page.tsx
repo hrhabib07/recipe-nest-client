@@ -14,7 +14,7 @@ const AboutUs = () => {
               discovering unique recipes. Our mission is to build a vibrant
               community where food lovers can connect, share their culinary
               experiences, and inspire each other with exciting new dishes.
-              Whether you're a home cook or a seasoned chef, RecipeNest is the
+              Whether you are a home cook or a seasoned chef, RecipeNest is the
               perfect space for you to explore, create, and engage with others
               who share your passion for food.
             </p>
@@ -48,9 +48,9 @@ const AboutUs = () => {
 
         <div className="mt-8">
           <img
-            src="https://images.pexels.com/photos/6804603/pexels-photo-6804603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="Team"
             className="rounded-lg shadow-lg mx-auto"
+            src="https://images.pexels.com/photos/6804603/pexels-photo-6804603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           />
           <p className="text-lg text-default-600 mt-4">
             Our amazing team working together to bring RecipeNest to life!

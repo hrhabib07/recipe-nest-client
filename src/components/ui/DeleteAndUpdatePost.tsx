@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { Button } from "@nextui-org/button";
 
 import UpdatePostModal from "./UpdatePostModal";
 
 import { useDeletePost } from "@/src/hooks/post.hook";
-import { Button } from "@nextui-org/button";
 
 const DeleteAndUpdatePost = ({ isMyPost, postId, post }: any) => {
   const { mutate: deletePost } = useDeletePost();

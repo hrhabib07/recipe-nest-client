@@ -1,7 +1,8 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createCheckoutSession } from "../services/checkoutServices";
 import { loadStripe } from "@stripe/stripe-js";
+
+import { createCheckoutSession } from "../services/checkoutServices";
 
 interface CheckoutPayload {
   price: number;
@@ -20,8 +21,9 @@ export const useCheckout = (): UseMutationResult<
     onSuccess: (data) => {
       // Redirect to Stripe Checkout with the session ID
       const stripe = loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
       );
+
       stripe.then((stripeInstance) => {
         stripeInstance?.redirectToCheckout({ sessionId: data.id });
       });

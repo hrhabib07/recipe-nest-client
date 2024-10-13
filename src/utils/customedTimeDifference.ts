@@ -15,6 +15,7 @@ export const customizedTimeDifference = (time: Date): string => {
 
   // Determine the appropriate time difference to show
   let result;
+
   if (seconds < 60) {
     result = `${seconds} seconds ago`;
   } else if (minutes < 60) {

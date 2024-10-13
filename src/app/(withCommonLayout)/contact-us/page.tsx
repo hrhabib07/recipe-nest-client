@@ -4,9 +4,10 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+
 import RNForm from "@/src/components/form/RNForm";
 import RNInput from "@/src/components/form/RNInput";
-import { FieldValues, SubmitHandler } from "react-hook-form";
 import RNTextarea from "@/src/components/form/RNTextArea";
 
 const ContactUs = () => {
@@ -15,6 +16,7 @@ const ContactUs = () => {
     toast.success("Your request has been submitted");
     router.push("/");
   };
+
   return (
     <section className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
       <div className="w-[35%]">

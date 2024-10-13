@@ -1,13 +1,8 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import PostCard from "./PostCard";
-import SkeletonPostCard from "./SkeletonPostCard";
-import { useAllPostData } from "@/src/hooks/post.hook";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
-import { useUser } from "@/src/context/user.provider";
-import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
 import { isBefore } from "date-fns";
 import {
   Modal,
@@ -20,6 +15,13 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 
+import PostCard from "./PostCard";
+import SkeletonPostCard from "./SkeletonPostCard";
+
+import { useAllPostData } from "@/src/hooks/post.hook";
+import { useUser } from "@/src/context/user.provider";
+import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
+
 const AllPosts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [contentType, setContentType] = useState("Free");
@@ -28,6 +30,7 @@ const AllPosts = () => {
 
   const { user } = useUser();
   const userId = user?._id;
+
   useEffect(() => {}, [userId]);
 
   // Only call the hook if userId exists and is valid
@@ -60,10 +63,12 @@ const AllPosts = () => {
       if (!isUserLoggedIn) {
         setRedirectLink("/login");
         setIsOpen(true);
+
         return;
       } else if (!isSubscriptionValid) {
         setRedirectLink("/pricing");
         setIsOpen(true);
+
         return;
       }
     }
@@ -106,13 +111,13 @@ const AllPosts = () => {
         {/* Content Type Filter */}
         <div className="my-8 w-48 justify-end">
           {isLoading ? (
-            <Spinner></Spinner>
+            <Spinner />
           ) : (
             <Select
               label="Content Type"
+              style={{ width: "100%" }} // Set width to 100% or a fixed value
               value={contentType}
               onChange={handleContentTypeChange}
-              style={{ width: "100%" }} // Set width to 100% or a fixed value
             >
               <SelectItem key="Free" value="Free">
                 Free

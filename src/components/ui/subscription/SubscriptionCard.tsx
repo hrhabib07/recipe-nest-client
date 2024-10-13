@@ -14,15 +14,14 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import { loadStripe } from "@stripe/stripe-js";
-import { envConfig } from "@/src/config/envConfig";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/src/context/user.provider";
-import { toast } from "sonner";
 import Link from "next/link";
-import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
+
+import { useUser } from "@/src/context/user.provider";
+import { envConfig } from "@/src/config/envConfig";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
 
 interface MembershipPlan {
@@ -66,12 +65,13 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
             membershipType: plan.type,
             email: user.email,
           }),
-        }
+        },
       );
 
       if (!response.ok) {
         console.error("Failed to create checkout session", response.statusText);
         setLoading(false);
+
         return; // Exit if there's an error
       }
 
@@ -82,6 +82,7 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
       if (!sessionData.sessionId) {
         console.error("Session ID is missing", sessionData);
         setLoading(false);
+
         return; // Exit if there's no session ID
       }
 
@@ -89,6 +90,7 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
       const { error } = await stripe!.redirectToCheckout({
         sessionId: sessionData.sessionId, // Use the session ID returned from your backend
       });
+
       if (error) {
         console.error("Stripe checkout error", error);
       } else {
@@ -98,6 +100,7 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
       setLoading(false);
     }
   };
+
   return (
     <>
       <Card className="py-4 shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out">
@@ -122,11 +125,11 @@ const SubscriptionCard = ({ plan }: SubscriptionCardProps) => {
           </div>
           <div className="mt-6">
             <Button
-              onClick={handleCheckout}
-              disabled={loading}
               className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+              disabled={loading}
               size="lg"
               type="submit"
+              onClick={handleCheckout}
             >
               {loading ? "Processing..." : "Buy Now"}
             </Button>

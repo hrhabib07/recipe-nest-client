@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
-import { MdThumbDown, MdThumbUp } from "react-icons/md";
 import {
   BiDownvote,
   BiSolidDownvote,
   BiSolidUpvote,
   BiUpvote,
 } from "react-icons/bi";
-
 import { FiShare2 } from "react-icons/fi"; // Importing share icon
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -20,9 +18,10 @@ import {
   useDisclosure,
 } from "@nextui-org/modal";
 import Link from "next/link";
+import { toast } from "sonner";
+
 import { useUser } from "@/src/context/user.provider";
 import { useUpdatePost } from "@/src/hooks/post.hook";
-import { toast } from "sonner";
 
 type TProps = {
   _id: string;
@@ -57,6 +56,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const handleLikeClick = () => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     }
     if (disliked) {
@@ -75,6 +75,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const handleDislikeClick = () => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     }
     if (liked) {
@@ -98,6 +99,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   const handleCommentSubmit = () => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     } else if (!comment.trim()) return;
     const updatedPost = {
@@ -116,6 +118,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
   // Copy post link to clipboard
   const handleCopyLink = () => {
     const postUrl = `${window.location.origin}/posts/${postId}`;
+
     navigator.clipboard.writeText(postUrl);
     toast.success("Post link copied to clipboard!");
     // alert();
@@ -187,7 +190,7 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
           }`}
           startContent={<FiShare2 className="size-4" />} // Share icon
           onClick={handleShareClick}
-        ></Button>
+        />
       </div>
 
       {/* Comments Section */}
@@ -276,9 +279,9 @@ const PostInteractionSection = ({ post }: { post: TProps }) => {
       {shareVisible && (
         <div className="flex items-center gap-4 mt-4">
           <Input
+            readOnly
             className="flex-1 mb-0 shadow-sm rounded-md focus:ring-2 focus:ring-default-200 transition-all"
             value={`${window.location.origin}/posts/${postId}`}
-            readOnly
           />
           <Button
             className="bg-gradient-to-l from-default-100 hover:from-default-200 text-white font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"

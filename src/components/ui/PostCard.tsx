@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 
 import PostInteractionSection from "./PostInteractionSection";
 import ImageGallery from "./ImageGallery";
@@ -8,7 +9,6 @@ import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
 
 import { useUser } from "@/src/context/user.provider";
 import { customizedTimeDifference } from "@/src/utils/customedTimeDifference";
-import { useRouter } from "next/navigation";
 
 // Single post card component
 const PostCard = ({ post }: any) => {
@@ -46,8 +46,8 @@ const PostCard = ({ post }: any) => {
             currentUser={currentUserId}
             followers={post?.user?.followers}
             name={post?.user?.name}
-            profilePhoto={post?.user?.profilePhoto}
             postedOn={timeDifference}
+            profilePhoto={post?.user?.profilePhoto}
           />
         </div>
         <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />

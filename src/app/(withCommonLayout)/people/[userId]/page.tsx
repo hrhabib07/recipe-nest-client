@@ -162,7 +162,7 @@ const UserProfilePage = () => {
                             </div>
                           </div>
                         </div>
-                      )
+                      ),
                     )}
                 </ModalBody>
                 <ModalFooter>

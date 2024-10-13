@@ -11,9 +11,6 @@ import {
   useDisclosure,
 } from "@nextui-org/modal";
 import Link from "next/link";
-
-import { useUser } from "@/src/context/user.provider";
-import { useUpdatePost } from "@/src/hooks/post.hook";
 import { toast } from "sonner";
 import { FiShare2 } from "react-icons/fi";
 import {
@@ -22,6 +19,9 @@ import {
   BiSolidUpvote,
   BiUpvote,
 } from "react-icons/bi";
+
+import { useUpdatePost } from "@/src/hooks/post.hook";
+import { useUser } from "@/src/context/user.provider";
 
 type TProps = {
   _id: string;
@@ -93,6 +93,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
   const handleRatingClick = (ratingValue: number) => {
     if (!userId) {
       onOpen(); // Show modal if user is not logged in
+
       return;
     }
     setUserRating(ratingValue); // Update the local rating state
@@ -137,6 +138,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
   // Copy post link to clipboard
   const handleCopyLink = () => {
     const postUrl = `${window.location.origin}/posts/${postId}`;
+
     navigator.clipboard.writeText(postUrl);
     toast.success("Post link copied to clipboard!");
     // alert();
@@ -195,7 +197,7 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
           }`}
           startContent={<FiShare2 className="size-4" />} // Share icon
           onClick={handleShareClick}
-        ></Button>
+        />
       </div>
 
       {/* Share Link Section */}
@@ -203,9 +205,9 @@ const PostDetailsInteraction = ({ post }: { post: TProps }) => {
         {shareVisible && (
           <div className="flex items-center gap-4 mt-4">
             <Input
+              readOnly
               className="flex-1 mb-0 shadow-sm rounded-md focus:ring-2 focus:ring-default-200 transition-all"
               value={`${window.location.origin}/posts/${postId}`}
-              readOnly
             />
             <Button
               className="bg-gradient-to-l from-default-100 hover:from-default-200 font-semibold px-4 py-2 rounded-md shadow-md transition-transform transform hover:scale-105"

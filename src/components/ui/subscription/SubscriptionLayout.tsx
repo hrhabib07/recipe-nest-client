@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
+import { format, isBefore } from "date-fns";
+
+import LoadingSpinner from "../LoadingSpinner";
+
 import SubscriptionCard from "./SubscriptionCard";
+
 import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
 import { useUser } from "@/src/context/user.provider";
-import { format, isBefore } from "date-fns";
-import LoadingSpinner from "../LoadingSpinner";
 
 const membershipPlans = [
   {
@@ -61,7 +64,7 @@ const SubscriptionLayout = () => {
   const { user } = useUser();
   const userId = user?._id;
   const { data: currentUserFullInfo, isLoading } = useGetSingleUsersProfileData(
-    userId as string
+    userId as string,
   );
   const validityOfSubs = currentUserFullInfo?.data?.subscription?.validUntil;
 

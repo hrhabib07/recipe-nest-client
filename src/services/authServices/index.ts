@@ -66,13 +66,13 @@ export const changePasswordUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       `/auth/change-password`,
-      userData
+      userData,
     );
 
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to change password."
+      error.response?.data?.message || "Failed to change password.",
     );
   }
 };
@@ -80,32 +80,36 @@ export const forgetPassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       `/auth/forget-password`,
-      userData
+      userData,
     );
 
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to send the email."
+      error.response?.data?.message || "Failed to send the email.",
     );
   }
 };
 export const resetPassword = async (userData: FieldValues) => {
   const accessToken = userData.accessToken;
+
   cookies().set("accessToken", accessToken);
   const payload = {
     email: userData.email,
     newPassword: userData.newPassword,
   };
+
   // console.log("final payload", payload);
   try {
     const { data } = await axiosInstance.post(`/auth/reset-password`, payload);
+
     cookies().delete("accessToken");
+
     // console.log(data);
     return data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to reset the password."
+      error.response?.data?.message || "Failed to reset the password.",
     );
   }
 };
@@ -122,7 +126,7 @@ export const getCurrentUserWithId = async () => {
       return data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch user data."
+        error.response?.data?.message || "Failed to fetch user data.",
       );
     }
   }

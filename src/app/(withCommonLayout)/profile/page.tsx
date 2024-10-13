@@ -2,13 +2,6 @@
 "use client";
 
 import Image from "next/image";
-
-import { useUserData } from "@/src/hooks/auth.hook";
-import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
-import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
-import CreatePostModal from "@/src/components/ui/createPostModal";
-import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
-import UsersPostsData from "@/src/components/ui/UsersPostsData";
 import {
   Modal,
   ModalBody,
@@ -19,6 +12,12 @@ import {
 } from "@nextui-org/modal";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
+
+import { useUserData } from "@/src/hooks/auth.hook";
+import UpdateBioModal from "@/src/components/ui/UpdateBioModal";
+import UpdateProfileModal from "@/src/components/ui/UpdateProfileModal";
+import CreatePostModal from "@/src/components/ui/createPostModal";
+import SkeletonProfileHeader from "@/src/components/ui/SkeletonProfileHeader";
 import ChangePasswordModal from "@/src/components/ui/ChangePasswordModal";
 import UserProfilePostData from "@/src/components/ui/UserProfilePostData";
 
@@ -41,6 +40,7 @@ const page = () => {
 
   const hasFollowers = userData?.followers?.length > 0;
   const hasFollowing = userData?.following?.length > 0;
+
   if (isLoading) {
     return <SkeletonProfileHeader />;
   }
@@ -116,7 +116,7 @@ const page = () => {
             <CreatePostModal />
           </div>
           <div className="mt-6">
-            <ChangePasswordModal></ChangePasswordModal>
+            <ChangePasswordModal />
           </div>
         </div>
         <UserProfilePostData userId={userData._id} />
@@ -141,7 +141,7 @@ const page = () => {
                       userData?.followers?.map(
                         (
                           follower: any,
-                          index: React.Key | null | undefined
+                          index: React.Key | null | undefined,
                         ) => (
                           <div
                             key={index}
@@ -180,7 +180,7 @@ const page = () => {
                               </div>
                             </div>
                           </div>
-                        )
+                        ),
                       )}
                   </ModalBody>
                   <ModalFooter>

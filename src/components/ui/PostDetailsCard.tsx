@@ -1,13 +1,14 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { customizedTimeDifference } from "@/src/utils/customedTimeDifference";
 import { useState } from "react";
+
 import UserCard from "./UserCard";
 import DeleteAndUpdatePost from "./DeleteAndUpdatePost";
-import PostInteractionSection from "./PostInteractionSection";
 import ImageGallery from "./ImageGallery";
 import PostDetailsInteraction from "./PostDetailsInteraction";
+
+import { customizedTimeDifference } from "@/src/utils/customedTimeDifference";
+import { useUser } from "@/src/context/user.provider";
 
 const PostDetailCard = ({ post }: any) => {
   const { _id, likedUsers, dislikedUsers, comments, user: postedAuthor } = post;
@@ -41,8 +42,8 @@ const PostDetailCard = ({ post }: any) => {
             currentUser={currentUserId}
             followers={post?.user?.followers}
             name={post?.user?.name}
-            profilePhoto={post?.user?.profilePhoto}
             postedOn={timeDifference}
+            profilePhoto={post?.user?.profilePhoto}
           />
         </div>
         <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
@@ -55,8 +56,8 @@ const PostDetailCard = ({ post }: any) => {
         {/* Rich text content */}
         <div className="text-default-900">
           <div
-            className="prose text-default-900"
             dangerouslySetInnerHTML={{ __html: description }}
+            className="prose text-default-900"
           />
         </div>
 

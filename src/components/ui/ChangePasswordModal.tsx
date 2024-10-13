@@ -7,7 +7,6 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Modal,
@@ -21,7 +20,6 @@ import RNInput from "../form/RNInput";
 
 import LoadingSpinner from "@/src/components/ui/LoadingSpinner";
 import { useUser } from "@/src/context/user.provider";
-import { useCreatePost } from "@/src/hooks/post.hook";
 import { usePasswordChange } from "@/src/hooks/auth.hook";
 
 // export default function CreatePost() {
@@ -85,7 +83,7 @@ const ChangePasswordModal = () => {
                         </div>
 
                         <div className="flex justify-end">
-                          <Button onPress={onClose} size="lg" type="submit">
+                          <Button size="lg" type="submit" onPress={onClose}>
                             Update
                           </Button>
                         </div>
