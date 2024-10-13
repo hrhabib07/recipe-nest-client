@@ -32,7 +32,6 @@ const AllPosts = () => {
   const userId = user?._id;
 
   useEffect(() => {}, [userId]);
-
   // Only call the hook if userId exists and is valid
   const { data: currentUserFullInfo, isLoading: userDataLoading } =
     useGetSingleUsersProfileData(userId as string);
