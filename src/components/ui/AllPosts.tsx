@@ -110,7 +110,20 @@ const AllPosts = () => {
         {/* Content Type Filter */}
         <div className="my-8 w-48 justify-end">
           {isLoading ? (
-            <Spinner />
+            <Select
+              className="animate-pulse"
+              disabled
+              label="Content Type"
+              style={{ width: "100%" }} // Set width to 100% or a fixed value
+            >
+              <SelectItem
+                key={"loading"}
+                value={"loading"}
+                className="text-default-400"
+              >
+                loading...
+              </SelectItem>
+            </Select>
           ) : (
             <Select
               label="Content Type"
