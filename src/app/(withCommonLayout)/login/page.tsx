@@ -5,7 +5,7 @@ import { Suspense, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation"; // Client-side hooks only
 
 import loginValidationSchema from "@/src/schemas/login.schema";
@@ -32,10 +32,20 @@ function LoginForm() {
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
 
+  const { setValue, handleSubmit } = useForm<FieldValues>({
+    resolver: zodResolver(loginValidationSchema),
+  });
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
     userLoading(true);
   };
+
+  const fillTestCredentials = (email: string, password: string) => {
+    setValue("email", email);
+    setValue("password", password);
+  };
+  // console.log(email, password);
 
   useEffect(() => {
     if (!isPending && isSuccess) {
@@ -54,10 +64,28 @@ function LoginForm() {
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
         <h3 className="my-2 text-2xl font-bold">Login with RecipeNest</h3>
         <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
+        <div className="flex gap-4 mb-6">
+          <Button
+            className="bg-blue-500 text-white hover:bg-blue-700"
+            onClick={() =>
+              fillTestCredentials("test@user1.com", "test@user1.com")
+            }
+          >
+            Test User
+          </Button>
+          <Button
+            className="bg-red-500 text-white hover:bg-red-700"
+            onClick={() =>
+              fillTestCredentials("admin@admin.com", "admin@admin")
+            }
+          >
+            Admin
+          </Button>
+        </div>
         <div className="md:w-[35%]">
           <RNForm
             resolver={zodResolver(loginValidationSchema)}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <div className="py-3">
               <RNInput label="Email" name="email" type="email" />
