@@ -27,7 +27,6 @@ function CredentialsDisplay({
 }) {
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
-    // alert(`${label} credentials copied to clipboard!`);
     toast.success(`${label} credentials copied to clipboard!`);
   };
 
