@@ -77,71 +77,6 @@ const AllPosts = () => {
 
   return (
     <>
-      {/* search and filter content bar */}
-      <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
-        {/* Search Bar */}
-        <div className="my-8 w-96 justify-end">
-          <Input
-            endContent={
-              <span className="text-default-400">
-                <svg
-                  className="size-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            }
-            label="Search"
-            style={{ width: "100%" }} // Set width to 100% or a fixed value
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        {/* Content Type Filter */}
-        <div className="my-8 w-48 justify-end">
-          {isLoading ? (
-            <Select
-              className="animate-pulse"
-              disabled
-              label="Content Type"
-              style={{ width: "100%" }} // Set width to 100% or a fixed value
-            >
-              <SelectItem
-                key={"loading"}
-                value={"loading"}
-                className="text-default-400"
-              >
-                loading...
-              </SelectItem>
-            </Select>
-          ) : (
-            <Select
-              label="Content Type"
-              style={{ width: "100%" }} // Set width to 100% or a fixed value
-              value={contentType}
-              onChange={handleContentTypeChange}
-            >
-              <SelectItem key="Free" value="Free">
-                Free
-              </SelectItem>
-              <SelectItem key="Premium" value="Premium">
-                Premium
-              </SelectItem>
-            </Select>
-          )}
-        </div>
-      </div>
-
       {/* Post cards display */}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
@@ -151,23 +86,142 @@ const AllPosts = () => {
         </div>
       ) : (
         <>
-          <InfiniteScroll
-            dataLength={posts.length}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>No more posts to display!</b>
-              </p>
-            }
-            hasMore={!!hasNextPage}
-            loader={<h4>Loading more posts...</h4>}
-            next={fetchNextPage}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-              {posts.map((post: any) => (
-                <PostCard key={post._id} post={post} />
-              ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Advertisement Section */}
+            <div className="hidden lg:block p-4  rounded shadow">
+              <h3 className="text-lg font-bold">Sponsored Ads</h3>
+              <div className="mt-4">
+                <div className="mb-4">
+                  <img
+                    src="https://via.placeholder.com/300x150"
+                    alt="Ad 1"
+                    className="rounded"
+                  />
+                  <p className="text-sm text-default-600 mt-2">
+                    Check out the latest gadgets at unbeatable prices!
+                  </p>
+                </div>
+                <div>
+                  <img
+                    src="https://via.placeholder.com/300x150"
+                    alt="Ad 2"
+                    className="rounded"
+                  />
+                  <p className="text-sm text-default-600 mt-2">
+                    Join our online courses and enhance your skills today!
+                  </p>
+                </div>
+              </div>
             </div>
-          </InfiniteScroll>
+
+            <div>
+              {/* search and filter content bar */}
+              <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
+                {/* Search Bar */}
+                <div className="my-8 w-96 justify-end">
+                  <Input
+                    endContent={
+                      <span className="text-default-400">
+                        <svg
+                          className="size-6"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={1.5}
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    }
+                    label="Search"
+                    style={{ width: "100%" }} // Set width to 100% or a fixed value
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                {/* Content Type Filter */}
+                <div className="my-8 w-48 justify-end">
+                  {isLoading ? (
+                    <Select
+                      className="animate-pulse"
+                      disabled
+                      label="Content Type"
+                      style={{ width: "100%" }} // Set width to 100% or a fixed value
+                    >
+                      <SelectItem
+                        key={"loading"}
+                        value={"loading"}
+                        className="text-default-400"
+                      >
+                        loading...
+                      </SelectItem>
+                    </Select>
+                  ) : (
+                    <Select
+                      label="Content Type"
+                      style={{ width: "100%" }} // Set width to 100% or a fixed value
+                      value={contentType}
+                      onChange={handleContentTypeChange}
+                    >
+                      <SelectItem key="Free" value="Free">
+                        Free
+                      </SelectItem>
+                      <SelectItem key="Premium" value="Premium">
+                        Premium
+                      </SelectItem>
+                    </Select>
+                  )}
+                </div>
+              </div>
+
+              {/* Main Content Section */}
+              <InfiniteScroll
+                dataLength={posts.length}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>No more posts to display!</b>
+                  </p>
+                }
+                hasMore={!!hasNextPage}
+                loader={<h4>Loading more posts...</h4>}
+                next={fetchNextPage}
+              >
+                <div className="grid grid-cols-1 gap-4">
+                  {posts.map((post: any) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </div>
+              </InfiniteScroll>
+            </div>
+
+            {/* Features Section */}
+            <div className="hidden lg:block p-4  rounded shadow">
+              <h3 className="text-lg font-bold">Features</h3>
+              <ul className="mt-4 space-y-2">
+                <li className="text-sm text-default-700">
+                  📸 Photo Sharing: Share moments with your friends and family.
+                </li>
+                <li className="text-sm text-default-700">
+                  💬 Messaging: Stay connected through private or group chats.
+                </li>
+                <li className="text-sm text-default-700">
+                  🎥 Video Stories: Share your daily highlights in video format.
+                </li>
+                <li className="text-sm text-default-700">
+                  ⭐ Post Reactions: React to posts with likes, loves, and more.
+                </li>
+                <li className="text-sm text-default-700">
+                  📌 Saved Posts: Bookmark posts to revisit later.
+                </li>
+              </ul>
+            </div>
+          </div>
 
           {isFetchingNextPage && <h4>Loading more...</h4>}
         </>
