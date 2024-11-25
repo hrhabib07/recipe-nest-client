@@ -86,7 +86,7 @@ const AllPosts = () => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Advertisement Section */}
             <div className="hidden lg:block p-4  rounded shadow">
               <h3 className="text-lg font-bold">Sponsored Ads</h3>
@@ -114,7 +114,7 @@ const AllPosts = () => {
               </div>
             </div>
 
-            <div>
+            <div className="col-span-2">
               {/* search and filter content bar */}
               <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
                 {/* Search Bar */}
