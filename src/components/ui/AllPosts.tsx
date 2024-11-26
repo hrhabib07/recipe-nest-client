@@ -114,7 +114,7 @@ const AllPosts = () => {
               </div>
             </div>
 
-            <div className="col-span-2">
+            <div className="col-span-2 mx-12">
               {/* search and filter content bar */}
               <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
                 {/* Search Bar */}
