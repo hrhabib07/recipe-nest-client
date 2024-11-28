@@ -21,6 +21,7 @@ import SkeletonPostCard from "./SkeletonPostCard";
 import { useAllPostData } from "@/src/hooks/post.hook";
 import { useUser } from "@/src/context/user.provider";
 import { useGetSingleUsersProfileData } from "@/src/hooks/user.hook";
+import CreatePostModal from "./createPostModal";
 
 const AllPosts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +75,45 @@ const AllPosts = () => {
 
     setContentType(selectedContentType);
   };
+  const images = [
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/7_shpfwg.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/8_ucmdzm.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/5_ugxqhe.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/3_dqpbr2.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/1_uowlng.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/6_oayfra.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/4_zyluil.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/2_jtmhvm.png",
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Function to move to the next image
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // Automatically transition to the next image every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(nextImage, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval); // Clean up interval on unmount
+  }, []);
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // const nextImage = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === images.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
+
+  // const prevImage = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === 0 ? images.length - 1 : prevIndex - 1
+  //   );
+  // };
 
   return (
     <>
@@ -85,12 +125,6 @@ const AllPosts = () => {
             <h3 className="text-lg font-bold">Sponsored Ads</h3>
             <div className="mt-4">
               <div className="mb-4">
-                <div className="h-36 bg-default-200 rounded-lg animate-pulse" />
-                <p className="text-sm text-default-600 mt-2">
-                  Loading advertisement details...
-                </p>
-              </div>
-              <div>
                 <div className="h-36 bg-default-200 rounded-lg animate-pulse" />
                 <p className="text-sm text-default-600 mt-2">
                   Loading advertisement details...
@@ -136,27 +170,36 @@ const AllPosts = () => {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Advertisement Section */}
-            <div className="hidden lg:block p-4  rounded shadow">
+            <div className="hidden lg:block p-4 rounded shadow">
               <h3 className="text-lg font-bold">Sponsored Ads</h3>
               <div className="mt-4">
                 <div className="mb-4">
-                  <img
-                    src="https://via.placeholder.com/300x150"
-                    alt="Ad 1"
-                    className="rounded"
-                  />
+                  <div className="relative w-full max-w-4xl mx-auto">
+                    <div className="overflow-hidden">
+                      <img
+                        src={images[currentIndex]}
+                        alt={`carousel image ${currentIndex}`}
+                        className="w-full h-auto transition-all duration-500"
+                      />
+                    </div>
+
+                    {/* Indicator dots */}
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                      {images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentIndex(index)}
+                          className={`h-2 w-2 rounded-full bg-white ${
+                            currentIndex === index
+                              ? "bg-opacity-100"
+                              : "bg-opacity-50"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                   <p className="text-sm text-default-600 mt-2">
-                    Check out the latest gadgets at unbeatable prices!
-                  </p>
-                </div>
-                <div>
-                  <img
-                    src="https://via.placeholder.com/300x150"
-                    alt="Ad 2"
-                    className="rounded"
-                  />
-                  <p className="text-sm text-default-600 mt-2">
-                    Join our online courses and enhance your skills today!
+                    Let's build something great together!
                   </p>
                 </div>
               </div>
@@ -164,7 +207,13 @@ const AllPosts = () => {
 
             <div className="col-span-2 mx-12">
               {/* search and filter content bar */}
-              <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
+              {/* <div>
+               
+                <div className="mt-6">
+                  <CreatePostModal />
+                </div>
+              </div> */}
+              <div className="flex justify-center gap-2 items-center">
                 {/* Search Bar */}
                 <div className="my-8 w-96 justify-end">
                   <Input
@@ -249,23 +298,53 @@ const AllPosts = () => {
             </div>
 
             {/* Features Section */}
-            <div className="hidden lg:block p-4  rounded shadow">
-              <h3 className="text-lg font-bold">Features</h3>
-              <ul className="mt-4 space-y-2">
-                <li className="text-sm text-default-700">
-                  📸 Photo Sharing: Share moments with your friends and family.
+            <div className="hidden lg:block p-4 rounded shadow">
+              <h3 className="text-lg font-bold mb-4">Features</h3>
+              <ul className="space-y-4">
+                <li className="flex items-center space-x-3">
+                  <div className="text-primary text-xl">
+                    📸 {/* Replace with a suitable icon component */}
+                  </div>
+                  <p className="text-sm text-default-700">
+                    <span className="font-semibold">Photo Sharing:</span> Share
+                    moments with your friends and family.
+                  </p>
                 </li>
-                <li className="text-sm text-default-700">
-                  💬 Messaging: Stay connected through private or group chats.
+                <li className="flex items-center space-x-3">
+                  <div className="text-primary text-xl">
+                    💬 {/* Replace with a suitable icon component */}
+                  </div>
+                  <p className="text-sm text-default-700">
+                    <span className="font-semibold">Messaging:</span> Stay
+                    connected through private or group chats.
+                  </p>
                 </li>
-                <li className="text-sm text-default-700">
-                  🎥 Video Stories: Share your daily highlights in video format.
+                <li className="flex items-center space-x-3">
+                  <div className="text-primary text-xl">
+                    🎥 {/* Replace with a suitable icon component */}
+                  </div>
+                  <p className="text-sm text-default-700">
+                    <span className="font-semibold">Video Stories:</span> Share
+                    your daily highlights in video format.
+                  </p>
                 </li>
-                <li className="text-sm text-default-700">
-                  ⭐ Post Reactions: React to posts with likes, loves, and more.
+                <li className="flex items-center space-x-3">
+                  <div className="text-primary text-xl">
+                    ⭐ {/* Replace with a suitable icon component */}
+                  </div>
+                  <p className="text-sm text-default-700">
+                    <span className="font-semibold">Post Reactions:</span> React
+                    to posts with likes, loves, and more.
+                  </p>
                 </li>
-                <li className="text-sm text-default-700">
-                  📌 Saved Posts: Bookmark posts to revisit later.
+                <li className="flex items-center space-x-3">
+                  <div className="text-primary text-xl">
+                    📌 {/* Replace with a suitable icon component */}
+                  </div>
+                  <p className="text-sm text-default-700">
+                    <span className="font-semibold">Saved Posts:</span> Bookmark
+                    posts to revisit later.
+                  </p>
                 </li>
               </ul>
             </div>

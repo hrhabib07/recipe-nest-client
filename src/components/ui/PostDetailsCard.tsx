@@ -33,38 +33,40 @@ const PostDetailCard = ({ post }: any) => {
   console.log(description);
 
   return (
-    <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4">
-      {/* Post header with user profile info */}
-      <div className="flex justify-between gap-4">
-        <div className="w-full">
-          <UserCard
-            authorId={post?.user?._id}
-            currentUser={currentUserId}
-            followers={post?.user?.followers}
-            name={post?.user?.name}
-            postedOn={timeDifference}
-            profilePhoto={post?.user?.profilePhoto}
-          />
+    <div className="flex justify-center py-6">
+      <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4 max-w-3xl">
+        {/* Post header with user profile info */}
+        <div className="flex justify-between gap-4">
+          <div className="w-full">
+            <UserCard
+              authorId={post?.user?._id}
+              currentUser={currentUserId}
+              followers={post?.user?.followers}
+              name={post?.user?.name}
+              postedOn={timeDifference}
+              profilePhoto={post?.user?.profilePhoto}
+            />
+          </div>
+          <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
         </div>
-        <DeleteAndUpdatePost isMyPost={isMyPost} post={post} postId={_id} />
-      </div>
-      <div>{/* <small>{timeDifference}</small> */}</div>
-      {/* Post content */}
-      <div className="text-start">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        {/* Description content with enhanced styles */}
-        {/* Rich text content */}
-        <div className="text-default-900">
-          <div
-            dangerouslySetInnerHTML={{ __html: description }}
-            className="prose text-default-900"
-          />
-        </div>
+        <div>{/* <small>{timeDifference}</small> */}</div>
+        {/* Post content */}
+        <div className="text-start">
+          <h2 className="text-xl font-semibold">{title}</h2>
+          {/* Description content with enhanced styles */}
+          {/* Rich text content */}
+          <div className="text-default-900">
+            <div
+              dangerouslySetInnerHTML={{ __html: description }}
+              className="prose text-default-900"
+            />
+          </div>
 
-        {post.images?.length > 0 && <ImageGallery images={post.images} />}
-      </div>
-      <div className="w-full mx-auto flex justify-center">
-        <PostDetailsInteraction post={dynamicPostInfo} />
+          {post.images?.length > 0 && <ImageGallery images={post.images} />}
+        </div>
+        <div className="w-full mx-auto flex justify-center">
+          <PostDetailsInteraction post={dynamicPostInfo} />
+        </div>
       </div>
     </div>
   );
