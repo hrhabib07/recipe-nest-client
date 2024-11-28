@@ -47,7 +47,7 @@ const page = () => {
 
   return (
     <>
-      <div className="w-full  overflow-hidden shadow-md bg-gradient-to-b from-default-50 relative">
+      <div className="w-full  overflow-hidden shadow-md bg-gradient-to-b from-default-50 relative mt-16">
         {/* Cover Photo */}
         <div
           className="w-full h-48 bg-cover bg-center"
@@ -141,7 +141,7 @@ const page = () => {
                       userData?.followers?.map(
                         (
                           follower: any,
-                          index: React.Key | null | undefined,
+                          index: React.Key | null | undefined
                         ) => (
                           <div
                             key={index}
@@ -180,7 +180,7 @@ const page = () => {
                               </div>
                             </div>
                           </div>
-                        ),
+                        )
                       )}
                   </ModalBody>
                   <ModalFooter>

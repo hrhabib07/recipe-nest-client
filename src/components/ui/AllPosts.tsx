@@ -76,14 +76,14 @@ const AllPosts = () => {
     setContentType(selectedContentType);
   };
   const images = [
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/1_uowlng.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/2_jtmhvm.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/3_dqpbr2.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/4_zyluil.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/5_ugxqhe.png",
+    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/6_oayfra.png",
     "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/7_shpfwg.png",
     "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/8_ucmdzm.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/5_ugxqhe.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/3_dqpbr2.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/1_uowlng.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/6_oayfra.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/4_zyluil.png",
-    "https://res.cloudinary.com/daqvhd097/image/upload/v1732785607/2_jtmhvm.png",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -106,7 +106,7 @@ const AllPosts = () => {
     <>
       {/* Post cards display */}
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
           {/* Advertisement Section */}
           <div className="hidden lg:block p-4 rounded shadow">
             <h3 className="text-lg font-bold">Sponsored Ads</h3>
@@ -155,9 +155,9 @@ const AllPosts = () => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
             {/* Advertisement Section */}
-            <div className="hidden lg:block p-4 rounded shadow">
+            <div className="hidden lg:block p-4 rounded shadow sticky top-16 self-start">
               <h3 className="text-lg font-bold">Sponsored Ads</h3>
               <div className="mt-4">
                 <div className="mb-4">
@@ -207,7 +207,7 @@ const AllPosts = () => {
               </div>
             </div>
 
-            <div className="col-span-2 mx-12">
+            <div className="col-span-2 mx-12 ">
               {/* search and filter content bar */}
               {/* <div>
                
@@ -300,7 +300,7 @@ const AllPosts = () => {
             </div>
 
             {/* Features Section */}
-            <div className="hidden lg:block p-4 rounded shadow">
+            <div className="hidden lg:block p-4 rounded shadow sticky top-16 self-start">
               <h3 className="text-lg font-bold mb-4">Features</h3>
               <ul className="space-y-4">
                 <li className="flex items-center space-x-3">

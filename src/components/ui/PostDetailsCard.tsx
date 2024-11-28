@@ -33,7 +33,7 @@ const PostDetailCard = ({ post }: any) => {
   console.log(description);
 
   return (
-    <div className="flex justify-center py-6">
+    <div className="flex justify-center py-6 my-16">
       <div className="relative p-4 bg-gradient-to-b from-default-100 to-default-50  rounded-xl shadow-lg flex flex-col gap-4 max-w-3xl">
         {/* Post header with user profile info */}
         <div className="flex justify-between gap-4">
