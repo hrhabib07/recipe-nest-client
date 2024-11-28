@@ -79,10 +79,58 @@ const AllPosts = () => {
     <>
       {/* Post cards display */}
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-          {Array.from({ length: 9 }, (_, index) => (
-            <SkeletonPostCard key={index} />
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Advertisement Section */}
+          <div className="hidden lg:block p-4 rounded shadow">
+            <h3 className="text-lg font-bold">Sponsored Ads</h3>
+            <div className="mt-4">
+              <div className="mb-4">
+                <div className="h-36 bg-default-200 rounded-lg animate-pulse" />
+                <p className="text-sm text-default-600 mt-2">
+                  Loading advertisement details...
+                </p>
+              </div>
+              <div>
+                <div className="h-36 bg-default-200 rounded-lg animate-pulse" />
+                <p className="text-sm text-default-600 mt-2">
+                  Loading advertisement details...
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-2 mx-12">
+            {/* Search and Filter Content Bar */}
+            <div className="flex justify-end items-end p-4 lg:me-8 gap-2">
+              {/* Search Bar Skeleton */}
+              <div className="my-8 w-96">
+                <div className="h-12 bg-default-200 rounded-lg animate-pulse" />
+              </div>
+              {/* Content Type Filter Skeleton */}
+              <div className="my-8 w-48">
+                <div className="h-12 bg-default-200 rounded-lg animate-pulse" />
+              </div>
+            </div>
+
+            {/* Skeleton Post Cards Section */}
+            <div className="grid grid-cols-1  gap-6">
+              {Array.from({ length: 9 }, (_, index) => (
+                <SkeletonPostCard key={index} />
+              ))}
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="hidden lg:block p-4 rounded shadow">
+            <h3 className="text-lg font-bold">Features</h3>
+            <ul className="mt-4 space-y-2">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <li key={index} className="text-sm text-default-700">
+                  <div className="h-4 bg-default-200 rounded w-3/4 animate-pulse" />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       ) : (
         <>
