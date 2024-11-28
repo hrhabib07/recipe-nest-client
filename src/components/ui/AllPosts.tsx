@@ -101,19 +101,6 @@ const AllPosts = () => {
 
     return () => clearInterval(interval); // Clean up interval on unmount
   }, []);
-  // const [currentIndex, setCurrentIndex] = useState(0);
-
-  // const nextImage = () => {
-  //   setCurrentIndex((prevIndex) =>
-  //     prevIndex === images.length - 1 ? 0 : prevIndex + 1
-  //   );
-  // };
-
-  // const prevImage = () => {
-  //   setCurrentIndex((prevIndex) =>
-  //     prevIndex === 0 ? images.length - 1 : prevIndex - 1
-  //   );
-  // };
 
   return (
     <>
@@ -175,12 +162,27 @@ const AllPosts = () => {
               <div className="mt-4">
                 <div className="mb-4">
                   <div className="relative w-full max-w-4xl mx-auto">
-                    <div className="overflow-hidden">
+                    <div className="overflow-hidden group">
+                      {" "}
+                      {/* Add 'group' class for hover effect */}
                       <img
                         src={images[currentIndex]}
                         alt={`carousel image ${currentIndex}`}
                         className="w-full h-auto transition-all duration-500"
                       />
+                      {/* Dark overlay on hover */}
+                      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      {/* Hire Me button */}
+                      <a
+                        href="https://www.linkedin.com/in/mdhabibur-hr7/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      >
+                        <button className="bg-blue-600 text-white py-2 px-6 rounded-full hover:bg-blue-700">
+                          Hire A Developer
+                        </button>
+                      </a>
                     </div>
 
                     {/* Indicator dots */}
